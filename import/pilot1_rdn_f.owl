@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:saref="https://saref.etsi.org/core/"
+  xmlns:s4ener="https://saref.etsi.org/saref4ener/"
+  xmlns:sosa="http://www.w3.org/ns/sosa/"
+  xmlns:iec61850="https://saref.etsi.org/saref4ener/iec61850/"
+  xmlns:dcat="http://www.w3.org/ns/dcat#"
+  xmlns:dct="http://purl.org/dc/terms/"
+  xmlns:eg="http://example.org/pilot1_f#">
+
+  <!-- Ontology header -->
+  <owl:Ontology rdf:about="http://example.org/pilot1_f_standard_mapped">
+    <rdfs:label>Pilot 1F Standard-Mapped Ontology</rdfs:label>
+    <rdfs:comment>OWL ontology for ScopeView measurement data, mapped to SAREF, SAREF4ENER, SOSA, and IEC61850-SAREF4ENER.</rdfs:comment>
+    <owl:imports rdf:resource="https://saref.etsi.org/core/"/>
+    <owl:imports rdf:resource="https://saref.etsi.org/saref4ener/"/>
+    <owl:imports rdf:resource="http://www.w3.org/ns/sosa/"/>
+    <owl:imports rdf:resource="https://saref.etsi.org/saref4ener/iec61850/"/>
+  </owl:Ontology>
+
+  <!-- Classes with Standard Mappings -->
+  <owl:Class rdf:about="eg:ScopeViewDevice">
+    <rdfs:subClassOf rdf:resource="saref:Device"/>
+    <rdfs:label>ScopeView Device</rdfs:label>
+  </owl:Class>
+
+  <owl:Class rdf:about="eg:Measurement">
+    <rdfs:subClassOf rdf:resource="sosa:Observation"/>
+    <rdfs:label>Measurement</rdfs:label>
+  </owl:Class>
+
+  <!-- Object Properties (Standard Mappings) -->
+  <owl:ObjectProperty rdf:about="eg:recordedBy">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="eg:ScopeViewDevice"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:madeBySensor"/>
+    <rdfs:label>recorded by</rdfs:label>
+  </owl:ObjectProperty>
+
+  <!-- Data Properties (Standard Mappings) -->
+  <owl:DatatypeProperty rdf:about="eg:timestamp">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:dateTime"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:resultTime"/>
+    <rdfs:label>timestamp</rdfs:label>
+  </owl:DatatypeProperty>
+
+  <!-- Channel Properties mapped to IEC61850 and SOSA -->
+  <owl:DatatypeProperty rdf:about="eg:Ia_scaledValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:hasSimpleResult"/>
+    <rdfs:label>Phase A Current (scaled)</rdfs:label>
+    <rdfs:comment>Maps to iec61850:MMXU_A</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="eg:Ia_rawValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:hasSimpleResult"/>
+    <rdfs:label>Phase A Current (raw)</rdfs:label>
+    <rdfs:comment>Maps to iec61850:MMXU_A</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="eg:Ib_scaledValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:hasSimpleResult"/>
+    <rdfs:label>Phase B Current (scaled)</rdfs:label>
+    <rdfs:comment>Maps to iec61850:MMXU_B</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="eg:Ib_rawValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:hasSimpleResult"/>
+    <rdfs:label>Phase B Current (raw)</rdfs:label>
+    <rdfs:comment>Maps to iec61850:MMXU_B</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="eg:Ic_scaledValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:hasSimpleResult"/>
+    <rdfs:label>Phase C Current (scaled)</rdfs:label>
+    <rdfs:comment>Maps to iec61850:MMXU_C</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="eg:Ic_rawValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:hasSimpleResult"/>
+    <rdfs:label>Phase C Current (raw)</rdfs:label>
+    <rdfs:comment>Maps to iec61850:MMXU_C</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="eg:Va_scaledValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:hasSimpleResult"/>
+    <rdfs:label>Phase A Voltage (scaled)</rdfs:label>
+    <rdfs:comment>Maps to iec61850:MMXU_V</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="eg:Va_rawValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:hasSimpleResult"/>
+    <rdfs:label>Phase A Voltage (raw)</rdfs:label>
+    <rdfs:comment>Maps to iec61850:MMXU_V</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="eg:Vb_scaledValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:hasSimpleResult"/>
+    <rdfs:label>Phase B Voltage (scaled)</rdfs:label>
+    <rdfs:comment>Maps to iec61850:MMXU_V</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="eg:Vb_rawValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:hasSimpleResult"/>
+    <rdfs:label>Phase B Voltage (raw)</rdfs:label>
+    <rdfs:comment>Maps to iec61850:MMXU_V</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="eg:Vc_scaledValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:hasSimpleResult"/>
+    <rdfs:label>Phase C Voltage (scaled)</rdfs:label>
+    <rdfs:comment>Maps to iec61850:MMXU_V</rdfs:comment>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="eg:Vc_rawValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:subPropertyOf rdf:resource="sosa:hasSimpleResult"/>
+    <rdfs:label>Phase C Voltage (raw)</rdfs:label>
+    <rdfs:comment>Maps to iec61850:MMXU_V</rdfs:comment>
+  </owl:DatatypeProperty>
+
+  <!-- Calibration and Metadata Properties -->
+  <owl:DatatypeProperty rdf:about="eg:scaleFactor">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:label>scale factor</rdfs:label>
+    <rdfs:comment>Calibration scale factor for converting raw to scaled values</rdfs:comment>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="eg:offset">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:label>offset</rdfs:label>
+    <rdfs:comment>Calibration offset for converting raw to scaled values</rdfs:comment>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="eg:unit">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:string"/>
+    <rdfs:label>unit</rdfs:label>
+    <rdfs:comment>Measurement unit (A for Ampere, V for Volt). For QUDT compliance, use qudt:unit with unit instances.</rdfs:comment>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="eg:minValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:label>minimum value</rdfs:label>
+    <rdfs:comment>Minimum allowed raw value for the channel</rdfs:comment>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="eg:maxValue">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+    <rdfs:label>maximum value</rdfs:label>
+    <rdfs:comment>Maximum allowed raw value for the channel</rdfs:comment>
+  </owl:DatatypeProperty>
+
+  <!-- Dataset instance (DCAT) for Pilot 1 - ScopeView faults/time-series -->
+  <eg:Dataset rdf:about="http://example.org/pilot1_f#Dataset_Pilot1F_2025_10_29">
+    <rdf:type rdf:resource="dcat:Dataset"/>
+    <dct:title>Pilot 1 ScopeView Faults Dataset</dct:title>
+    <dct:description>Time-series export for Pilot 1 (ScopeView). Data values are externalized to a CSV; CSVW metadata provided in repo.</dct:description>
+    <dcat:distribution>
+      <rdf:Description>
+        <dcat:downloadURL rdf:resource="./data/pilot1_scopeview_faults.csv"/>
+        <dct:format>text/csv</dct:format>
+        <dct:hasFormat rdf:resource="./data/pilot1_scopeview_faults.csv-metadata.json"/>
+      </rdf:Description>
+      <rdf:Description>
+        <dcat:downloadURL rdf:resource="./Pilot 1 data samples/fault data/LCGRM1_1_11_15_54.dat"/>
+        <dct:format>text/plain</dct:format>
+        <dct:description>Raw ScopeView ASCII capture (.dat)</dct:description>
+      </rdf:Description>
+      <rdf:Description>
+        <dcat:downloadURL rdf:resource="./Pilot 1 data samples/fault data/LCGRM1_1_11_15_54.cfg"/>
+        <dct:format>text/plain</dct:format>
+        <dct:description>ScopeView configuration file (.cfg) with channel order and calibration</dct:description>
+      </rdf:Description>
+    <dcat:hasPart rdf:resource="#Measurement"/>
+    </dcat:distribution>
+    <!-- Link dataset to the recording device (device holds channel metadata) -->
+    <dct:hasPart rdf:resource="http://example.org/pilot1_f#ScopeView_LCGRM1_1"/>
+  </eg:Dataset>
+
+  <!-- Instances for ScopeView device and channels (metadata-only) -->
+  <eg:ScopeViewDevice rdf:about="http://example.org/pilot1_f#ScopeView_LCGRM1_1">
+    <rdfs:label>ScopeView recorder LCGRM1_1</rdfs:label>
+    <dct:creator>ScopeView</dct:creator>
+    <dct:description>Recorder device instance created from LCGRM1_1_11_15_54.cfg</dct:description>
+    <eg:hasConfiguration rdf:resource="./Pilot 1 data samples/fault data/LCGRM1_1_11_15_54.cfg"/>
+  </eg:ScopeViewDevice>
+
+</rdf:RDF>

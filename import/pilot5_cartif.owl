@@ -1,0 +1,1080 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:saref="https://saref.etsi.org/core/"
+    xmlns:s4ener="https://saref.etsi.org/saref4ener/"
+    xmlns:sosa="http://www.w3.org/ns/sosa/"
+    xmlns:ssn="http://www.w3.org/ns/ssn/"
+    xmlns:qudt="http://qudt.org/schema/qudt/"
+    xmlns:unit="http://qudt.org/vocab/unit/"
+    xmlns:eg="http://www.energyguard.eu/ontology#"
+    xmlns:dcat="http://www.w3.org/ns/dcat#"
+    xmlns:dct="http://purl.org/dc/terms/">
+
+    <!-- Ontology Header -->
+    <owl:Ontology rdf:about="http://www.energyguard.eu/ontology/cartif/v3">
+        <rdfs:label>CARTIF Hydrogen System Ontology (Refactored v3)</rdfs:label>
+        <rdfs:comment>Version aligned with Pilot2 v3 schema: each measurement NamedIndividual explicitly references the component it represents.</rdfs:comment>
+        <owl:versionInfo>3.0.0-refactored</owl:versionInfo>
+
+        <!-- Import standard ontologies used for mappings -->
+        <owl:imports rdf:resource="https://saref.etsi.org/core/"/>
+        <owl:imports rdf:resource="https://saref.etsi.org/saref4ener/"/>
+        <owl:imports rdf:resource="http://www.w3.org/ns/sosa/"/>
+        <owl:imports rdf:resource="http://www.w3.org/ns/ssn/"/>
+        <owl:imports rdf:resource="http://qudt.org/schema/qudt/"/>
+    </owl:Ontology>
+
+    <!-- ==============================
+         CLASSES
+    ============================== -->
+
+    <!-- Dataset -->
+    <owl:Class rdf:about="eg:Dataset">
+        <rdfs:subClassOf rdf:resource="dcat:Dataset" />
+    </owl:Class>
+
+    <!-- Measurement mapped to SOSA Observation -->
+    <owl:Class rdf:about="eg:Measurement">
+        <rdfs:subClassOf rdf:resource="s4ener:Measurement" />
+        <rdfs:label>Measurement</rdfs:label>
+        <rdfs:comment>A time-stamped reading from any sensor or system (numeric, state, or signal).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:TemperatureMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+        <rdfs:label>Temperature Measurement</rdfs:label>
+        <rdfs:comment>Temperature readings from sensors or stacks (e.g., TT111, TT113, TT114).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:PowerMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+        <rdfs:label>Power Measurement</rdfs:label>
+        <rdfs:comment>Electrical power generation or consumption (e.g., POT_ELE, POT_PILA, HP_elect_pow, Resistor_Pow).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:ElectricalMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+        <rdfs:label>Electrical Measurement</rdfs:label>
+        <rdfs:comment>Electrical quantities such as current, voltage and SOC (A, V, %).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:HydrogenMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+        <rdfs:label>Hydrogen Measurement</rdfs:label>
+        <rdfs:comment>Hydrogen-related data: flow, pressure, or storage (e.g., ELE_H2_Flow_Rate, FC_flow_Rate, MH1_accumulated_H2_NL).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:PressureMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+        <rdfs:label>Pressure Measurement</rdfs:label>
+        <rdfs:comment>Hydrogen-related pressure data (e.g., PTH403, PTH404).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:FlowMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+        <rdfs:label>Flow Measurement</rdfs:label>
+        <rdfs:comment>Hydrogen-related flow data (e.g., ELE_H2_Flow_Rate, FC_flow_Rate).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:StateMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+        <rdfs:label>State Measurement</rdfs:label>
+        <rdfs:comment>Operational states of components (e.g., SYS, MH1_Active, MH2_Empty).</rdfs:comment>
+    </owl:Class>
+
+    <!-- SystemComponent mapped to SAREF Device -->
+    <owl:Class rdf:about="eg:SystemComponent">
+        <rdfs:subClassOf rdf:resource="saref:Device"/>
+        <rdfs:label>System Component</rdfs:label>
+        <rdfs:comment>Physical equipment or subsystem in the facility.</rdfs:comment>
+    </owl:Class>
+
+    <!-- Specific system components with additional SAREF/S4ENER mappings where applicable -->
+    <owl:Class rdf:about="eg:Battery">
+        <rdfs:subClassOf rdf:resource="eg:SystemComponent"/>
+        <rdfs:subClassOf rdf:resource="s4ener:Storage"/>
+        <rdfs:label>Battery</rdfs:label>
+        <rdfs:comment>Energy storage device with voltage, current, and SOC (e.g., BATA, BATB).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:Electrolyzer">
+        <rdfs:subClassOf rdf:resource="eg:SystemComponent"/>
+        <rdfs:subClassOf rdf:resource="s4ener:EnergyConsumer"/>
+        <rdfs:label>Electrolyzer</rdfs:label>
+        <rdfs:comment>Produces hydrogen from water and electricity (e.g., ELECTROLIZADOR).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:FuelCell">
+        <rdfs:subClassOf rdf:resource="eg:SystemComponent"/>
+        <rdfs:subClassOf rdf:resource="s4ener:EnergyProducer"/>
+        <rdfs:label>Fuel Cell</rdfs:label>
+        <rdfs:comment>Consumes hydrogen to generate electricity (e.g., FC).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:MetalHydrideTank">
+        <rdfs:subClassOf rdf:resource="eg:SystemComponent"/>
+        <rdfs:subClassOf rdf:resource="s4ener:Storage"/>
+        <rdfs:label>Metal Hydride Tank</rdfs:label>
+        <rdfs:comment>Hydrogen storage tanks with multiple level and state signals (e.g., MH1, MH2).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:Pump">
+        <rdfs:subClassOf rdf:resource="eg:SystemComponent"/>
+        <rdfs:subClassOf rdf:resource="saref:Actuator"/>
+        <rdfs:label>Pump</rdfs:label>
+        <rdfs:comment>Moves fluids/hydrogen through the system (e.g., Pump_State).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:Valve">
+        <rdfs:subClassOf rdf:resource="eg:SystemComponent"/>
+        <rdfs:subClassOf rdf:resource="saref:Actuator"/>
+        <rdfs:label>Valve</rdfs:label>
+        <rdfs:comment>Regulates hydrogen or thermal circuit flow (e.g., MV3C101_State, SV2H208_State).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:AuxiliaryDevice">
+        <rdfs:subClassOf rdf:resource="eg:SystemComponent"/>
+        <rdfs:subClassOf rdf:resource="saref:Actuator"/>
+        <rdfs:label>Auxiliary Device</rdfs:label>
+        <rdfs:comment>Supports hydrogen or thermal management subsystems (e.g., Dryer, Fan, Heater, Resistor).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:Sensor">
+        <rdfs:subClassOf rdf:resource="eg:SystemComponent"/>
+        <rdfs:subClassOf rdf:resource="sosa:Sensor"/>
+        <rdfs:label>Sensor</rdfs:label>
+        <rdfs:comment>Measures environmental or process parameters (e.g., TT102, TT107, PTH401).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:State">
+        <rdfs:label>State</rdfs:label>
+        <rdfs:comment>Boolean or coded indicator for operational states, alarms, warnings (e.g., MH1_Active, FC_War).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:Alarm">
+        <rdfs:subClassOf rdf:resource="eg:State"/>
+        <rdfs:label>Alarm</rdfs:label>
+        <rdfs:comment>Active alarm signals (e.g., ALTA_PRESION_MH1_Alarm, FC_Alarm).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:Warning">
+        <rdfs:subClassOf rdf:resource="eg:State"/>
+        <rdfs:label>Warning</rdfs:label>
+        <rdfs:comment>Non-critical warning signals (e.g., BAJA_TEMP_MH1_Alarm, BATERIAS_War).</rdfs:comment>
+    </owl:Class>
+
+    <!-- ==============================
+         PROPERTIES (minimal, used by instances)
+    ============================== -->
+
+    <owl:ObjectProperty rdf:ID="hasMeasurement">
+        <rdfs:domain rdf:resource="eg:SystemComponent"/>
+        <rdfs:range rdf:resource="eg:Measurement"/>
+        <rdfs:label>has measurement</rdfs:label>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:hasState">
+        <rdfs:domain rdf:resource="eg:SystemComponent"/>
+        <rdfs:range rdf:resource="eg:State"/>
+        <rdfs:label>has state</rdfs:label>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:hasAlarm">
+        <rdfs:domain rdf:resource="eg:SystemComponent"/>
+        <rdfs:range rdf:resource="eg:Alarm"/>
+        <rdfs:subPropertyOf rdf:resource="eg:hasState"/>
+        <rdfs:label>has alarm</rdfs:label>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:hasWarning">
+        <rdfs:domain rdf:resource="eg:SystemComponent"/>
+        <rdfs:range rdf:resource="eg:Warning"/>
+        <rdfs:subPropertyOf rdf:resource="eg:hasState"/>
+        <rdfs:label>has warning</rdfs:label>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:representsComponent">
+        <rdfs:domain rdf:resource="eg:Dataset"/>
+        <rdfs:range rdf:resource="eg:SystemComponent"/>
+        <rdfs:label>represents component</rdfs:label>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="hasUnit">
+        <rdfs:domain rdf:resource="eg:Measurement" />
+        <rdfs:range rdf:resource="qudt:Unit" />
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="recordedInDataset">
+        <rdfs:domain rdf:resource="eg:Measurement" />
+        <rdfs:range rdf:resource="eg:Dataset" />
+        <owl:equivalentProperty rdf:resource="s4ener:recordedInDataset" />
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="representsComponent">
+        <rdfs:domain rdf:resource="eg:Dataset" />
+        <rdfs:range rdf:resource="eg:SystemComponent" />
+        <owl:equivalentProperty rdf:resource="s4ener:representsComponent" />
+    </owl:ObjectProperty>
+    
+    <!-- <owl:ObjectProperty rdf:ID="hasMeasurement">
+        <rdfs:domain rdf:resource="eg:Dataset"/>
+        <rdfs:range rdf:resource="eg:Measurement"/>
+        <owl:equivalentProperty rdf:resource="s4ener:hasMeasurement"/>
+        <owl:equivalentProperty rdf:resource="saref:hasMeasurement"/>
+    </owl:ObjectProperty> -->
+
+    <!-- Minimal datatype properties -->
+    <owl:DatatypeProperty rdf:about="eg:filename">
+        <rdfs:domain rdf:resource="eg:Dataset"/>
+        <rdfs:range rdf:resource="xsd:string"/>
+        <rdfs:label>filename</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:startTime">
+        <rdfs:domain rdf:resource="eg:Dataset"/>
+        <rdfs:range rdf:resource="xsd:dateTime"/>
+        <rdfs:label>start time</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:endTime">
+        <rdfs:domain rdf:resource="eg:Dataset"/>
+        <rdfs:range rdf:resource="xsd:dateTime"/>
+        <rdfs:label>end time</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:sampleRate">
+        <rdfs:domain rdf:resource="eg:Dataset"/>
+        <rdfs:range rdf:resource="xsd:float"/>
+        <rdfs:label>sample rate</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:measurementType">
+        <rdfs:domain rdf:resource="eg:Measurement"/>
+        <rdfs:range rdf:resource="xsd:string"/>
+        <rdfs:label>measurement type</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:unit">
+        <rdfs:domain rdf:resource="eg:Measurement"/>
+        <rdfs:range rdf:resource="xsd:string"/>
+        <rdfs:label>unit</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:value">
+        <rdfs:domain rdf:resource="eg:Measurement"/>
+        <rdfs:label>value</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:timestamp">
+        <rdfs:domain rdf:resource="eg:Measurement"/>
+        <rdfs:range rdf:resource="xsd:dateTime"/>
+        <rdfs:label>timestamp</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:alarmLevel">
+        <rdfs:domain rdf:resource="eg:Alarm"/>
+        <rdfs:label>alarm level</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:stateCode">
+        <rdfs:domain rdf:resource="eg:State"/>
+        <rdfs:label>state code</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:location">
+        <rdfs:domain rdf:resource="eg:SystemComponent"/>
+        <rdfs:range rdf:resource="xsd:string"/>
+        <rdfs:label>location</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- ==============================
+         DATASET INSTANCE (keeps original sample content)
+    ============================== -->
+    <eg:Dataset rdf:ID="Dataset_2024_06_02">
+        <eg:filename>Cartif_Hydrogen_2024-06-02.csv</eg:filename>
+        <eg:startTime rdf:datatype="xsd:dateTime">2024-06-02T00:00:00+00:00</eg:startTime>
+        <eg:endTime rdf:datatype="xsd:dateTime">2024-06-02T23:59:59+00:00</eg:endTime>
+        <eg:sampleRate rdf:datatype="xsd:float">15.0</eg:sampleRate>
+
+        <eg:representsComponent rdf:resource="eg:ElectrolyzerGroup"/>
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTankGroup"/>
+        <eg:representsComponent rdf:resource="eg:FuelCellGroup"/>
+        <eg:representsComponent rdf:resource="eg:BatteryGroup"/>
+        <eg:representsComponent rdf:resource="eg:PumpGroup"/>
+        <eg:representsComponent rdf:resource="eg:ValveGroup"/>
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDeviceGroup"/>
+
+        <dcat:distribution>
+            <dcat:Distribution>
+                <dcat:downloadURL rdf:resource="./data/Cartif_Hydrogen_2024-06-02.csv"/>
+                <dcat:mediaType>text/csv</dcat:mediaType>
+                <dct:hasFormat rdf:resource="./data/Cartif_Hydrogen_2024-06-02.csv-metadata.json"/>
+            </dcat:Distribution>
+        </dcat:distribution>
+    </eg:Dataset>
+
+    <!-- DatasetComponent instances (kept as simple individuals referencing measurements) -->
+    <owl:NamedIndividual rdf:about="eg:ElectrolyzerGroup">
+        <rdf:type rdf:resource="eg:Electrolyzer" />
+        <eg:hasMeasurement rdf:resource="eg:ELE_Current" />
+        <eg:hasMeasurement rdf:resource="eg:ELE_Stack_Voltage" />
+        <eg:hasMeasurement rdf:resource="eg:ELE_H2_Flow_Rate" />
+        <eg:hasMeasurement rdf:resource="eg:ELE_State" />
+        <eg:hasMeasurement rdf:resource="eg:ELE_Inner_H2_Pressure" />
+        <eg:hasMeasurement rdf:resource="eg:ELE_Outer_H2_Pressure" />
+        <eg:hasMeasurement rdf:resource="eg:ELE_water" />
+        <eg:hasMeasurement rdf:resource="eg:EL_preheat" />
+        <eg:hasMeasurement rdf:resource="eg:EL_temp" />
+        <eg:hasMeasurement rdf:resource="eg:ELECTROLIZADOR_Alarm" />
+        <eg:hasMeasurement rdf:resource="eg:ELECTROLIZADOR_War" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MetalHydrideTankGroup">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank" />
+        <eg:hasMeasurement rdf:resource="eg:MH1_Active"/>
+        <eg:hasMeasurement rdf:resource="eg:MH1_Empty"/>
+        <eg:hasMeasurement rdf:resource="eg:MH1_accumulated_H2_NL"/>
+        <eg:hasMeasurement rdf:resource="eg:MH1_Full"/>
+        <eg:hasMeasurement rdf:resource="eg:ALTA_PRESION_MH1_Alarm"/>
+        <eg:hasMeasurement rdf:resource="eg:ALTA_PRESION_MH2_Alarm"/>
+        <eg:hasMeasurement rdf:resource="eg:ALTA_TEMP_MH1_Alarm"/>
+        <eg:hasMeasurement rdf:resource="eg:ALTA_TEMP_MH2_Alarm"/>
+        <eg:hasMeasurement rdf:resource="eg:BAJA_TEMP_MH1_Alarm"/>
+        <eg:hasMeasurement rdf:resource="eg:BAJA_TEMP_MH2_Alarm"/>
+        <eg:hasMeasurement rdf:resource="eg:BMHEMPTY_War"/>
+        <eg:hasMeasurement rdf:resource="eg:BMHFULL_War"/>
+        <eg:hasMeasurement rdf:resource="eg:MH1_H"/>
+        <eg:hasMeasurement rdf:resource="eg:MH1_L"/>
+        <eg:hasMeasurement rdf:resource="eg:MH1_acc"/>
+        <eg:hasMeasurement rdf:resource="eg:MH2_H"/>
+        <eg:hasMeasurement rdf:resource="eg:MH2_L"/>
+        <eg:hasMeasurement rdf:resource="eg:MH2_acc"/>
+        <eg:hasMeasurement rdf:resource="eg:MH2_accumulated_H2_NL"/>
+        <eg:hasMeasurement rdf:resource="eg:Purging_MH1"/>
+        <eg:hasMeasurement rdf:resource="eg:Purging_MH2"/>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FuelCellGroup">
+        <eg:hasMeasurement rdf:resource="eg:FC_Current"/>
+        <eg:hasMeasurement rdf:resource="eg:FC_Voltage"/>
+        <eg:hasMeasurement rdf:resource="eg:FC_State"/>
+        <eg:hasMeasurement rdf:resource="eg:FC_flow_Rate"/>
+        <eg:hasMeasurement rdf:resource="eg:FC_Alarm"/>
+        <eg:hasMeasurement rdf:resource="eg:FC_War"/>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:BatterySystemGroup">
+        <eg:hasMeasurement rdf:resource="eg:BATA_Current"/>
+        <eg:hasMeasurement rdf:resource="eg:BATA_Voltage"/>
+        <eg:hasMeasurement rdf:resource="eg:BATA_SOC"/>
+        <eg:hasMeasurement rdf:resource="eg:BATB_Current"/>
+        <eg:hasMeasurement rdf:resource="eg:BATERIAS_Alarm"/>
+        <eg:hasMeasurement rdf:resource="eg:BATERIAS_War"/>
+        <eg:hasMeasurement rdf:resource="eg:BAT_CURR_BATSTATE"/>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PumpGroup">
+        <rdf:type rdf:resource="eg:Pump" />
+        <eg:hasMeasurement rdf:resource="eg:Pump_State"/>
+        <eg:hasMeasurement rdf:resource="eg:POT_ELE"/>
+        <eg:hasMeasurement rdf:resource="eg:POT_PILA"/>
+        <eg:hasMeasurement rdf:resource="eg:Resistor_Pow"/>
+        <eg:hasMeasurement rdf:resource="eg:HP_ON"/>
+        <eg:hasMeasurement rdf:resource="eg:HP_elect_pow"/>
+        <eg:hasMeasurement rdf:resource="eg:Resistor_SP"/>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ValveGroup">
+        <rdf:type rdf:resource="eg:Valve" />
+        <eg:hasMeasurement rdf:resource="eg:MV3C101_State"/>
+        <eg:hasMeasurement rdf:resource="eg:MV3C103_State"/>
+        <eg:hasMeasurement rdf:resource="eg:MV3C105_State"/>
+        <eg:hasMeasurement rdf:resource="eg:MV3C108_State"/>
+        <eg:hasMeasurement rdf:resource="eg:SV2H208_State"/>
+        <eg:hasMeasurement rdf:resource="eg:SV2H303_State"/>
+        <eg:hasMeasurement rdf:resource="eg:SV2H405_State"/>
+        <eg:hasMeasurement rdf:resource="eg:SV2H406_State"/>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:AuxiliaryDeviceGroup">
+        <rdf:type rdf:resource="eg:AuxiliaryDevice" />
+        <eg:hasMeasurement rdf:resource="eg:Fan_State" />
+        <eg:hasMeasurement rdf:resource="eg:Heater_State" />
+        <eg:hasMeasurement rdf:resource="eg:Dryer_State" />
+        <eg:hasMeasurement rdf:resource="eg:SYS" />
+        <eg:hasMeasurement rdf:resource="eg:GENERAL_Alarm" />
+        <eg:hasMeasurement rdf:resource="eg:GENERAL_War" />
+        <eg:hasMeasurement rdf:resource="eg:TERMICO_Alarm" />
+        <eg:hasMeasurement rdf:resource="eg:TERMICO_War" />
+        <eg:hasMeasurement rdf:resource="eg:PTH401" />
+        <eg:hasMeasurement rdf:resource="eg:PTH403" />
+        <eg:hasMeasurement rdf:resource="eg:PTH404" />
+        <eg:hasMeasurement rdf:resource="eg:TT102" />
+        <eg:hasMeasurement rdf:resource="eg:TT107" />
+        <eg:hasMeasurement rdf:resource="eg:TT111" />
+        <eg:hasMeasurement rdf:resource="eg:TT113" />
+        <eg:hasMeasurement rdf:resource="eg:TT114" />
+    </owl:NamedIndividual>
+
+    <!-- Measurement Individuals updated with eg:representsComponent -->
+
+    <owl:NamedIndividual rdf:ID="ALTA_PRESION_MH1_Alarm">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:Alarm"/>
+        <rdfs:label>ALTA_PRESION_MH1 Alarm</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ALTA_PRESION_MH1_Alarm</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ALTA_PRESION_MH2_Alarm">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:Alarm"/>
+        <rdfs:label>ALTA_PRESION_MH2 Alarm</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ALTA_PRESION_MH2_Alarm</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ALTA_TEMP_MH1_Alarm">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:Alarm"/>
+        <rdfs:label>ALTA_TEMP_MH1 Alarm</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ALTA_TEMP_MH1_Alarm</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ALTA_TEMP_MH2_Alarm">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:Alarm"/>
+        <rdfs:label>ALTA_TEMP_MH2 Alarm</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ALTA_TEMP_MH2_Alarm</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:BAJA_TEMP_MH1_Alarm">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:Warning"/>
+        <rdfs:label>BAJA_TEMP_MH1 Warning</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BAJA_TEMP_MH1_Alarm</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:BAJA_TEMP_MH2_Alarm">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:Warning"/>
+        <rdfs:label>BAJA_TEMP_MH2 Warning</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BAJA_TEMP_MH2_Alarm</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:BATERIAS_Alarm">
+        <eg:representsComponent rdf:resource="eg:Battery"/>
+        <rdf:type rdf:resource="eg:Alarm"/>
+        <rdfs:label>BATERIAS Alarm</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BATERIAS_Alarm</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:BATERIAS_War">
+        <eg:representsComponent rdf:resource="eg:Battery"/>
+        <rdf:type rdf:resource="eg:Warning"/>
+        <rdfs:label>BATERIAS Warning</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BATERIAS_War</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:BAT_CURR_BATSTATE">
+        <eg:representsComponent rdf:resource="eg:Battery"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>BAT CURR BATSTATE</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BAT_CURR_BATSTATE</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:BMHEMPTY_War">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:Warning"/>
+        <rdfs:label>BMH Empty Warning</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BMHEMPTY_War</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:BMHFULL_War">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:Warning"/>
+        <rdfs:label>BMH Full Warning</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BMHFULL_War</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ELECTROLIZADOR_Alarm">
+        <eg:representsComponent rdf:resource="eg:Electrolyzer"/>
+        <rdf:type rdf:resource="eg:Alarm"/>
+        <rdfs:label>Electrolizador Alarm</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ELECTROLIZADOR_Alarm</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ELECTROLIZADOR_War">
+        <eg:representsComponent rdf:resource="eg:Electrolyzer"/>
+        <rdf:type rdf:resource="eg:Warning"/>
+        <rdfs:label>Electrolizador Warning</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ELECTROLIZADOR_War</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ELE_Inner_H2_Pressure">
+        <eg:representsComponent rdf:resource="eg:Electrolyzer"/>
+        <rdf:type rdf:resource="eg:PressureMeasurement"/>
+        <rdfs:label>Electrolyzer Inner H2 Pressure</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ELE_Inner_H2_Pressure</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ELE_Outer_H2_Pressure">
+        <eg:representsComponent rdf:resource="eg:Electrolyzer"/>
+        <rdf:type rdf:resource="eg:PressureMeasurement"/>
+        <rdfs:label>Electrolyzer Outer H2 Pressure</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ELE_Outer_H2_Pressure</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ELE_water">
+        <eg:representsComponent rdf:resource="eg:Electrolyzer"/>
+        <rdf:type rdf:resource="eg:HydrogenMeasurement"/>
+        <rdfs:label>Electrolyzer Water Level</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ELE_water</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:EL_preheat">
+        <eg:representsComponent rdf:resource="eg:Electrolyzer"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>Electrolyzer Preheat</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">EL_preheat</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:EL_temp">
+        <eg:representsComponent rdf:resource="eg:Electrolyzer"/>
+        <rdf:type rdf:resource="eg:TemperatureMeasurement"/>
+        <rdfs:label>Electrolyzer Temperature</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">EL_temp</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FC_Alarm">
+        <eg:representsComponent rdf:resource="eg:FuelCell"/>
+        <rdf:type rdf:resource="eg:Alarm"/>
+        <rdfs:label>Fuel Cell Alarm</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FC_Alarm</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FC_War">
+        <eg:representsComponent rdf:resource="eg:FuelCell"/>
+        <rdf:type rdf:resource="eg:Warning"/>
+        <rdfs:label>Fuel Cell Warning</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FC_War</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:HP_ON">
+        <eg:representsComponent rdf:resource="eg:Pump"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>HP On</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HP_ON</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:HP_elect_pow">
+        <eg:representsComponent rdf:resource="eg:Pump"/>
+        <rdf:type rdf:resource="eg:PowerMeasurement"/>
+        <rdfs:label>HP Electrical Power</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HP_elect_pow</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:Resistor_SP">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:PowerMeasurement"/>
+        <rdfs:label>Resistor Setpoint</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Resistor_SP</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SV2H208_State">
+        <eg:representsComponent rdf:resource="eg:Valve"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>SV2H208 State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SV2H208_State</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SV2H303_State">
+        <eg:representsComponent rdf:resource="eg:Valve"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>SV2H303 State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SV2H303_State</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SV2H405_State">
+        <eg:representsComponent rdf:resource="eg:Valve"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>SV2H405 State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SV2H405_State</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SV2H406_State">
+        <eg:representsComponent rdf:resource="eg:Valve"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>SV2H406 State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SV2H406_State</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:GENERAL_Alarm">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:Alarm"/>
+        <rdfs:label>General Alarm</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:GENERAL_War">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:Warning"/>
+        <rdfs:label>General Warning</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TERMICO_Alarm">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:Alarm"/>
+        <rdfs:label>Thermal Alarm</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TERMICO_War">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:Warning"/>
+        <rdfs:label>Thermal Warning</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PTH401">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:PressureMeasurement"/>
+        <rdfs:label>PTH401 Pressure</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PTH401</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PTH403">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:PressureMeasurement"/>
+        <rdfs:label>PTH403 Pressure</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PTH403</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PTH404">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:PressureMeasurement"/>
+        <rdfs:label>PTH404 Pressure</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PTH404</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT102">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:TemperatureMeasurement"/>
+        <rdfs:label>TT102 Temperature</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT102</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT107">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:TemperatureMeasurement"/>
+        <rdfs:label>TT107 Temperature</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT107</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT111">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:TemperatureMeasurement"/>
+        <rdfs:label>TT111 Temperature</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT111</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT113">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:TemperatureMeasurement"/>
+        <rdfs:label>TT113 Temperature</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT113</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT114">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:TemperatureMeasurement"/>
+        <rdfs:label>TT114 Temperature</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT114</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MH1_H">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:HydrogenMeasurement"/>
+        <rdfs:label>MH1 High Level</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MH1_H</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MH1_L">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:HydrogenMeasurement"/>
+        <rdfs:label>MH1 Low Level</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MH1_L</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MH1_acc">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:HydrogenMeasurement"/>
+        <rdfs:label>MH1 Accumulated</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MH1_acc</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MH2_H">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:HydrogenMeasurement"/>
+        <rdfs:label>MH2 High Level</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MH2_H</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MH2_L">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:HydrogenMeasurement"/>
+        <rdfs:label>MH2 Low Level</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MH2_L</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MH2_acc">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:HydrogenMeasurement"/>
+        <rdfs:label>MH2 Accumulated</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MH2_acc</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MH2_accumulated_H2_NL">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:HydrogenMeasurement"/>
+        <rdfs:label>MH2 Accumulated H2 (NL)</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MH2_accumulated_H2_NL</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:Purging_MH1">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>Purging MH1</rdfs:label>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:Purging_MH2">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>Purging MH2</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Purging_MH2</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <!-- Auto-added / missing measurement individuals: descriptive typing and component links -->
+
+    <!-- Electrolyzer measurements -->
+    <owl:NamedIndividual rdf:about="eg:ELE_Current">
+        <eg:representsComponent rdf:resource="eg:Electrolyzer"/>
+        <rdf:type rdf:resource="eg:ElectricalMeasurement"/>
+        <rdfs:label>Electrolyzer Current</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ELE_Current</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ELE_Stack_Voltage">
+        <eg:representsComponent rdf:resource="eg:Electrolyzer"/>
+        <rdf:type rdf:resource="eg:ElectricalMeasurement"/>
+        <rdfs:label>Electrolyzer Stack Voltage</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ELE_Stack_Voltage</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ELE_H2_Flow_Rate">
+        <eg:representsComponent rdf:resource="eg:Electrolyzer"/>
+        <rdf:type rdf:resource="eg:HydrogenMeasurement"/>
+        <rdfs:label>Electrolyzer H2 Flow Rate</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ELE_H2_Flow_Rate</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ELE_State">
+        <eg:representsComponent rdf:resource="eg:Electrolyzer"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>Electrolyzer State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ELE_State</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <!-- Metal Hydride Tank additional states/measurements -->
+    <owl:NamedIndividual rdf:about="eg:MH1_Active">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>MH1 Active</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MH1_Active</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MH1_Empty">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>MH1 Empty</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MH1_Empty</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MH1_Full">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>MH1 Full</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MH1_Full</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MH1_accumulated_H2_NL">
+        <eg:representsComponent rdf:resource="eg:MetalHydrideTank"/>
+        <rdf:type rdf:resource="eg:HydrogenMeasurement"/>
+        <rdfs:label>MH1 Accumulated H2 (NL)</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MH1_accumulated_H2_NL</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <!-- Fuel cell measurements -->
+    <owl:NamedIndividual rdf:about="eg:FC_Current">
+        <eg:representsComponent rdf:resource="eg:FuelCell"/>
+        <rdf:type rdf:resource="eg:ElectricalMeasurement"/>
+        <rdfs:label>Fuel Cell Current</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FC_Current</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FC_Voltage">
+        <eg:representsComponent rdf:resource="eg:FuelCell"/>
+        <rdf:type rdf:resource="eg:ElectricalMeasurement"/>
+        <rdfs:label>Fuel Cell Voltage</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FC_Voltage</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FC_State">
+        <eg:representsComponent rdf:resource="eg:FuelCell"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>Fuel Cell State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FC_State</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FC_flow_Rate">
+        <eg:representsComponent rdf:resource="eg:FuelCell"/>
+        <rdf:type rdf:resource="eg:HydrogenMeasurement"/>
+        <rdfs:label>Fuel Cell H2 Flow Rate</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FC_flow_Rate</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <!-- Battery measurements (A, V, SOC) -->
+    <owl:NamedIndividual rdf:about="eg:BATA_Current">
+        <eg:representsComponent rdf:resource="eg:Battery"/>
+        <rdf:type rdf:resource="eg:ElectricalMeasurement"/>
+        <rdfs:label>Battery A Current (A)</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BATA_Current</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:BATA_Voltage">
+        <eg:representsComponent rdf:resource="eg:Battery"/>
+        <rdf:type rdf:resource="eg:ElectricalMeasurement"/>
+        <rdfs:label>Battery A Voltage (V)</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BATA_Voltage</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:BATA_SOC">
+        <eg:representsComponent rdf:resource="eg:Battery"/>
+        <rdf:type rdf:resource="eg:ElectricalMeasurement"/>
+        <rdfs:label>Battery A State Of Charge (%)</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BATA_SOC</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:BATB_Current">
+        <eg:representsComponent rdf:resource="eg:Battery"/>
+        <rdf:type rdf:resource="eg:ElectricalMeasurement"/>
+        <rdfs:label>Battery B Current (A)</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BATB_Current</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:BATB_Voltage">
+        <eg:representsComponent rdf:resource="eg:Battery"/>
+        <rdf:type rdf:resource="eg:ElectricalMeasurement"/>
+        <rdfs:label>Battery B Voltage (V)</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BATB_Voltage</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:BATB_SOC">
+        <eg:representsComponent rdf:resource="eg:Battery"/>
+        <rdf:type rdf:resource="eg:ElectricalMeasurement"/>
+        <rdfs:label>Battery B State Of Charge (%)</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BATB_SOC</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+    </owl:NamedIndividual>
+
+    <!-- Pump measurements -->
+    <owl:NamedIndividual rdf:about="eg:Pump_State">
+        <eg:representsComponent rdf:resource="eg:Pump"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>Pump State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pump_State</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:POT_ELE">
+        <eg:representsComponent rdf:resource="eg:Pump"/>
+        <rdf:type rdf:resource="eg:PowerMeasurement"/>
+        <rdfs:label>Electrolyzer Power (W)</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">POT_ELE</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:POT_PILA">
+        <eg:representsComponent rdf:resource="eg:Pump"/>
+        <rdf:type rdf:resource="eg:PowerMeasurement"/>
+        <rdfs:label>Fuel Cell Power (W)</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">POT_PILA</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:Resistor_Pow">
+        <eg:representsComponent rdf:resource="eg:Pump"/>
+        <rdf:type rdf:resource="eg:PowerMeasurement"/>
+        <rdfs:label>Tank Resistor Power (W)</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Resistor_Pow</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <!-- MV valves states not previously defined -->
+    <owl:NamedIndividual rdf:about="eg:MV3C101_State">
+        <eg:representsComponent rdf:resource="eg:Valve"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>MV3C101 State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MV3C101_State</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MV3C103_State">
+        <eg:representsComponent rdf:resource="eg:Valve"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>MV3C103 State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MV3C103_State</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MV3C105_State">
+        <eg:representsComponent rdf:resource="eg:Valve"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>MV3C105 State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MV3C105_State</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:MV3C108_State">
+        <eg:representsComponent rdf:resource="eg:Valve"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>MV3C108 State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cartif_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MV3C108_State</eg:storedInDatabaseColumn>
+        <eg:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <!-- Auxiliary device states -->
+    <owl:NamedIndividual rdf:about="eg:Fan_State">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>Fancoil State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Fan_State</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:Heater_State">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>Heater State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Heater_State</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:Dryer_State">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>Dryer State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dryer_State</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SYS">
+        <eg:representsComponent rdf:resource="eg:AuxiliaryDevice"/>
+        <rdf:type rdf:resource="eg:StateMeasurement"/>
+        <rdfs:label>Global System State</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cartif_Hydrogen_2024_06_02_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SYS</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+</rdf:RDF>

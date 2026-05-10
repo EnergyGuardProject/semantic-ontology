@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#AB47BC", "id": "602", "label": "[\u0027has measurements\u0027]", "shape": "dot", "title": "Pilot5 | Pilot5, owl__ObjectProperty, Resource, Measurement"}, {"color": "#90A4AE", "id": "300", "label": "Pilot5Engreen", "shape": "dot", "title": "Pilot5 | owl__Class, Resource"}, {"color": "#AB47BC", "id": "450", "label": "userCategory", "shape": "dot", "title": "Pilot5 | Pilot5, owl__DatatypeProperty, Resource"}, {"color": "#90A4AE", "id": "894", "label": "xsd:string", "shape": "dot", "title": "Pilot5 | Resource"}, {"color": "#AB47BC", "id": "634", "label": "hasRetributionScheme", "shape": "dot", "title": "Pilot5 | Pilot5, owl__ObjectProperty, Resource"}, {"color": "#AB47BC", "id": "760", "label": "REC", "shape": "dot", "title": "Pilot5 | Pilot5, owl__Class, Resource"}, {"color": "#AB47BC", "id": "405", "label": "UserProfile", "shape": "dot", "title": "Pilot5 | Pilot5, owl__Class, Resource"}, {"color": "#AB47BC", "id": "234", "label": "hasUserProfile", "shape": "dot", "title": "Pilot5 | Pilot5, owl__ObjectProperty, Resource"}, {"color": "#AB47BC", "id": "352", "label": "EnergyAsset", "shape": "dot", "title": "Pilot5 | Pilot5, owl__Class, Resource"}, {"color": "#90A4AE", "id": "94", "label": "saref:Device", "shape": "dot", "title": "Pilot5 | Resource"}, {"color": "#AB47BC", "id": "756", "label": "azimuth", "shape": "dot", "title": "Pilot5 | Pilot5, owl__DatatypeProperty, Resource"}, {"color": "#90A4AE", "id": "53", "label": "xsd:float", "shape": "dot", "title": "Pilot5 | Resource"}, {"color": "#AB47BC", "id": "653", "label": "User", "shape": "dot", "title": "Pilot5 | ns9__UserProfile, Resource, Pilot5"}, {"color": "#AB47BC", "id": "640", "label": "Battery_User1", "shape": "dot", "title": "Pilot5 | Pilot5, Resource"}, {"color": "#AB47BC", "id": "658", "label": "pvCapacity", "shape": "dot", "title": "Pilot5 | Pilot5, owl__DatatypeProperty, Resource"}, {"color": "#AB47BC", "id": "532", "label": "PhotovoltaicSystem", "shape": "dot", "title": "Pilot5 | Pilot5, owl__Class, Resource"}, {"color": "#AB47BC", "id": "695", "label": "M_Production_User1_00_00", "shape": "dot", "title": "Pilot5 | Pilot5, ns9__ProductionMeasurement, Resource"}, {"color": "#AB47BC", "id": "231", "label": "TS_2025_09_14T00_00", "shape": "dot", "title": "Pilot5 | Pilot5, ns9__Timestamp, Resource"}, {"color": "#AB47BC", "id": "160", "label": "[\u0027Battery Measurement\u0027]", "shape": "dot", "title": "Pilot5 | Pilot5, owl__Class, Resource, Measurement"}, {"color": "#AB47BC", "id": "521", "label": "[\u0027Measurement\u0027]", "shape": "dot", "title": "Pilot5 | Pilot5, owl__Class, Resource, Measurement"}, {"color": "#AB47BC", "id": "638", "label": "voltageLevel", "shape": "dot", "title": "Pilot5 | Pilot5, owl__DatatypeProperty, Resource"}, {"color": "#AB47BC", "id": "233", "label": "[\u0027has measurement\u0027]", "shape": "dot", "title": "Pilot5 | Pilot5, owl__ObjectProperty, Resource, Measurement"}, {"color": "#AB47BC", "id": "129", "label": "consumptionValue", "shape": "dot", "title": "Pilot5 | Pilot5, owl__DatatypeProperty, Resource"}, {"color": "#AB47BC", "id": "364", "label": "chargedDischargedEnergy", "shape": "dot", "title": "Pilot5 | Pilot5, owl__DatatypeProperty, Resource"}, {"color": "#AB47BC", "id": "595", "label": "M_Battery_User1_00_00", "shape": "dot", "title": "Pilot5 | ns9__BatteryMeasurement, Pilot5, Resource"}, {"color": "#AB47BC", "id": "537", "label": "locatedAt", "shape": "dot", "title": "Pilot5 | Pilot5, owl__ObjectProperty, Resource"}, {"color": "#90A4AE", "id": "295", "label": "geo:Point", "shape": "dot", "title": "Pilot5 | Resource"}, {"color": "#AB47BC", "id": "593", "label": "MeasurementSeries_User1", "shape": "dot", "title": "Pilot5 | Pilot5, Resource, Measurement"}, {"color": "#AB47BC", "id": "445", "label": "[\u0027Production Measurement\u0027]", "shape": "dot", "title": "Pilot5 | Pilot5, owl__Class, Resource, Measurement"}, {"color": "#90A4AE", "id": "449", "label": "s4ener:Power", "shape": "dot", "title": "Pilot5 | Resource"}, {"color": "#AB47BC", "id": "79", "label": "producesPower", "shape": "dot", "title": "Pilot5 | Pilot5, owl__ObjectProperty, Resource"}, {"color": "#90A4AE", "id": "534", "label": "foaf:Organization", "shape": "dot", "title": "Pilot5 | Resource"}, {"color": "#AB47BC", "id": "476", "label": "storesEnergy", "shape": "dot", "title": "Pilot5 | Pilot5, owl__ObjectProperty, Resource"}, {"color": "#AB47BC", "id": "545", "label": "[\u0027has dataset\u0027]", "shape": "dot", "title": "Pilot5 | Dataset, owl__ObjectProperty, Resource, Pilot5"}, {"color": "#AB47BC", "id": "543", "label": "[\u0027Measurement Series\u0027]", "shape": "dot", "title": "Pilot5 | Pilot5, owl__Class, Resource, Measurement"}, {"color": "#AB47BC", "id": "565", "label": "hasAsset", "shape": "dot", "title": "Pilot5 | Pilot5, owl__ObjectProperty, Resource"}, {"color": "#AB47BC", "id": "662", "label": "consumesPower", "shape": "dot", "title": "Pilot5 | Pilot5, owl__ObjectProperty, Resource"}, {"color": "#AB47BC", "id": "89", "label": "batterySOC", "shape": "dot", "title": "Pilot5 | Pilot5, owl__DatatypeProperty, Resource"}, {"color": "#AB47BC", "id": "654", "label": "RetributionScheme", "shape": "dot", "title": "Pilot5 | Pilot5, owl__Class, Resource"}, {"color": "#AB47BC", "id": "213", "label": "[\u0027Dataset\u0027]", "shape": "dot", "title": "Pilot5 | Dataset, owl__Class, Resource, Pilot5"}, {"color": "#AB47BC", "id": "814", "label": "M_Consumption_User1_00_00", "shape": "dot", "title": "Pilot5 | ns9__ConsumptionMeasurement, Pilot5, Resource"}, {"color": "#AB47BC", "id": "60", "label": "Retribution_User1", "shape": "dot", "title": "Pilot5 | Pilot5, Resource"}, {"color": "#AB47BC", "id": "333", "label": "[\u0027Consumption Measurement\u0027]", "shape": "dot", "title": "Pilot5 | Pilot5, owl__Class, Resource, Measurement"}, {"color": "#AB47BC", "id": "215", "label": "[\u0027User 1 Measurement Series\u0027]", "shape": "dot", "title": "Pilot5 | ns9__MeasurementSeries, Pilot5, Resource, Measurement"}, {"color": "#AB47BC", "id": "601", "label": "M_Battery_User1_00_05", "shape": "dot", "title": "Pilot5 | Pilot5, Resource"}, {"color": "#AB47BC", "id": "456", "label": "productionValue", "shape": "dot", "title": "Pilot5 | Pilot5, owl__DatatypeProperty, Resource"}, {"color": "#90A4AE", "id": "805", "label": "dcat:Dataset", "shape": "dot", "title": "Pilot5 | Dataset, Resource"}, {"color": "#AB47BC", "id": "811", "label": "M_Consumption_User1_00_05", "shape": "dot", "title": "Pilot5 | Pilot5, Resource"}, {"color": "#AB47BC", "id": "486", "label": "Battery", "shape": "dot", "title": "Pilot5 | Pilot5, owl__Class, Resource"}, {"color": "#90A4AE", "id": "286", "label": "foaf:Agent", "shape": "dot", "title": "Pilot5 | Resource"}, {"color": "#90A4AE", "id": "876", "label": "sosa:Observation", "shape": "dot", "title": "Pilot5 | Resource"}, {"color": "#AB47BC", "id": "553", "label": "Contract", "shape": "dot", "title": "Pilot5 | Pilot5, owl__Class, Resource"}, {"color": "#AB47BC", "id": "694", "label": "M_Production_User1_00_05", "shape": "dot", "title": "Pilot5 | Pilot5, Resource"}, {"color": "#AB47BC", "id": "648", "label": "Contract_User1", "shape": "dot", "title": "Pilot5 | Pilot5, Resource"}, {"color": "#AB47BC", "id": "583", "label": "tiltAngle", "shape": "dot", "title": "Pilot5 | Pilot5, owl__DatatypeProperty, Resource"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "602", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "450", "label": "rdfs__range", "title": "rdfs__range", "to": "894"}, {"arrows": "to", "from": "634", "label": "rdfs__domain", "title": "rdfs__domain", "to": "760"}, {"arrows": "to", "from": "602", "label": "rdfs__domain", "title": "rdfs__domain", "to": "405"}, {"arrows": "to", "from": "234", "label": "rdfs__domain", "title": "rdfs__domain", "to": "760"}, {"arrows": "to", "from": "352", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "94"}, {"arrows": "to", "from": "756", "label": "rdfs__range", "title": "rdfs__range", "to": "53"}, {"arrows": "to", "from": "653", "label": "ns9__hasAsset", "title": "ns9__hasAsset", "to": "640"}, {"arrows": "to", "from": "658", "label": "rdfs__domain", "title": "rdfs__domain", "to": "532"}, {"arrows": "to", "from": "695", "label": "ns9__measuredAt", "title": "ns9__measuredAt", "to": "231"}, {"arrows": "to", "from": "160", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "521"}, {"arrows": "to", "from": "638", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "233", "label": "rdfs__range", "title": "rdfs__range", "to": "521"}, {"arrows": "to", "from": "129", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "405", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "300"}, {"arrows": "to", "from": "364", "label": "rdfs__range", "title": "rdfs__range", "to": "53"}, {"arrows": "to", "from": "595", "label": "ns9__measuredAt", "title": "ns9__measuredAt", "to": "231"}, {"arrows": "to", "from": "537", "label": "rdfs__range", "title": "rdfs__range", "to": "295"}, {"arrows": "to", "from": "521", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "300"}, {"arrows": "to", "from": "653", "label": "ns9__hasMeasurements", "title": "ns9__hasMeasurements", "to": "593"}, {"arrows": "to", "from": "445", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "449"}, {"arrows": "to", "from": "234", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "234", "label": "rdfs__range", "title": "rdfs__range", "to": "405"}, {"arrows": "to", "from": "79", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "450", "label": "rdfs__domain", "title": "rdfs__domain", "to": "405"}, {"arrows": "to", "from": "537", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "760", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "534"}, {"arrows": "to", "from": "476", "label": "rdfs__domain", "title": "rdfs__domain", "to": "405"}, {"arrows": "to", "from": "545", "label": "rdfs__domain", "title": "rdfs__domain", "to": "760"}, {"arrows": "to", "from": "638", "label": "rdfs__domain", "title": "rdfs__domain", "to": "405"}, {"arrows": "to", "from": "543", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "300"}, {"arrows": "to", "from": "476", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "634", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "602", "label": "rdfs__range", "title": "rdfs__range", "to": "543"}, {"arrows": "to", "from": "450", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "565", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "79", "label": "rdfs__domain", "title": "rdfs__domain", "to": "405"}, {"arrows": "to", "from": "662", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "89", "label": "rdfs__domain", "title": "rdfs__domain", "to": "160"}, {"arrows": "to", "from": "760", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "300"}, {"arrows": "to", "from": "565", "label": "rdfs__range", "title": "rdfs__range", "to": "352"}, {"arrows": "to", "from": "537", "label": "rdfs__domain", "title": "rdfs__domain", "to": "760"}, {"arrows": "to", "from": "654", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "300"}, {"arrows": "to", "from": "545", "label": "rdfs__range", "title": "rdfs__range", "to": "213"}, {"arrows": "to", "from": "233", "label": "rdfs__domain", "title": "rdfs__domain", "to": "543"}, {"arrows": "to", "from": "814", "label": "ns9__measuredAt", "title": "ns9__measuredAt", "to": "231"}, {"arrows": "to", "from": "300", "label": "ns0__hasPropertyEntity", "title": "ns0__hasPropertyEntity", "to": "602"}, {"arrows": "to", "from": "653", "label": "ns9__hasRetributionScheme_User", "title": "ns9__hasRetributionScheme_User", "to": "60"}, {"arrows": "to", "from": "79", "label": "rdfs__range", "title": "rdfs__range", "to": "445"}, {"arrows": "to", "from": "476", "label": "rdfs__range", "title": "rdfs__range", "to": "160"}, {"arrows": "to", "from": "333", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "521"}, {"arrows": "to", "from": "662", "label": "rdfs__domain", "title": "rdfs__domain", "to": "405"}, {"arrows": "to", "from": "129", "label": "rdfs__range", "title": "rdfs__range", "to": "53"}, {"arrows": "to", "from": "300", "label": "ns0__hasClassEntity", "title": "ns0__hasClassEntity", "to": "405"}, {"arrows": "to", "from": "215", "label": "ns9__hasMeasurement", "title": "ns9__hasMeasurement", "to": "695"}, {"arrows": "to", "from": "565", "label": "rdfs__domain", "title": "rdfs__domain", "to": "405"}, {"arrows": "to", "from": "215", "label": "ns9__hasMeasurement", "title": "ns9__hasMeasurement", "to": "601"}, {"arrows": "to", "from": "456", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "658", "label": "rdfs__range", "title": "rdfs__range", "to": "53"}, {"arrows": "to", "from": "213", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "805"}, {"arrows": "to", "from": "756", "label": "rdfs__domain", "title": "rdfs__domain", "to": "532"}, {"arrows": "to", "from": "532", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "352"}, {"arrows": "to", "from": "756", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "545", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "215", "label": "ns9__hasMeasurement", "title": "ns9__hasMeasurement", "to": "811"}, {"arrows": "to", "from": "215", "label": "ns9__hasMeasurement", "title": "ns9__hasMeasurement", "to": "595"}, {"arrows": "to", "from": "456", "label": "rdfs__range", "title": "rdfs__range", "to": "53"}, {"arrows": "to", "from": "634", "label": "rdfs__range", "title": "rdfs__range", "to": "654"}, {"arrows": "to", "from": "658", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "486", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "352"}, {"arrows": "to", "from": "405", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "286"}, {"arrows": "to", "from": "521", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "876"}, {"arrows": "to", "from": "233", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "364", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "456", "label": "rdfs__domain", "title": "rdfs__domain", "to": "445"}, {"arrows": "to", "from": "215", "label": "ns9__hasMeasurement", "title": "ns9__hasMeasurement", "to": "814"}, {"arrows": "to", "from": "638", "label": "rdfs__range", "title": "rdfs__range", "to": "894"}, {"arrows": "to", "from": "662", "label": "rdfs__range", "title": "rdfs__range", "to": "333"}, {"arrows": "to", "from": "553", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "300"}, {"arrows": "to", "from": "215", "label": "ns9__hasMeasurement", "title": "ns9__hasMeasurement", "to": "694"}, {"arrows": "to", "from": "213", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "300"}, {"arrows": "to", "from": "89", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "653", "label": "ns9__hasContract", "title": "ns9__hasContract", "to": "648"}, {"arrows": "to", "from": "583", "label": "rdfs__range", "title": "rdfs__range", "to": "53"}, {"arrows": "to", "from": "364", "label": "rdfs__domain", "title": "rdfs__domain", "to": "160"}, {"arrows": "to", "from": "129", "label": "rdfs__domain", "title": "rdfs__domain", "to": "333"}, {"arrows": "to", "from": "445", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "521"}, {"arrows": "to", "from": "300", "label": "ns0__hasIndividualEntity", "title": "ns0__hasIndividualEntity", "to": "653"}, {"arrows": "to", "from": "89", "label": "rdfs__range", "title": "rdfs__range", "to": "53"}, {"arrows": "to", "from": "583", "label": "rdfs__subPropertyOf", "title": "rdfs__subPropertyOf", "to": "300"}, {"arrows": "to", "from": "352", "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": "300"}, {"arrows": "to", "from": "583", "label": "rdfs__domain", "title": "rdfs__domain", "to": "532"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"interaction": {"hover": true, "navigationButtons": true, "keyboard": true}, "physics": {"enabled": true, "solver": "forceAtlas2Based", "forceAtlas2Based": {"gravitationalConstant": -35, "centralGravity": 0.015, "springLength": 110, "springConstant": 0.08, "damping": 0.45, "avoidOverlap": 0.7}, "stabilization": {"enabled": true, "iterations": 250}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

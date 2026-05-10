@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#4FC3F7", "id": 4, "label": "DEPOSITO_NIVEL_LEVI", "shape": "dot", "title": "ns3__HydroProduction, Viz_ns3__HydroProduction"}, {"color": "#B0BEC5", "id": 26, "label": "unit:Liter", "shape": "dot", "title": ""}, {"color": "#4FC3F7", "id": 68, "label": "eg:HydroProductionGroup", "shape": "dot", "title": "ns3__HydroProduction, Viz_ns3__HydroProduction"}, {"color": "#4FC3F7", "id": 6, "label": "eg:WindProductionGroup", "shape": "dot", "title": "ns3__WindProduction, Viz_ns3__WindProduction"}, {"color": "#4FC3F7", "id": 8, "label": "ENNERA_3_5_Production", "shape": "dot", "title": "ns3__WindProduction, Viz_ns3__WindProduction"}, {"color": "#4FC3F7", "id": 56, "label": "WINDERA_4_2_Production", "shape": "dot", "title": "ns3__WindProduction, Viz_ns3__WindProduction"}, {"color": "#4FC3F7", "id": 7, "label": "DEPOSITO_NIVEL_INFERIOR", "shape": "dot", "title": "ns3__HydroProduction, Viz_ns3__HydroProduction"}, {"color": "#B0BEC5", "id": 0, "label": "unit:KiloWatt", "shape": "dot", "title": ""}, {"color": "#4FC3F7", "id": 10, "label": "DEPOSITO_NIVEL", "shape": "dot", "title": "ns3__HydroProduction, Viz_ns3__HydroProduction"}, {"color": "#4FC3F7", "id": 11, "label": "PEPA_III_TRACKER8_PV", "shape": "dot", "title": "ns3__SolarProduction, Viz_ns3__SolarProduction"}, {"color": "#4FC3F7", "id": 17, "label": "eg:SolarProductionGroup", "shape": "dot", "title": "ns3__SolarProduction, Viz_ns3__SolarProduction"}, {"color": "#B0BEC5", "id": 12, "label": "eg:value", "shape": "dot", "title": "owl__DatatypeProperty"}, {"color": "#E57373", "id": 19, "label": "eg:Measurement", "shape": "dot", "title": "ns0__Observation, Viz_ns0__Observation"}, {"color": "#4FC3F7", "id": 13, "label": "PEPA_III_TRACKER7_PV", "shape": "dot", "title": "ns3__SolarProduction, Viz_ns3__SolarProduction"}, {"color": "#4FC3F7", "id": 14, "label": "BATERIA_PEPA_II_CARGA", "shape": "dot", "title": "Viz_ns3__BatteryPower, ns3__BatteryPower"}, {"color": "#B0BEC5", "id": 23, "label": "unit:KiloWattHour", "shape": "dot", "title": ""}, {"color": "#4FC3F7", "id": 94, "label": "eg:BatteryPowerGroup", "shape": "dot", "title": "Viz_ns3__BatteryPower, ns3__BatteryPower"}, {"color": "#4FC3F7", "id": 20, "label": "PEPA_III_TRACKER6_2_PV", "shape": "dot", "title": "ns3__SolarProduction, Viz_ns3__SolarProduction"}, {"color": "#4FC3F7", "id": 30, "label": "RADIACION_SOLAR", "shape": "dot", "title": "ns3__SolarProductionGroup, Viz_ns3__SolarProductionGroup"}, {"color": "#4FC3F7", "id": 36, "label": "PEPA_III_TRACKER3_PV", "shape": "dot", "title": "ns3__SolarProduction, Viz_ns3__SolarProduction"}, {"color": "#4FC3F7", "id": 38, "label": "PEPA_III_TOTAL_PV", "shape": "dot", "title": "ns3__SolarProduction, Viz_ns3__SolarProduction"}, {"color": "#4FC3F7", "id": 44, "label": "PEPA_III_INV1_PV", "shape": "dot", "title": "ns3__SolarProduction, Viz_ns3__SolarProduction"}, {"color": "#4FC3F7", "id": 58, "label": "PEPA_III_TRACKER5_PV", "shape": "dot", "title": "ns3__SolarProduction, Viz_ns3__SolarProduction"}, {"color": "#4FC3F7", "id": 76, "label": "PEPA_III_TRACKER6_1_PV", "shape": "dot", "title": "ns3__SolarProduction, Viz_ns3__SolarProduction"}, {"color": "#4FC3F7", "id": 81, "label": "PEPA_III_MICROINV_PV", "shape": "dot", "title": "ns3__SolarProduction, Viz_ns3__SolarProduction"}, {"color": "#4FC3F7", "id": 89, "label": "TURBINA_Production", "shape": "dot", "title": "Viz_ns3__DieselGenerator, ns3__DieselGenerator"}, {"color": "#4FC3F7", "id": 90, "label": "EDIFICIO_ARFRISOL_PV", "shape": "dot", "title": "ns3__SolarProduction, Viz_ns3__SolarProduction"}, {"color": "#4FC3F7", "id": 97, "label": "PEPA_III_INV2_PV", "shape": "dot", "title": "ns3__SolarProduction, Viz_ns3__SolarProduction"}, {"color": "#4FC3F7", "id": 98, "label": "PARKING_ARFRISOL_PV", "shape": "dot", "title": "ns3__SolarProduction, Viz_ns3__SolarProduction"}, {"color": "#B0BEC5", "id": 15, "label": "s4ener:Measurement", "shape": "dot", "title": ""}, {"color": "#4FC3F7", "id": 21, "label": "PEPA_III", "shape": "dot", "title": "Viz_ns3__ThermalConsumption, ns3__ThermalConsumption"}, {"color": "#4FC3F7", "id": 88, "label": "eg:ThermalConsumptionGroup", "shape": "dot", "title": "Viz_ns3__ThermalConsumption, ns3__ThermalConsumption"}, {"color": "#4FC3F7", "id": 22, "label": "GRUPO_DIESEL_Power", "shape": "dot", "title": "Viz_ns3__DieselGenerator, ns3__DieselGenerator"}, {"color": "#4FC3F7", "id": 27, "label": "eg:DieselGeneratorGroup", "shape": "dot", "title": "ns3__DieselGeneratorPower, Viz_ns3__DieselGeneratorPower"}, {"color": "#4FC3F7", "id": 24, "label": "ACTARIS_Measurement", "shape": "dot", "title": "Viz_ns3__DieselGenerator, ns3__DieselGenerator"}, {"color": "#B0BEC5", "id": 32, "label": "unit:WattPerSquareMeter", "shape": "dot", "title": ""}, {"color": "#4FC3F7", "id": 34, "label": "BOMBAS", "shape": "dot", "title": "ns3__HydroProduction, Viz_ns3__HydroProduction"}, {"color": "#4FC3F7", "id": 37, "label": "BATERIA_REDOX", "shape": "dot", "title": "Viz_ns3__BatteryPower, ns3__BatteryPower"}, {"color": "#B0BEC5", "id": 41, "label": "eg:hasUnit", "shape": "dot", "title": "owl__ObjectProperty"}, {"color": "#4FC3F7", "id": 49, "label": "BATERIA_LITIO_CARGA", "shape": "dot", "title": "Viz_ns3__BatteryPower, ns3__BatteryPower"}, {"color": "#4FC3F7", "id": 51, "label": "ARFRISOL_GENERIC", "shape": "dot", "title": "Viz_ns3__DieselGenerator, ns3__DieselGenerator"}, {"color": "#4FC3F7", "id": 52, "label": "LEVI", "shape": "dot", "title": "Viz_ns3__ThermalConsumption, ns3__ThermalConsumption"}, {"color": "#4FC3F7", "id": 54, "label": "BATERIA_PEPA_I_CARGA", "shape": "dot", "title": "Viz_ns3__BatteryPower, ns3__BatteryPower"}, {"color": "#FFCC80", "id": 55, "label": "file:/C:/Users/atzortzis/OneDrive%20-%20EPU-NTUA/Documents/\u0395PU%20Projects/EGuard/ontology/ontology_v3/pilot2_refactored_v3.owl#Dataset_2025_01_30", "shape": "dot", "title": "Viz_ns1__Dataset, ns1__Dataset"}, {"color": "#81C784", "id": 57, "label": "bnode://b8a73a0cb94c4870a79a0847f11c2cb65", "shape": "dot", "title": "ns2__Distribution, Viz_ns2__Distribution"}, {"color": "#B0BEC5", "id": 93, "label": "file:/C:/Users/atzortzis/OneDrive%20-%20EPU-NTUA/Documents/\u0395PU%20Projects/EGuard/ontology/ontology_v3/data/RED_1sec_v2_2025-01-30.csv", "shape": "dot", "title": ""}, {"color": "#B0BEC5", "id": 59, "label": "eg:timestamp", "shape": "dot", "title": "owl__DatatypeProperty"}, {"color": "#4FC3F7", "id": 60, "label": "PEPA_II", "shape": "dot", "title": "Viz_ns3__ThermalConsumption, ns3__ThermalConsumption"}, {"color": "#4FC3F7", "id": 62, "label": "VATIMETRO_PEPA_III", "shape": "dot", "title": "Viz_ns3__DieselGenerator, ns3__DieselGenerator"}, {"color": "#4FC3F7", "id": 63, "label": "PEPA_I", "shape": "dot", "title": "Viz_ns3__DieselGenerator, ns3__DieselGenerator"}, {"color": "#B0BEC5", "id": 66, "label": "eg:recordedInDataset", "shape": "dot", "title": "owl__ObjectProperty"}, {"color": "#B0BEC5", "id": 67, "label": "eg:measurementType", "shape": "dot", "title": "owl__DatatypeProperty"}, {"color": "#4FC3F7", "id": 71, "label": "RIOS", "shape": "dot", "title": "ns3__HydroProduction, Viz_ns3__HydroProduction"}, {"color": "#4FC3F7", "id": 75, "label": "ATLANTIC", "shape": "dot", "title": "ns3__HydroProduction, Viz_ns3__HydroProduction"}, {"color": "#4FC3F7", "id": 70, "label": "BATERIA_PEPA_I_DESCARGA", "shape": "dot", "title": "Viz_ns3__BatteryPower, ns3__BatteryPower"}, {"color": "#4FC3F7", "id": 78, "label": "BATERIA_NMC_PEPA_II", "shape": "dot", "title": "Viz_ns3__BatteryPower, ns3__BatteryPower"}, {"color": "#4FC3F7", "id": 79, "label": "BATERIA_LITIO_DESCARGA", "shape": "dot", "title": "Viz_ns3__BatteryPower, ns3__BatteryPower"}, {"color": "#B0BEC5", "id": 80, "label": "eg:hasMeasurement", "shape": "dot", "title": "owl__ObjectProperty"}, {"color": "#4FC3F7", "id": 84, "label": "ED03", "shape": "dot", "title": "Viz_ns3__ThermalConsumption, ns3__ThermalConsumption"}, {"color": "#4FC3F7", "id": 86, "label": "ED02", "shape": "dot", "title": "Viz_ns3__ThermalConsumption, ns3__ThermalConsumption"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": 4, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 26}, {"arrows": "to", "from": 4, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 68}, {"arrows": "to", "from": 6, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 8}, {"arrows": "to", "from": 6, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 56}, {"arrows": "to", "from": 7, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 26}, {"arrows": "to", "from": 7, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 68}, {"arrows": "to", "from": 8, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 8, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 6}, {"arrows": "to", "from": 10, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 26}, {"arrows": "to", "from": 10, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 68}, {"arrows": "to", "from": 11, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 11, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}, {"arrows": "to", "from": 12, "label": "rdfs__domain", "title": "rdfs__domain", "to": 19}, {"arrows": "to", "from": 13, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 13, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}, {"arrows": "to", "from": 14, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 23}, {"arrows": "to", "from": 14, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 94}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 11}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 13}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 20}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 30}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 36}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 38}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 44}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 58}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 76}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 81}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 89}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 90}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 97}, {"arrows": "to", "from": 17, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 98}, {"arrows": "to", "from": 19, "label": "rdfs__subClassOf", "title": "rdfs__subClassOf", "to": 15}, {"arrows": "to", "from": 20, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 20, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}, {"arrows": "to", "from": 21, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 23}, {"arrows": "to", "from": 21, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 88}, {"arrows": "to", "from": 22, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 22, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 27}, {"arrows": "to", "from": 24, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 24, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 27}, {"arrows": "to", "from": 27, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 22}, {"arrows": "to", "from": 30, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 32}, {"arrows": "to", "from": 30, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}, {"arrows": "to", "from": 34, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 34, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 68}, {"arrows": "to", "from": 36, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 36, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}, {"arrows": "to", "from": 37, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 23}, {"arrows": "to", "from": 37, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 94}, {"arrows": "to", "from": 38, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 38, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}, {"arrows": "to", "from": 41, "label": "rdfs__domain", "title": "rdfs__domain", "to": 19}, {"arrows": "to", "from": 44, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 44, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}, {"arrows": "to", "from": 49, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 23}, {"arrows": "to", "from": 49, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 94}, {"arrows": "to", "from": 51, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 51, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 27}, {"arrows": "to", "from": 52, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 23}, {"arrows": "to", "from": 52, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 88}, {"arrows": "to", "from": 54, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 23}, {"arrows": "to", "from": 54, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 94}, {"arrows": "to", "from": 55, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 6}, {"arrows": "to", "from": 55, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}, {"arrows": "to", "from": 55, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 27}, {"arrows": "to", "from": 55, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 68}, {"arrows": "to", "from": 55, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 88}, {"arrows": "to", "from": 55, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 94}, {"arrows": "to", "from": 55, "label": "ns2__distribution", "title": "ns2__distribution", "to": 57}, {"arrows": "to", "from": 56, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 56, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 6}, {"arrows": "to", "from": 57, "label": "ns2__downloadURL", "title": "ns2__downloadURL", "to": 93}, {"arrows": "to", "from": 58, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 58, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}, {"arrows": "to", "from": 59, "label": "rdfs__domain", "title": "rdfs__domain", "to": 19}, {"arrows": "to", "from": 60, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 23}, {"arrows": "to", "from": 60, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 88}, {"arrows": "to", "from": 62, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 62, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 27}, {"arrows": "to", "from": 63, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 63, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 27}, {"arrows": "to", "from": 66, "label": "rdfs__domain", "title": "rdfs__domain", "to": 19}, {"arrows": "to", "from": 67, "label": "rdfs__domain", "title": "rdfs__domain", "to": 19}, {"arrows": "to", "from": 68, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 4}, {"arrows": "to", "from": 68, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 7}, {"arrows": "to", "from": 68, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 10}, {"arrows": "to", "from": 68, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 34}, {"arrows": "to", "from": 68, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 71}, {"arrows": "to", "from": 68, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 75}, {"arrows": "to", "from": 70, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 23}, {"arrows": "to", "from": 70, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 94}, {"arrows": "to", "from": 71, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 71, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 68}, {"arrows": "to", "from": 75, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 75, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 68}, {"arrows": "to", "from": 76, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 76, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}, {"arrows": "to", "from": 78, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 23}, {"arrows": "to", "from": 78, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 94}, {"arrows": "to", "from": 79, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 23}, {"arrows": "to", "from": 79, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 94}, {"arrows": "to", "from": 80, "label": "rdfs__range", "title": "rdfs__range", "to": 19}, {"arrows": "to", "from": 81, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 81, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}, {"arrows": "to", "from": 84, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 23}, {"arrows": "to", "from": 84, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 88}, {"arrows": "to", "from": 86, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 23}, {"arrows": "to", "from": 86, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 88}, {"arrows": "to", "from": 88, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 21}, {"arrows": "to", "from": 88, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 24}, {"arrows": "to", "from": 88, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 51}, {"arrows": "to", "from": 88, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 52}, {"arrows": "to", "from": 88, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 60}, {"arrows": "to", "from": 88, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 62}, {"arrows": "to", "from": 88, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 63}, {"arrows": "to", "from": 88, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 84}, {"arrows": "to", "from": 88, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 86}, {"arrows": "to", "from": 88, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 89}, {"arrows": "to", "from": 89, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 89, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 27}, {"arrows": "to", "from": 90, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 90, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}, {"arrows": "to", "from": 94, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 14}, {"arrows": "to", "from": 94, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 37}, {"arrows": "to", "from": 94, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 49}, {"arrows": "to", "from": 94, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 54}, {"arrows": "to", "from": 94, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 70}, {"arrows": "to", "from": 94, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 78}, {"arrows": "to", "from": 94, "label": "ns1__hasMeasurement", "title": "ns1__hasMeasurement", "to": 79}, {"arrows": "to", "from": 97, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 97, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}, {"arrows": "to", "from": 98, "label": "ns1__hasUnit", "title": "ns1__hasUnit", "to": 0}, {"arrows": "to", "from": 98, "label": "ns1__representsComponent", "title": "ns1__representsComponent", "to": 17}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
