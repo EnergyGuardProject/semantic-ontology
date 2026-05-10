@@ -1,0 +1,9 @@
+**/certificates
+**/data
+**/data-test
+**/logs
+**/logs-test
+**/neo4j-venv
+**/plugins-enterprise
+**/lib
+docker-compose.all.yml

@@ -1,0 +1,993 @@
+<?xml version="1.0"?>
+<rdf:RDF xml:base="http://www.energyguard.eu/ontology" 
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:saref="https://saref.etsi.org/core/v4.1.1/"
+    xmlns:s4ener="https://saref.etsi.org/saref4ener/v2.1.1/"
+    xmlns:sosa="http://www.w3.org/ns/sosa/"
+    xmlns:qudt="http://qudt.org/schema/qudt/"
+    xmlns:unit="http://qudt.org/vocab/unit/"
+    xmlns:cd="http://www.ceder-energy.org/ontology#"
+    xmlns:dcat="http://www.w3.org/ns/dcat#"
+    xmlns:eg="http://www.energyguard.eu/ontology#">
+    <!-- Ontology Header -->
+    <owl:Ontology rdf:about="http://www.energyguard.eu/ontology/cea/v3">
+        <rdfs:label>CEA Pilot 3 Ontology (Refactored v3)</rdfs:label>
+        <rdfs:comment>v3: dataset and measurement individuals explicitly reference their owning SystemComponent via eg:representsComponent.</rdfs:comment>
+        <owl:versionInfo>3.0.0-refactored</owl:versionInfo>
+        <owl:imports rdf:resource="https://saref.etsi.org/core/v4.1.1/"/>
+        <owl:imports rdf:resource="https://saref.etsi.org/saref4ener/v2.1.1/"/>
+        <owl:imports rdf:resource="http://www.w3.org/ns/sosa/"/>
+        <owl:imports rdf:resource="http://qudt.org/schema/qudt/"/>
+        <owl:imports rdf:resource="http://www.w3.org/ns/dcat#"/>
+        <owl:imports rdf:resource="iec61850s4ener.owl"/>
+    </owl:Ontology>
+
+    <!-- Dataset -->
+    <owl:Class rdf:about="eg:Dataset">
+        <rdfs:subClassOf rdf:resource="dcat:Dataset" />
+    </owl:Class>
+
+    <!-- Keep the class and property declarations from the original CEA refactor, so v3 remains compatible -->
+    <owl:Class rdf:about="eg:Measurement">
+        <rdfs:subClassOf rdf:resource="sosa:Observation"/>
+    </owl:Class>
+    <owl:Class rdf:about="eg:TemperatureMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+    </owl:Class>
+    <owl:Class rdf:about="eg:PressureMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+    </owl:Class>
+    <owl:Class rdf:about="eg:FlowMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+    </owl:Class>
+    <owl:Class rdf:about="eg:ControlSignalMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+    </owl:Class>
+    <owl:Class rdf:about="eg:PowerMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+    </owl:Class>
+    <owl:Class rdf:about="eg:StateMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+    </owl:Class>
+    <owl:Class rdf:about="eg:HydrogenMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+    </owl:Class>
+    <owl:Class rdf:about="eg:Timer">
+        <rdfs:subClassOf rdf:resource="eg:Measurement"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="eg:SystemComponent">
+        <rdfs:subClassOf rdf:resource="saref:Device"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:Sensor">
+        <rdfs:subClassOf rdf:resource="eg:SystemComponent"/>
+        <rdfs:subClassOf rdf:resource="sosa:Sensor"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:TemperatureSensorSystem">
+        <rdfs:subClassOf rdf:resource="eg:Sensor"/>
+        <rdfs:label>Temperature Sensor System</rdfs:label>
+    </owl:Class>
+    <owl:Class rdf:about="eg:PressureSensorSystem">
+        <rdfs:subClassOf rdf:resource="eg:Sensor"/>
+        <rdfs:label>Pressure Sensor System</rdfs:label>
+    </owl:Class>
+    <owl:Class rdf:about="eg:FlowSensorSystem">
+        <rdfs:subClassOf rdf:resource="eg:Sensor"/>
+        <rdfs:label>Flow Sensor System</rdfs:label>
+    </owl:Class>
+    <owl:Class rdf:about="eg:ElectricalSensorSystem">
+        <rdfs:subClassOf rdf:resource="eg:Sensor"/>
+        <rdfs:label>Electrical Sensor System</rdfs:label>
+    </owl:Class>
+    <owl:Class rdf:about="eg:StackSystem">
+        <rdfs:subClassOf rdf:resource="eg:SystemComponent"/>
+        <rdfs:label>Stack System</rdfs:label>
+    </owl:Class>
+    <owl:Class rdf:about="eg:ControlSignalSystem">
+        <rdfs:subClassOf rdf:resource="eg:SystemComponent"/>
+        <rdfs:label>Control Signal System</rdfs:label>
+    </owl:Class>
+
+    <!-- ========================= -->
+    <!-- New MeasurementGroup Class -->
+    <!-- ========================= -->
+    <owl:Class rdf:about="eg:MeasurementGroup">
+        <rdfs:subClassOf rdf:resource="sosa:ObservationCollection" />
+        <rdfs:subClassOf rdf:resource="saref:Device" />
+    </owl:Class>
+
+    <!-- ========================= -->
+    <!-- Object Properties -->
+    <!-- ========================= -->
+    
+    <owl:ObjectProperty rdf:about="eg:hasMeasurement">
+        <rdfs:domain rdf:resource="eg:MeasurementGroup"/>
+        <rdfs:range rdf:resource="eg:Measurement"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:hasGroup">
+        <rdfs:domain rdf:resource="eg:Dataset" />
+        <rdfs:range rdf:resource="eg:MeasurementGroup" />
+    </owl:ObjectProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:unit"><rdfs:domain rdf:resource="eg:Measurement"/></owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="eg:unitUCUM"><rdfs:domain rdf:resource="eg:Measurement"/></owl:DatatypeProperty>
+
+    <owl:ObjectProperty rdf:ID="hasUnit">
+        <rdfs:domain rdf:resource="eg:Measurement" />
+        <rdfs:range rdf:resource="qudt:Unit" />
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="recordedInDataset">
+        <rdfs:domain rdf:resource="eg:Measurement" />
+        <rdfs:range rdf:resource="eg:Dataset" />
+        <owl:equivalentProperty rdf:resource="s4ener:recordedInDataset" />
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="representsComponent">
+        <rdfs:domain rdf:resource="eg:Dataset" />
+        <rdfs:range rdf:resource="eg:SystemComponent" />
+        <owl:equivalentProperty rdf:resource="s4ener:representsComponent" />
+    </owl:ObjectProperty>
+
+    <!-- ========== DATASET INSTANCE (v3) ========== -->
+    <eg:Dataset rdf:about="eg:CEA_Dataset_Example_2025_10_15" xmlns:dct="http://purl.org/dc/terms/">
+        <eg:filename rdf:datatype="xsd:string">CEA_H2_Production_2025-10-15.csv</eg:filename>
+        <eg:startTime rdf:datatype="xsd:dateTime">2025-10-15T00:00:00+00:00</eg:startTime>
+        <eg:endTime rdf:datatype="xsd:dateTime">2025-10-15T23:59:59+00:00</eg:endTime>
+        <eg:sampleRate rdf:datatype="xsd:float">1.0</eg:sampleRate>
+
+        <!-- Groupings of measurements -->
+        <eg:hasGroup rdf:resource="eg:TemperatureMeasurementGroup" />
+        <eg:hasGroup rdf:resource="eg:PressureMeasurementGroup" />
+        <eg:hasGroup rdf:resource="eg:FlowMeasurementGroup" />
+        <eg:hasGroup rdf:resource="eg:VoltageMeasurementGroup" />
+        <eg:hasGroup rdf:resource="eg:CurrentMeasurementGroup" />
+        <eg:hasGroup rdf:resource="eg:ControlSignalMeasurementGroup" />
+        <eg:hasGroup rdf:resource="eg:TimerGroup" />
+
+        <dcat:distribution>
+            <dcat:Distribution>
+                <dcat:downloadURL rdf:resource="./data/CEA_H2_Production_2025-10-15.csv"/>
+                <dcat:mediaType>text/csv</dcat:mediaType>
+                <dct:hasFormat rdf:resource="./data/CEA_H2_Production_2025-10-15.csv-metadata.json"/>
+            </dcat:Distribution>
+        </dcat:distribution>
+    </eg:Dataset>
+
+    <!-- Observation Groups -->
+
+    <owl:NamedIndividual rdf:about="eg:TemperatureMeasurementGroup">
+        <rdf:type rdf:resource="eg:MeasurementGroup" />
+        <!-- Include all temperature transmitters and TV readings -->
+        <eg:hasMeasurement rdf:resource="#TT106" />
+        <eg:hasMeasurement rdf:resource="#TT107" />
+        <eg:hasMeasurement rdf:resource="#TT111" />
+        <eg:hasMeasurement rdf:resource="#TT112" />
+        <eg:hasMeasurement rdf:resource="#TT113" />
+        <eg:hasMeasurement rdf:resource="#TT114" />
+        <eg:hasMeasurement rdf:resource="#Tstack01" />
+        <eg:hasMeasurement rdf:resource="#Tstack02" />
+        <eg:hasMeasurement rdf:resource="#Tstack03" />
+        <eg:hasMeasurement rdf:resource="#Tstack04" />
+        <eg:hasMeasurement rdf:resource="#ST360" />
+        <eg:hasMeasurement rdf:resource="#AT231" />
+        <eg:hasMeasurement rdf:resource="#AT243" />
+        <eg:hasMeasurement rdf:resource="#AT312" />
+        <eg:hasMeasurement rdf:resource="#AT361" />
+        <eg:hasMeasurement rdf:resource="#AT416" />
+        <eg:hasMeasurement rdf:resource="#TV212" />
+        <eg:hasMeasurement rdf:resource="#TV216" />
+        <eg:hasMeasurement rdf:resource="#TV402" />
+        <eg:hasMeasurement rdf:resource="#TV415" />
+        <eg:hasMeasurement rdf:resource="#TV504" />
+        <eg:hasMeasurement rdf:resource="#TV506" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PressureMeasurementGroup">
+        <rdf:type rdf:resource="eg:MeasurementGroup" />
+        <!-- Pressure transmitters and PV readings -->
+        <eg:hasMeasurement rdf:resource="#PT204" />
+        <eg:hasMeasurement rdf:resource="#PT211" />
+        <eg:hasMeasurement rdf:resource="#PT217" />
+        <eg:hasMeasurement rdf:resource="#PT220" />
+        <eg:hasMeasurement rdf:resource="#PT222" />
+        <eg:hasMeasurement rdf:resource="#PT228" />
+        <eg:hasMeasurement rdf:resource="#PT230" />
+        <eg:hasMeasurement rdf:resource="#PT241" />
+        <eg:hasMeasurement rdf:resource="#PT245" />
+        <eg:hasMeasurement rdf:resource="#PT305" />
+        <eg:hasMeasurement rdf:resource="#PT353" />
+        <eg:hasMeasurement rdf:resource="#PT354" />
+        <eg:hasMeasurement rdf:resource="#PT407" />
+        <eg:hasMeasurement rdf:resource="#PT418" />
+        <eg:hasMeasurement rdf:resource="#PT420" />
+        <eg:hasMeasurement rdf:resource="#PT423" />
+        <eg:hasMeasurement rdf:resource="#PT503" />
+        <eg:hasMeasurement rdf:resource="#PT505" />
+        <eg:hasMeasurement rdf:resource="#PT110" />
+        <eg:hasMeasurement rdf:resource="#PT112" />
+        <eg:hasMeasurement rdf:resource="#PV305" />
+        <eg:hasMeasurement rdf:resource="#PV305b" />
+        <eg:hasMeasurement rdf:resource="#PV220" />
+        <eg:hasMeasurement rdf:resource="#PV220b" />
+        <eg:hasMeasurement rdf:resource="#DPT202" />
+        <eg:hasMeasurement rdf:resource="#DPT207" />
+        <eg:hasMeasurement rdf:resource="#DPT208" />
+        <eg:hasMeasurement rdf:resource="#DPT213" />
+        <eg:hasMeasurement rdf:resource="#DPT214" />
+        <eg:hasMeasurement rdf:resource="#DPT311" />
+        <eg:hasMeasurement rdf:resource="#DPT403" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FlowMeasurementGroup">
+        <rdf:type rdf:resource="eg:MeasurementGroup" />
+        <!-- Flow transmitters -->
+        <eg:hasMeasurement rdf:resource="#FT101" />
+        <eg:hasMeasurement rdf:resource="#FT102" />
+        <eg:hasMeasurement rdf:resource="#FT103" />
+        <eg:hasMeasurement rdf:resource="#FT104" />
+        <eg:hasMeasurement rdf:resource="#FT219" />
+        <eg:hasMeasurement rdf:resource="#FT221" />
+        <eg:hasMeasurement rdf:resource="#FT232" />
+        <eg:hasMeasurement rdf:resource="#FT237" />
+        <eg:hasMeasurement rdf:resource="#FT405" />
+        <eg:hasMeasurement rdf:resource="#FT412" />
+        <eg:hasMeasurement rdf:resource="#FT413" />
+        <eg:hasMeasurement rdf:resource="#FT417" />
+        <eg:hasMeasurement rdf:resource="#FT421" />
+        <eg:hasMeasurement rdf:resource="#FT501" />
+        <eg:hasMeasurement rdf:resource="#FT507" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:VoltageMeasurementGroup">
+        <rdf:type rdf:resource="eg:MeasurementGroup" />
+        <!-- Voltage sensors -->
+        <eg:hasMeasurement rdf:resource="#VT356" />
+        <eg:hasMeasurement rdf:resource="#VT357" />
+        <eg:hasMeasurement rdf:resource="#VT358" />
+        <eg:hasMeasurement rdf:resource="#VT359" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:CurrentMeasurementGroup">
+        <rdf:type rdf:resource="eg:MeasurementGroup" />
+        <!-- Stack currents -->
+        <eg:hasMeasurement rdf:resource="#Istack01" />
+        <eg:hasMeasurement rdf:resource="#Istack02" />
+        <eg:hasMeasurement rdf:resource="#Istack03" />
+        <eg:hasMeasurement rdf:resource="#Istack04" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ControlSignalMeasurementGroup">
+        <rdf:type rdf:resource="eg:MeasurementGroup" />
+        <!-- Manual and control signals -->
+        <eg:hasMeasurement rdf:resource="#M_K_O_04" />
+        <eg:hasMeasurement rdf:resource="#M_R_O_01" />
+        <eg:hasMeasurement rdf:resource="#M_K_H_02" />
+        <eg:hasMeasurement rdf:resource="#M_X_H_02" />
+        <eg:hasMeasurement rdf:resource="#M_K_H_03" />
+        <eg:hasMeasurement rdf:resource="#M_R_H_01" />
+        <eg:hasMeasurement rdf:resource="#M_R_B_01" />
+        <eg:hasMeasurement rdf:resource="#M_R_B_02" />
+        <eg:hasMeasurement rdf:resource="#M_R_B_03" />
+        <eg:hasMeasurement rdf:resource="#cns_FV508" />
+        <eg:hasMeasurement rdf:resource="#cns_FV101" />
+        <eg:hasMeasurement rdf:resource="#cns_FV102" />
+        <eg:hasMeasurement rdf:resource="#cns_Stacks_Inlets_deltaP" />
+        <eg:hasMeasurement rdf:resource="#cns_X_O2_Vent" />
+        <eg:hasMeasurement rdf:resource="#cns_j" />
+        <eg:hasMeasurement rdf:resource="#SC_calc_S1" />
+        <eg:hasMeasurement rdf:resource="#SC_calc_S2" />
+        <eg:hasMeasurement rdf:resource="#SC_calc_S3" />
+        <eg:hasMeasurement rdf:resource="#SC_calc_S4" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TimerGroup">
+        <rdf:type rdf:resource="eg:MeasurementGroup" />
+        <!-- Operation time counters -->
+        <eg:hasMeasurement rdf:resource="#t_SOEC_kh_1" />
+        <eg:hasMeasurement rdf:resource="#t_SOEC_kh_2" />
+        <eg:hasMeasurement rdf:resource="#t_SOEC_kh_3" />
+        <eg:hasMeasurement rdf:resource="#t_SOEC_kh_4" />
+    </owl:NamedIndividual>
+
+    <!-- ========== Measurement individuals with v3 component links ========== -->
+    <owl:NamedIndividual rdf:ID="eg:M_K_O_04">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">M_K_O_04</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CEA_H2_Production_2025_10_15_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M_K_O_04</eg:storedInDatabaseColumn>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:M_R_O_01">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">M_R_O_01</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CEA_H2_Production_2025_10_15_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M_R_O_01</eg:storedInDatabaseColumn>
+        <eg:unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">%</eg:unit>
+        <eg:unitUCUM rdf:datatype="http://www.w3.org/2001/XMLSchema#string">%</eg:unitUCUM>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:M_R_H_01">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">M_R_H_01</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CEA_H2_Production_2025_10_15_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M_R_H_01</eg:storedInDatabaseColumn>
+        <eg:unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">%</eg:unit>
+        <eg:unitUCUM rdf:datatype="http://www.w3.org/2001/XMLSchema#string">%</eg:unitUCUM>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:M_K_H_02">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">M_K_H_02</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M_K_H_02</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FV101">
+        <rdf:type rdf:resource="eg:StateMeasurement" />
+        <rdfs:label xml:lang="en">FV101</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FV101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:PT306">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">PT306</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PT306</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:DPT401">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">DPT401</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DPT401</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:Tstack01">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">Tstack01</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Tstack01</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:t_SOEC_kh_1">
+        <rdf:type rdf:resource="eg:Timer" />
+        <rdfs:label xml:lang="en">t_SOEC_kh_1</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            t_SOEC_kh_1</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:M_R_B_01">
+        <rdf:type rdf:resource="eg:StateMeasurement" />
+        <rdfs:label xml:lang="en">M_R_B_01</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CEA_H2_Production_2025_10_15_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M_R_B_01</eg:storedInDatabaseColumn>
+        <eg:unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">%</eg:unit>
+        <eg:unitUCUM rdf:datatype="http://www.w3.org/2001/XMLSchema#string">%</eg:unitUCUM>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:QH2_prod_kg_h">
+        <rdf:type rdf:resource="eg:HydrogenMeasurement" />
+        <rdfs:label xml:lang="en">QH2_prod_kg_h</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CEA_H2_Production_2025_10_15_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">QH2_prod_kg_h</eg:storedInDatabaseColumn>
+        <eg:unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kg/h</eg:unit>
+        <eg:unitUCUM rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kg/h</eg:unitUCUM>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:QH2_prod_Nm3_h">
+        <rdf:type rdf:resource="eg:HydrogenMeasurement" />
+        <rdfs:label xml:lang="en">QH2_prod_Nm3_h</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CEA_H2_Production_2025_10_15_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">QH2_prod_Nm3_h</eg:storedInDatabaseColumn>
+        <eg:unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Nm3/h</eg:unit>
+        <eg:unitUCUM rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Nm3/h</eg:unitUCUM>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:TT308">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT308</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CEA_H2_Production_2025_10_15_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT308</eg:storedInDatabaseColumn>
+        <eg:unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">°C</eg:unit>
+        <eg:unitUCUM rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cel</eg:unitUCUM>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:TT303">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT303</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CEA_H2_Production_2025_10_15_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT303</eg:storedInDatabaseColumn>
+        <eg:unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">°C</eg:unit>
+        <eg:unitUCUM rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cel</eg:unitUCUM>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:TT304">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT304</rdfs:label>
+        <eg:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CEA_H2_Production_2025_10_15_table</eg:storedInDatabaseTable>
+        <eg:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT304</eg:storedInDatabaseColumn>
+        <eg:unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">°C</eg:unit>
+        <eg:unitUCUM rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cel</eg:unitUCUM>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT101">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT101</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT102">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT102</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT102</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT104">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT104</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT104</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FV412">
+        <rdf:type rdf:resource="eg:StateMeasurement" />
+        <rdfs:label xml:lang="en">FV412</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FV412</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FV238">
+        <rdf:type rdf:resource="eg:StateMeasurement" />
+        <rdfs:label xml:lang="en">FV238</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FV238</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:VT356">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">VT356</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:Istack01">
+        <rdf:type rdf:resource="eg:PowerMeasurement" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Istack01</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:t_SOEC_kh_2">
+        <rdf:type rdf:resource="eg:Timer" />
+        <rdfs:label xml:lang="en">t_SOEC_kh_2</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            t_SOEC_kh_2</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWattHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:t_SOEC_kh_3">
+        <rdf:type rdf:resource="eg:Timer" />
+        <rdfs:label xml:lang="en">t_SOEC_kh_3</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            t_SOEC_kh_3</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWattHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:t_SOEC_kh_4">
+        <rdf:type rdf:resource="eg:Timer" />
+        <rdfs:label xml:lang="en">t_SOEC_kh_4</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            t_SOEC_kh_4</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWattHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:M_X_H_02">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">M_X_H_02</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M_X_H_02</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:M_R_B_02">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">M_R_B_02</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M_R_B_02</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:M_R_B_03">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">M_R_B_03</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M_R_B_03</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:PV305">
+        <rdf:type rdf:resource="eg:StateMeasurement" />
+        <rdfs:label xml:lang="en">PV305</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PV305</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:PV305b">
+        <rdf:type rdf:resource="eg:StateMeasurement" />
+        <rdfs:label xml:lang="en">PV305b</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PV305b</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:PV220">
+        <rdf:type rdf:resource="eg:StateMeasurement" />
+        <rdfs:label xml:lang="en">PV220</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PV220</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:PV220b">
+        <rdf:type rdf:resource="eg:StateMeasurement" />
+        <rdfs:label xml:lang="en">PV220b</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PV220b</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:PV220b2">
+        <rdf:type rdf:resource="eg:StateMeasurement" />
+        <rdfs:label xml:lang="en">PV220b2</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PV220b2</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:M_K_H_03">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">M_K_H_03</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M_K_H_03</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:cns_I_stack01">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">cns_I_stack01</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            cns_I_stack01</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Ampere" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:cns_I_stack02">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">cns_I_stack02</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            cns_I_stack02</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Ampere" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:cns_I_stack03">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">cns_I_stack03</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            cns_I_stack03</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Ampere" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:cns_I_stack04">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">cns_I_stack04</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            cns_I_stack04</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Ampere" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:cns_FV508">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">cns_FV508</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cns_FV508</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:cns_FV101">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">cns_FV101</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cns_FV101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:cns_FV102">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">cns_FV102</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cns_FV102</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:cns_Stacks_Inlets_deltaP">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">cns_Stacks_Inlets_deltaP</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            cns_Stacks_Inlets_deltaP</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:TV212">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TV212</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TV212</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:TV216">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TV216</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TV216</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:TV402">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TV402</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TV402</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:TV415">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TV415</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TV415</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:TV504">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TV504</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TV504</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+    </owl:NamedIndividual>
+
+    <!-- Temperature Measurements (Valve) -->
+    <owl:NamedIndividual rdf:ID="eg:TV506">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TV506</rdfs:label>
+        <eg:representsComponent rdf:resource="#Valve" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TV506</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+    </owl:NamedIndividual>
+
+    <!-- Flow Measurements -->
+    <owl:NamedIndividual rdf:ID="eg:FT103">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT103</rdfs:label>
+        <eg:representsComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT103</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT219">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT219</rdfs:label>
+        <eg:representsComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT219</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT221">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT221</rdfs:label>
+        <eg:representsComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT221</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT232">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT232</rdfs:label>
+        <eg:representsComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT232</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT237">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT237</rdfs:label>
+        <eg:representsComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT237</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT405">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT405</rdfs:label>
+        <eg:representsComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT405</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT412">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT412</rdfs:label>
+        <eg:representsComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT412</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT413">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT413</rdfs:label>
+        <eg:representsComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT413</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT417">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT417</rdfs:label>
+        <eg:representsComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT417</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT421">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT421</rdfs:label>
+        <eg:representsComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT421</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT501">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT501</rdfs:label>
+        <eg:representsComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT501</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:FT507">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT507</rdfs:label>
+        <eg:representsComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT507</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+    </owl:NamedIndividual>
+
+    <!-- Voltage Measurements -->
+    <owl:NamedIndividual rdf:ID="eg:VT357">
+        <rdf:type rdf:resource="eg:VoltageMeasurement" />
+        <rdfs:label xml:lang="en">VT357</rdfs:label>
+        <eg:representsComponent rdf:resource="#ElectricalSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">VT357</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Volt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:VT358">
+        <rdf:type rdf:resource="eg:VoltageMeasurement" />
+        <rdfs:label xml:lang="en">VT358</rdfs:label>
+        <eg:representsComponent rdf:resource="#ElectricalSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">VT358</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Volt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:VT359">
+        <rdf:type rdf:resource="eg:VoltageMeasurement" />
+        <rdfs:label xml:lang="en">VT359</rdfs:label>
+        <eg:representsComponent rdf:resource="#ElectricalSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">VT359</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Volt" />
+    </owl:NamedIndividual>
+
+    <!-- Stack currents / Power -->
+    <owl:NamedIndividual rdf:ID="eg:Istack02">
+        <rdf:type rdf:resource="eg:PowerMeasurement" />
+        <rdfs:label xml:lang="en">Istack02</rdfs:label>
+        <eg:representsComponent rdf:resource="#ElectricalSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Istack02</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:Istack03">
+        <rdf:type rdf:resource="eg:PowerMeasurement" />
+        <rdfs:label xml:lang="en">Istack03</rdfs:label>
+        <eg:representsComponent rdf:resource="#ElectricalSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Istack03</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:Istack04">
+        <rdf:type rdf:resource="eg:PowerMeasurement" />
+        <rdfs:label xml:lang="en">Istack04</rdfs:label>
+        <eg:representsComponent rdf:resource="#ElectricalSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Istack04</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:KiloWatt" />
+    </owl:NamedIndividual>
+
+    <!-- Differential Pressure Measurements -->
+    <owl:NamedIndividual rdf:ID="eg:DPT202">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">DPT202</rdfs:label>
+        <eg:representsComponent rdf:resource="#PressureSensorSystemGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DPT202</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:DPT207">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">DPT207</rdfs:label>
+        <eg:representsComponent rdf:resource="#PressureSensorSystemGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DPT207</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:DPT208">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">DPT208</rdfs:label>
+        <eg:representsComponent rdf:resource="#PressureSensorSystemGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DPT208</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:DPT213">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">DPT213</rdfs:label>
+        <eg:representsComponent rdf:resource="#PressureSensorSystemGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DPT213</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:DPT214">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">DPT214</rdfs:label>
+        <eg:representsComponent rdf:resource="#PressureSensorSystemGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DPT214</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:DPT311">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">DPT311</rdfs:label>
+        <eg:representsComponent rdf:resource="#PressureSensorSystemGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DPT311</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:ID="eg:DPT403">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">DPT403</rdfs:label>
+        <eg:representsComponent rdf:resource="#PressureSensorSystemGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            CEA_H2_Production_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DPT403</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+    </owl:NamedIndividual>
+
+</rdf:RDF>

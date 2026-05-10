@@ -1,0 +1,19 @@
+services:
+  neo4j-test:
+    image: neo4j:2025.10.1-bullseye
+    container_name: neo4j-test
+    ports:
+      - "7475:7474"  # HTTP interface for the test instance
+      - "7688:7687"  # Bolt interface for the test instance
+    volumes:
+      - ./data-test:/data
+      - ./logs-test:/logs
+      - ./import:/import
+      - ./plugins:/plugins
+    environment:
+      NEO4J_AUTH: "neo4j/neo4j@energyguard"
+      NEO4J_dbms_security_procedures_unrestricted: 'apoc.*,n10s.*'
+      NEO4J_apoc_import_file_enabled: "true"
+      NEO4J_apoc_export_file_enabled: "true"
+      NEO4J_dbms_connector_bolt_advertised__address: energyguard.epu.ntua.gr:7688
+      NEO4J_dbms_connector_http_advertised__address: energyguard.epu.ntua.gr:7475

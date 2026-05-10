@@ -1,0 +1,315 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.energyguard.eu/ontology/rec#"
+    xml:base="http://www.energyguard.eu/ontology/rec"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:saref="https://saref.etsi.org/core/"
+    xmlns:s4ener="https://saref.etsi.org/saref4ener/"
+    xmlns:sosa="http://www.w3.org/ns/sosa/"
+    xmlns:dcat="http://www.w3.org/ns/dcat#"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+    xmlns:eg="http://www.energyguard.eu/ontology/rec#">
+
+    <!-- Ontology header -->
+    <owl:Ontology rdf:about="http://www.energyguard.eu/ontology/rec">
+        <rdfs:label xml:lang="en">Pilot 5 Engreen REC Ontology - Refined</rdfs:label>
+        <rdfs:comment xml:lang="en">
+            Refined Renewable Energy Community (REC) ontology with simplified subclassing,
+            added user and energy asset metadata, and optimized time-series measurement modeling.
+        </rdfs:comment>
+        <owl:versionInfo>1.1.0-refined</owl:versionInfo>
+        <owl:imports rdf:resource="https://saref.etsi.org/core/" />
+        <owl:imports rdf:resource="https://saref.etsi.org/saref4ener/" />
+        <owl:imports rdf:resource="http://www.w3.org/ns/sosa/" />
+        <owl:imports rdf:resource="http://www.w3.org/ns/dcat#" />
+        <owl:imports rdf:resource="http://xmlns.com/foaf/0.1/" />
+        <owl:imports rdf:resource="http://www.w3.org/2003/01/geo/wgs84_pos#" />
+    </owl:Ontology>
+
+    <!-- Core Classes -->
+    <owl:Class rdf:about="#REC">
+        <rdfs:subClassOf rdf:resource="foaf:Organization" />
+        <rdfs:label>Renewable Energy Community</rdfs:label>
+        <rdfs:comment>Community of energy users sharing renewable energy resources.</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#UserProfile">
+        <rdfs:subClassOf rdf:resource="foaf:Agent" />
+        <rdfs:label>User Profile</rdfs:label>
+        <rdfs:comment>Profile of a user in the REC (consumer, prosumer, or producer).</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#EnergyAsset">
+        <rdfs:subClassOf rdf:resource="saref:Device" />
+        <rdfs:label>Energy Asset</rdfs:label>
+        <rdfs:comment>Physical energy generation or storage device owned by a user.</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#Battery">
+        <rdfs:subClassOf rdf:resource="#EnergyAsset" />
+        <rdfs:label>Battery</rdfs:label>
+        <rdfs:comment>Battery energy storage system.</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#PhotovoltaicSystem">
+        <rdfs:subClassOf rdf:resource="#EnergyAsset" />
+        <rdfs:label>Photovoltaic System</rdfs:label>
+        <rdfs:comment>Solar PV system.</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#Contract">
+        <rdfs:label>Contract</rdfs:label>
+        <rdfs:comment>REC participation contract.</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#RetributionScheme">
+        <rdfs:label>Retribution Scheme</rdfs:label>
+        <rdfs:comment>Incentive or tariff scheme for energy sharing.</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#Dataset">
+        <rdfs:subClassOf rdf:resource="dcat:Dataset" />
+        <rdfs:label>Dataset</rdfs:label>
+        <rdfs:comment>Dataset containing REC measurement data.</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#MeasurementSeries">
+        <rdfs:label>Measurement Series</rdfs:label>
+        <rdfs:comment>Grouping of related time-series measurements.</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#Measurement">
+        <rdfs:subClassOf rdf:resource="sosa:Observation" />
+        <rdfs:label>Measurement</rdfs:label>
+        <rdfs:comment>Observation of energy-related data.</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#ConsumptionMeasurement">
+        <rdfs:subClassOf rdf:resource="#Measurement" />
+        <rdfs:label>Consumption Measurement</rdfs:label>
+        <rdfs:comment>Power consumption observation.</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#ProductionMeasurement">
+        <rdfs:subClassOf rdf:resource="#Measurement" />
+        <rdfs:subClassOf rdf:resource="s4ener:Power" />
+        <rdfs:label>Production Measurement</rdfs:label>
+        <rdfs:comment>Energy production observation.</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#BatteryMeasurement">
+        <rdfs:subClassOf rdf:resource="#Measurement" />
+        <rdfs:label>Battery Measurement</rdfs:label>
+        <rdfs:comment>Battery SOC and energy flow observation.</rdfs:comment>
+    </owl:Class>
+
+    <!-- Properties: REC -->
+    <owl:ObjectProperty rdf:about="#hasUserProfile">
+        <rdfs:domain rdf:resource="#REC" />
+        <rdfs:range rdf:resource="#UserProfile" />
+        <rdfs:label>has user profile</rdfs:label>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#hasDataset">
+        <rdfs:domain rdf:resource="#REC" />
+        <rdfs:range rdf:resource="#Dataset" />
+        <rdfs:label>has dataset</rdfs:label>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#hasRetributionScheme">
+        <rdfs:domain rdf:resource="#REC" />
+        <rdfs:range rdf:resource="#RetributionScheme" />
+        <rdfs:label>has retribution scheme</rdfs:label>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#locatedAt">
+        <rdfs:domain rdf:resource="#REC" />
+        <rdfs:range rdf:resource="geo:Point" />
+        <rdfs:label>located at</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- Properties: UserProfile -->
+    <owl:ObjectProperty rdf:about="#hasAsset">
+        <rdfs:domain rdf:resource="#UserProfile" />
+        <rdfs:range rdf:resource="#EnergyAsset" />
+        <rdfs:label>has asset</rdfs:label>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#hasMeasurements">
+        <rdfs:domain rdf:resource="#UserProfile" />
+        <rdfs:range rdf:resource="#MeasurementSeries" />
+        <rdfs:label>has measurements</rdfs:label>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#producesPower">
+        <rdfs:domain rdf:resource="#UserProfile" />
+        <rdfs:range rdf:resource="#ProductionMeasurement" />
+        <rdfs:label>produces power</rdfs:label>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#consumesPower">
+        <rdfs:domain rdf:resource="#UserProfile" />
+        <rdfs:range rdf:resource="#ConsumptionMeasurement" />
+        <rdfs:label>consumes power</rdfs:label>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#storesEnergy">
+        <rdfs:domain rdf:resource="#UserProfile" />
+        <rdfs:range rdf:resource="#BatteryMeasurement" />
+        <rdfs:label>stores energy</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- Properties: MeasurementSeries -->
+    <owl:ObjectProperty rdf:about="#hasMeasurement">
+        <rdfs:domain rdf:resource="#MeasurementSeries" />
+        <rdfs:range rdf:resource="#Measurement" />
+        <rdfs:label>has measurement</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- Properties: Measurement values -->
+    <owl:DatatypeProperty rdf:about="#consumptionValue">
+        <rdfs:domain rdf:resource="#ConsumptionMeasurement" />
+        <rdfs:range rdf:resource="xsd:float" />
+        <rdfs:label>consumption value</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#productionValue">
+        <rdfs:domain rdf:resource="#ProductionMeasurement" />
+        <rdfs:range rdf:resource="xsd:float" />
+        <rdfs:label>production value</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#batterySOC">
+        <rdfs:domain rdf:resource="#BatteryMeasurement" />
+        <rdfs:range rdf:resource="xsd:float" />
+        <rdfs:label>battery state of charge</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#chargedDischargedEnergy">
+        <rdfs:domain rdf:resource="#BatteryMeasurement" />
+        <rdfs:range rdf:resource="xsd:float" />
+        <rdfs:label>charged/discharged energy</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- Added user and asset metadata -->
+    <owl:DatatypeProperty rdf:about="#pvCapacity">
+        <rdfs:domain rdf:resource="#PhotovoltaicSystem" />
+        <rdfs:range rdf:resource="xsd:float" />
+        <rdfs:label>pv capacity (kWp)</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#tiltAngle">
+        <rdfs:domain rdf:resource="#PhotovoltaicSystem" />
+        <rdfs:range rdf:resource="xsd:float" />
+        <rdfs:label>tilt angle</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#azimuth">
+        <rdfs:domain rdf:resource="#PhotovoltaicSystem" />
+        <rdfs:range rdf:resource="xsd:float" />
+        <rdfs:label>azimuth</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#voltageLevel">
+        <rdfs:domain rdf:resource="#UserProfile" />
+        <rdfs:range rdf:resource="xsd:string" />
+        <rdfs:label>voltage level</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#userCategory">
+        <rdfs:domain rdf:resource="#UserProfile" />
+        <rdfs:range rdf:resource="xsd:string" />
+        <rdfs:label>user category</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- =======================
+         Users
+    ======================= -->
+    <rdf:Description rdf:about="#User">
+        <rdf:type rdf:resource="#UserProfile" />
+        <rdfs:label>User 1 (Consumer)</rdfs:label>
+        <hasMeasurements rdf:resource="#MeasurementSeries_User1" />
+        <hasContract rdf:resource="#Contract_User1" />
+        <hasRetributionScheme_User rdf:resource="#Retribution_User1" />
+        <hasAsset rdf:resource="#Battery_User1" />
+    </rdf:Description>
+
+    <!-- =======================
+         Energy Assets
+    ======================= -->
+    <rdf:Description rdf:about="#Battery_User">
+        <rdf:type rdf:resource="#Battery" />
+        <rdfs:label>User 1 Battery</rdfs:label>
+    </rdf:Description>
+
+    <!-- =======================
+         Contracts
+    ======================= -->
+    <rdf:Description rdf:about="#Contract_User">
+        <rdf:type rdf:resource="#Contract" />
+        <rdfs:label>User 1 Contract</rdfs:label>
+        <startDate rdf:datatype="xsd:date">2025-01-01</startDate>
+        <endDate rdf:datatype="xsd:date">end</endDate>
+        <newPlant rdf:datatype="xsd:boolean">true</newPlant>
+    </rdf:Description>
+
+    <!-- =======================
+         Retribution Schemes
+    ======================= -->
+    <rdf:Description rdf:about="#Retribution_User">
+        <rdf:type rdf:resource="#RetributionScheme" />
+        <rdfs:label>User 1 Scheme</rdfs:label>
+        <schemeName rdf:datatype="xsd:string">schema_3</schemeName>
+    </rdf:Description>
+
+    <!-- =======================
+         Measurement Series (User1 example)
+    ======================= -->
+    <rdf:Description rdf:about="#MeasurementSeries_User">
+        <rdf:type rdf:resource="#MeasurementSeries" />
+        <rdfs:label>User 1 Measurement Series</rdfs:label>
+        <hasMeasurement rdf:resource="#M_Consumption_User1_00_00" />
+        <hasMeasurement rdf:resource="#M_Battery_User1_00_00" />
+        <hasMeasurement rdf:resource="#M_Production_User1_00_00" />
+        <hasMeasurement rdf:resource="#M_Consumption_User1_00_05" />
+        <hasMeasurement rdf:resource="#M_Battery_User1_00_05" />
+        <hasMeasurement rdf:resource="#M_Production_User1_00_05" />
+    </rdf:Description>
+
+    <!-- =======================
+         Measurements (User1 first timestep)
+    ======================= -->
+    <rdf:Description rdf:about="#M_Consumption_User1_00_00">
+        <rdf:type rdf:resource="#ConsumptionMeasurement" />
+        <rdfs:label>User 1 Consumption 00:00</rdfs:label>
+        <consumptionValue rdf:datatype="xsd:float">0.0</consumptionValue>
+        <measuredAt rdf:resource="#TS_2025_09_14T00_00" />
+    </rdf:Description>
+
+    <rdf:Description rdf:about="#M_Battery_User1_00_00">
+        <rdf:type rdf:resource="#BatteryMeasurement" />
+        <rdfs:label>User 1 Battery 00:00</rdfs:label>
+        <batterySOC rdf:datatype="xsd:float">65.0</batterySOC>
+        <chargedDischargedEnergy rdf:datatype="xsd:float">-0.069</chargedDischargedEnergy>
+        <measuredAt rdf:resource="#TS_2025_09_14T00_00" />
+    </rdf:Description>
+
+    <rdf:Description rdf:about="#M_Production_User1_00_00">
+        <rdf:type rdf:resource="#ProductionMeasurement" />
+        <rdfs:label>User 1 Production 00:00</rdfs:label>
+        <productionValue rdf:datatype="xsd:float">0.069</productionValue>
+        <measuredAt rdf:resource="#TS_2025_09_14T00_00" />
+    </rdf:Description>
+    
+    <!-- =======================
+         Timestamps
+    ======================= -->
+    <rdf:Description rdf:about="#TS_2025_09_14T00_00">
+        <rdf:type rdf:resource="#Timestamp" />
+        <dateTime rdf:datatype="xsd:dateTime">2025-09-14T00:00:00</dateTime>
+    </rdf:Description>
+
+</rdf:RDF>

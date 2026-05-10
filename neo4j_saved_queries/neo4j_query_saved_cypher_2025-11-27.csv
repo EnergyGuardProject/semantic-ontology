@@ -1,0 +1,181 @@
+name,description,query,id,parentId,isFolder
+Schema viz,,CALL db.schema.visualization,0,,false
+Return all nodes,,"MATCH (n)
+RETURN n",1,,false
+"Return nodes, relationships and other nodes",,"MATCH (n)-[r]-(n2)
+RETURN n, r, n2",2,,false
+n10s installation,,,3,,true
+Uniqueness Constraint,,"CREATE CONSTRAINT n10s_unique_uri
+FOR (r:Resource)
+REQUIRE r.uri IS UNIQUE;",4,3,false
+Validate n10s installation,,"SHOW PROCEDURES YIELD name
+WHERE name STARTS WITH 'n10s'
+RETURN name ORDER BY name;",5,3,false
+Call n10s init,,CALL n10s.graphconfig.init();,6,3,false
+Import OWL File,,"CALL n10s.rdf.import.fetch(
+  ""file:///C:/Users/atzortzis/OneDrive%20-%20EPU-NTUA/Documents/ΕPU%20Projects/EGuard/ontology/pilot1_ts_refactored.owl"",
+  ""RDF/XML""
+);",7,3,false
+Ontology Structure,,"MATCH (c1:Resource)-[r]->(c2:Resource)
+RETURN DISTINCT labels(c1) AS FromLabels, type(r) AS Relation, labels(c2) AS ToLabels
+ORDER BY FromLabels, Relation;",8,3,false
+n10s overview,,,9,,true
+Ontology Structure,,"MATCH (c1:Resource)-[r]->(c2:Resource)
+RETURN DISTINCT labels(c1) AS FromLabels, type(r) AS Relation, labels(c2) AS ToLabels
+ORDER BY FromLabels, Relation;",10,9,false
+Explore all triples (subject-predicate-object),,"MATCH (s:Resource)-[p]->(o)
+RETURN s.iri AS Subject, type(p) AS Predicate, 
+       CASE WHEN o:Resource THEN o.iri ELSE o END AS Object
+LIMIT 100;",11,9,false
+List all classes,,"MATCH (c)
+WHERE any(l IN labels(c) WHERE l STARTS WITH ""ns"") OR ""Dataset"" IN labels(c)
+RETURN DISTINCT labels(c) AS ClassLabels
+ORDER BY ClassLabels;",12,9,false
+Get database labels,,CALL db.labels(),13,,false
+Query examples,,,14,,true
+Filter rows,,"MATCH (w:WindSeries), (s:`Solar Series`), (n:`Netload Series`)
+WITH w, s, n
+WHERE toFloat(w.wind) < 40
+  AND toFloat(s.solar) < 20
+  AND toFloat(n.`Net load`) > 0
+RETURN toFloat(w.wind) AS Wind,
+       toFloat(s.solar) AS Solar,
+       toFloat(n.`Net load`) AS `Net load`
+LIMIT 100",15,14,false
+Filter in series,,"MATCH (w:WindSeries)
+WHERE toFloat(w.wind) < 40
+RETURN w",16,14,false
+"Average wind ",,"MATCH (w:WindSeries)
+RETURN avg(toFloat(w.wind)) AS AvgWind",17,14,false
+EnergyGuard,,,18,,true
+Pilot2,,,19,18,true
+Pilot2 Ontology mapping,,"WITH {
+  `RADIACION SOLAR`: 'RADIACION_SOLAR',
+  `EDIFICIO ARFRISOL`: 'EDIFICIO_ARFRISOL_PV',
+  `PARKING ARFRISOL`: 'PARKING_ARFRISOL_PV',
+  `PEPA III`: 'PEPA_III',
+  `PEPA III INVERSOR 1`: 'PEPA_III_INV1_PV',
+  `PEPA III INVERSOR 2`: 'PEPA_III_INV2_PV',
+  `PEPA III SEGUIDOR 3`: 'PEPA_III_TRACKER3_PV',
+  `PEPA III SEGUIDOR 5`: 'PEPA_III_TRACKER5_PV',
+  `PEPA III SEGUIDOR 6.1`: 'PEPA_III_TRACKER6_1_PV',
+  `PEPA III SEGUIDOR 6.2`: 'PEPA_III_TRACKER6_2_PV',
+  `PEPA III SEGUIDOR 7`: 'PEPA_III_TRACKER7_PV',
+  `PEPA III SEGUIDOR 8`: 'PEPA_III_TRACKER8_PV',
+  `PEPA III INVERSOR 9`: 'PEPA_III_INV9_PV',
+  `PEPA III MICROINVERSORES`: 'PEPA_III_MICROINV_PV',
+
+  `TURBINA`: 'TURBINA_Production',
+  `CENTRAL TERMICA`: 'CENTRAL_THERMAL',
+
+  `ED02`: 'ED02',
+  `ED03`: 'ED03',
+  `ED09`: 'ED09',
+
+  `LECA 1`: 'LECA_1',
+  `LECA 2`: 'LECA_2',
+
+  `PEPA II`: 'PEPA_II',
+  `PEPA_I`: 'PEPA_I',
+
+  `RIOS`: 'RIOS',
+  `ATLANTIC`: 'ATLANTIC',
+
+  `VIENTO PEPA I`: 'VIENTO_PEPA_I',
+  `VIENTO ESTACION`: 'VIENTO_ESTACION',
+
+  `ENNERA 3.5`: 'ENNERA_3_5_Production',
+  `WINDERA 4.2`: 'WINDERA_4_2_Production',
+
+  `DEPOSITO NIVEL`: 'DEPOSITO_NIVEL',
+  `DEPOSITO NIVEL LEVI`: 'DEPOSITO_NIVEL_LEVI',
+  `DEPOSITO NIVEL INFERIOR`: 'DEPOSITO_NIVEL_INFERIOR',
+
+  `BOMBAS`: 'BOMBAS',
+
+  `BATERIA PEPA I`: 'BATERIA_PEPA_I_CARGA',
+  `BATERIA PEPA II`: 'BATERIA_PEPA_II_CARGA',
+  `BATERIA LITIO`: 'BATERIA_LITIO_CARGA',
+  `BATERIA NMC PEPA II`: 'BATERIA_NMC_PEPA_II',
+  `BATERIA REDOX`: 'BATERIA_REDOX',
+
+  `GRUPO DIESEL`: 'GRUPO_DIESEL_Power',
+
+  `ARFRISOL`: 'ARFRISOL_GENERIC',
+  `LEVI`: 'LEVI',
+
+  `VATIMETRO PEPA_III`: 'VATIMETRO_PEPA_III',
+  `ACTARIS`: 'ACTARIS_Measurement'
+} AS mapping
+RETURN mapping;
+",20,19,false
+N10s init shorten,,"CALL n10s.graphconfig.init({
+  handleVocabUris: ""SHORTEN"",
+  typesToLabels: true,
+  handleMultival: ""ARRAY"",
+  keepCustomDataTypes: true
+});
+",21,18,false
+Delete everything,,"MATCH (n)
+DETACH DELETE n;",22,18,false
+N10s init (EGuard),,"CALL n10s.graphconfig.init({
+  handleVocabUris: ""SHORTEN"",
+  typesToLabels: true,
+  namespacePrefixMappings: { eg: '<http://www.energyguard.eu/ontology#>' }
+});",23,18,false
+Clean Labels for better viz,,"// =========================
+// 1️⃣ Add meaningful labels from secondary ones
+// =========================
+MATCH (n)
+WITH n, [l IN labels(n) WHERE l STARTS WITH ""ns""] AS meaningfulLabels
+WHERE size(meaningfulLabels) > 0
+CALL apoc.create.addLabels(n, meaningfulLabels) YIELD node
+RETURN count(*) AS addedLabels;
+
+// =========================
+// 2️⃣ Remove generic labels for better visualization
+// =========================
+MATCH (n)
+WHERE ""Resource"" IN labels(n)
+REMOVE n:Resource
+RETURN count(*) AS removedResource;
+
+MATCH (n)
+WHERE ""owl__Class"" IN labels(n)
+REMOVE n:owl__Class
+RETURN count(*) AS removedClasses;
+
+MATCH (n)
+WHERE ""owl__NamedIndividual"" IN labels(n)
+REMOVE n:owl__NamedIndividual
+RETURN count(*) AS removedIndividuals;
+
+// =========================
+// 3️⃣ Optional: add temporary ""Viz"" label for coloring
+// =========================
+MATCH (n)
+WITH n, [l IN labels(n) WHERE l STARTS WITH ""ns""] AS meaningfulLabels
+WHERE size(meaningfulLabels) > 0
+CALL apoc.create.addLabels(n, [""Viz_"" + meaningfulLabels[0]]) YIELD node
+RETURN count(*) AS vizLabels;
+
+// =========================
+// 4️⃣ Optional: inspect relationships
+// =========================
+MATCH (n)-[r]->(m)
+WHERE any(l IN labels(n) WHERE l STARTS WITH ""ns"")
+  AND any(l IN labels(m) WHERE l STARTS WITH ""ns"")
+RETURN n, r, m
+LIMIT 300;",24,18,false
+Full ontology graph viz,,"MATCH (n)-[r]->(m)
+WHERE any(l IN labels(n) WHERE l STARTS WITH ""ns"") 
+   OR any(l IN labels(m) WHERE l STARTS WITH ""ns"")
+RETURN n, r, m
+LIMIT 300;
+",25,18,false
+Pilot 2 import ontology,,"CALL n10s.rdf.import.fetch(
+  ""file:///C:/Users/atzortzis/OneDrive%20-%20EPU-NTUA/Documents/ΕPU%20Projects/EGuard/ontology/ontology_v3/pilot2_refactored_v3.owl"",
+  ""RDF/XML"",
+  { handleVocabUris: ""SHORTEN"" }
+);",26,19,false
+New Folder,,,27,,true

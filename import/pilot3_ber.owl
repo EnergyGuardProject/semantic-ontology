@@ -1,0 +1,893 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rdf:RDF xmlns:dct="http://purl.org/dc/terms/" xmlns:eg="http://www.energyguard.eu/ontology#" xmlns:ns3="http://www.w3.org/ns/dcat#" xmlns:ns7="http://www.ceder-energy.org/ontology#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:sosa="http://www.w3.org/ns/sosa/" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:saref="https://saref.etsi.org/core/v4.1.1/" xmlns:s4ener="https://saref.etsi.org/saref4ener/v2.1.1/" xmlns:qudt="http://qudt.org/schema/qudt/" xmlns:unit="http://qudt.org/vocab/unit/" xmlns:cd="http://www.ceder-energy.org/ontology#" xmlns:dcat="http://www.w3.org/ns/dcat#" xml:base="http://www.energyguard.eu/ontology">
+
+    <owl:Ontology rdf:about="http://www.energyguard.eu/ontology/ber/v3">
+        <rdfs:label>BER Pilot 3 Ontology (Refactored v3)</rdfs:label>
+        <rdfs:comment>v3: dataset and measurement individuals explicitly reference their owning SystemComponent via eg:representsComponent. Converted from ontology_v2/pilot3_ber_refactored.owl (sample conversion).</rdfs:comment>
+        <owl:versionInfo>3.0.0-refactored</owl:versionInfo>
+        <owl:imports rdf:resource="https://saref.etsi.org/core/v4.1.1/" />
+        <owl:imports rdf:resource="https://saref.etsi.org/saref4ener/v2.1.1/" />
+        <owl:imports rdf:resource="http://www.w3.org/ns/sosa/" />
+        <owl:imports rdf:resource="http://qudt.org/schema/qudt/" />
+        <owl:imports rdf:resource="http://www.w3.org/ns/dcat#" />
+        
+        <owl:imports rdf:resource="../ontology_v2/pilot3_ber_refactored.owl" />
+    </owl:Ontology>
+
+    <owl:Class rdf:about="eg:Measurement">
+        <rdfs:subClassOf rdf:resource="sosa:Observation" />
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:TemperatureMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement" />
+    </owl:Class>
+    <owl:Class rdf:about="eg:PressureMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement" />
+    </owl:Class>
+    <owl:Class rdf:about="eg:FlowMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement" />
+    </owl:Class>
+    <owl:Class rdf:about="eg:LevelMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement" />
+    </owl:Class>
+    <owl:Class rdf:about="eg:CompositionMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement" />
+    </owl:Class>
+    <owl:Class rdf:about="eg:VoltageMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement" />
+    </owl:Class>
+    <owl:Class rdf:about="eg:CurrentMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement" />
+    </owl:Class>
+    <owl:Class rdf:about="eg:PowerMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement" />
+    </owl:Class>
+    <owl:Class rdf:about="eg:PowerQualityMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement" />
+    </owl:Class>
+    <owl:Class rdf:about="eg:ControlSignalMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement" />
+    </owl:Class>
+    <owl:Class rdf:about="eg:TimerMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement" />
+    </owl:Class>
+    <owl:Class rdf:about="eg:StateMeasurement">
+        <rdfs:subClassOf rdf:resource="eg:Measurement" />
+    </owl:Class>
+
+    <owl:ObjectProperty rdf:about="eg:hasMeasurement">
+        <rdfs:domain rdf:resource="eg:SystemComponent" />
+        <rdfs:range rdf:resource="eg:Measurement" />
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:isPartOfComponent">
+        <rdfs:domain rdf:resource="eg:Measurement" />
+        <rdfs:range rdf:resource="eg:SystemComponent" />
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:representsMeasurement">
+        <rdfs:domain rdf:resource="dcat:Dataset" />
+        <rdfs:range rdf:resource="eg:Measurement" />
+    </owl:ObjectProperty>
+
+    
+    <ns3:Dataset rdf:about="eg:BER_Dataset_2025_10_15">
+        <ns3:title>BER System 2025-10-15</ns3:title>
+        <ns3:mediaType>text/csv</ns3:mediaType>
+        <eg:startTime rdf:datatype="xsd:dateTime">2025-10-15T00:00:00+00:00</eg:startTime>
+        <eg:endTime rdf:datatype="xsd:dateTime">2025-10-15T23:59:59+00:00</eg:endTime>
+        <eg:sampleRate rdf:datatype="xsd:float">1.0</eg:sampleRate>
+        
+        <eg:representsMeasurement rdf:resource="#TemperatureMeasurementGroup" />
+        <eg:representsMeasurement rdf:resource="#PressureMeasurementGroup" />
+        <eg:representsMeasurement rdf:resource="#FlowMeasurementGroup" />
+        <eg:representsMeasurement rdf:resource="#LevelMeasurementGroup" />
+        <eg:representsMeasurement rdf:resource="#CompositionMeasurementGroup" />
+        <eg:representsMeasurement rdf:resource="#VoltageMeasurementGroup" />
+        <eg:representsMeasurement rdf:resource="#CurrentMeasurementGroup" />
+        <eg:representsMeasurement rdf:resource="#PowerMeasurementGroup" />
+        <eg:representsMeasurement rdf:resource="#PowerQualityMeasurementGroup" />
+        <eg:representsMeasurement rdf:resource="#ControlSignalMeasurementGroup" />
+        <eg:representsMeasurement rdf:resource="#TimerMeasurementGroup" />
+        <eg:representsMeasurement rdf:resource="#StateMeasurementGroup" />
+
+        <ns3:distribution>
+            <ns3:Distribution>
+                <ns3:downloadURL rdf:resource="./data/BER_System_2025-10-15.lp" />
+                <ns3:mediaType>text/csv</ns3:mediaType>
+                <dct:hasFormat rdf:resource="./data/BER_System_2025-10-15.lp-metadata.json" />
+            </ns3:Distribution>
+        </ns3:distribution>
+    </ns3:Dataset>
+
+
+    <sosa:ObservationCollection rdf:ID="TemperatureMeasurementGroup">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        
+        <eg:hasMeasurement rdf:resource="#TT-D101" />
+        <eg:hasMeasurement rdf:resource="#TT-X101" />
+        <eg:hasMeasurement rdf:resource="#TT-X201" />
+        <eg:hasMeasurement rdf:resource="#TT-U301" />
+        <eg:hasMeasurement rdf:resource="#TT-U301" />
+        
+        <eg:hasMeasurement rdf:resource="#TT-M202" />
+        <eg:hasMeasurement rdf:resource="#TT-M205" />
+        <eg:hasMeasurement rdf:resource="#TT-M302" />
+        <eg:hasMeasurement rdf:resource="#TT-M305" />
+        
+        <eg:hasMeasurement rdf:resource="#TT-H201" />
+        <eg:hasMeasurement rdf:resource="#TT-H502" />
+        <eg:hasMeasurement rdf:resource="#TT-H405" />
+        
+        <eg:hasMeasurement rdf:resource="#TT-C401" />
+        
+        <eg:hasMeasurement rdf:resource="#TT-B103" />
+        <eg:hasMeasurement rdf:resource="#TT-T101" />
+        
+        <eg:hasMeasurement rdf:resource="#TT-D201" />
+        <eg:hasMeasurement rdf:resource="#TT-B102" />
+        
+        <eg:hasMeasurement rdf:resource="#TT-4001" />
+        <eg:hasMeasurement rdf:resource="#TT-4002" />
+        <eg:hasMeasurement rdf:resource="#TT-4003" />
+        <eg:hasMeasurement rdf:resource="#TT-5001" />
+        <eg:hasMeasurement rdf:resource="#TT-5002" />
+        <eg:hasMeasurement rdf:resource="#TT-5003" />
+    </sosa:ObservationCollection>
+
+    <sosa:ObservationCollection rdf:ID="PressureMeasurementGroup">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        
+        <eg:hasMeasurement rdf:resource="#PT-D101" />
+        <eg:hasMeasurement rdf:resource="#PT-X101" />
+        <eg:hasMeasurement rdf:resource="#PT-X102" />
+        
+        <eg:hasMeasurement rdf:resource="#PT-U301" />
+        <eg:hasMeasurement rdf:resource="#PT-U302" />
+        
+        <eg:hasMeasurement rdf:resource="#PT-M201" />
+        <eg:hasMeasurement rdf:resource="#PT-M301" />
+        
+        <eg:hasMeasurement rdf:resource="#PT-H101" />
+        <eg:hasMeasurement rdf:resource="#PT-H301" />
+        
+        <eg:hasMeasurement rdf:resource="#PT-D201" />
+    </sosa:ObservationCollection>
+
+    <sosa:ObservationCollection rdf:ID="FlowMeasurementGroup">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        
+        <eg:hasMeasurement rdf:resource="#FT-M200-1" />
+        <eg:hasMeasurement rdf:resource="#FT-M200-2" />
+        <eg:hasMeasurement rdf:resource="#FT-M300-1" />
+        <eg:hasMeasurement rdf:resource="#FT-M300-2" />
+        
+        <eg:hasMeasurement rdf:resource="#FT-H200" />
+    </sosa:ObservationCollection>
+
+    <sosa:ObservationCollection rdf:ID="LevelMeasurementGroup">
+        <rdf:type rdf:resource="eg:LevelMeasurement" />
+        <eg:hasMeasurement rdf:resource="#LT-D101" />
+        <eg:hasMeasurement rdf:resource="#LT-X101" />
+        <eg:hasMeasurement rdf:resource="#LS-C401" />
+        <eg:hasMeasurement rdf:resource="#LT-D201" />
+    </sosa:ObservationCollection>
+
+    <sosa:ObservationCollection rdf:ID="CompositionMeasurementGroup">
+        <rdf:type rdf:resource="eg:CompositionMeasurement" />
+        <eg:hasMeasurement rdf:resource="#CT-X101" />
+        <eg:hasMeasurement rdf:resource="#CT-D201" />
+        <eg:hasMeasurement rdf:resource="#H2T-B103" />
+        <eg:hasMeasurement rdf:resource="#O2T-A201" />
+        <eg:hasMeasurement rdf:resource="#HT-A301" />
+    </sosa:ObservationCollection>
+
+    <sosa:ObservationCollection rdf:ID="VoltageMeasurementGroup">
+        <rdf:type rdf:resource="eg:VoltageMeasurement" />
+        <eg:hasMeasurement rdf:resource="#ET-1001" />
+        <eg:hasMeasurement rdf:resource="#ET-4004" />
+        <eg:hasMeasurement rdf:resource="#ET-5004" />
+    </sosa:ObservationCollection>
+
+    <sosa:ObservationCollection rdf:ID="CurrentMeasurementGroup">
+        <rdf:type rdf:resource="eg:CurrentMeasurement" />
+        <eg:hasMeasurement rdf:resource="#IT-1101" />
+        <eg:hasMeasurement rdf:resource="#IS-1102" />
+        <eg:hasMeasurement rdf:resource="#IS-1003" />
+        <eg:hasMeasurement rdf:resource="#IL-1104" />
+        <eg:hasMeasurement rdf:resource="#IL-1005" />
+        <eg:hasMeasurement rdf:resource="#IT-3101" />
+        <eg:hasMeasurement rdf:resource="#IT-3201" />
+        <eg:hasMeasurement rdf:resource="#IT-3301" />
+        <eg:hasMeasurement rdf:resource="#IT-4005" />
+        <eg:hasMeasurement rdf:resource="#IT-5005" />
+    </sosa:ObservationCollection>
+
+    <sosa:ObservationCollection rdf:ID="PowerMeasurementGroup">
+        <rdf:type rdf:resource="eg:PowerMeasurement" />
+        <eg:hasMeasurement rdf:resource="#JT-3001" />
+        <eg:hasMeasurement rdf:resource="#JT-3002" />
+        <eg:hasMeasurement rdf:resource="#JT-3003" />
+        <eg:hasMeasurement rdf:resource="#JT-3102" />
+        <eg:hasMeasurement rdf:resource="#JT-3202" />
+        <eg:hasMeasurement rdf:resource="#JT-3302" />
+        <eg:hasMeasurement rdf:resource="#JT-4001" />
+        <eg:hasMeasurement rdf:resource="#JT-5001" />
+    </sosa:ObservationCollection>
+
+    <sosa:ObservationCollection rdf:ID="PowerQualityMeasurementGroup">
+        <rdf:type rdf:resource="eg:PowerQualityMeasurement" />
+        <eg:hasMeasurement rdf:resource="#XT-3103" />
+        <eg:hasMeasurement rdf:resource="#XT-3203" />
+        <eg:hasMeasurement rdf:resource="#XT-3303" />
+        <eg:hasMeasurement rdf:resource="#XT-4007" />
+        <eg:hasMeasurement rdf:resource="#XT-4013" />
+        <eg:hasMeasurement rdf:resource="#XT-5007" />
+        <eg:hasMeasurement rdf:resource="#XT-5013" />
+        <eg:hasMeasurement rdf:resource="#ST-4006" />
+        <eg:hasMeasurement rdf:resource="#ST-5006" />
+    </sosa:ObservationCollection>
+
+    <sosa:ObservationCollection rdf:ID="ControlSignalMeasurementGroup">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <eg:hasMeasurement rdf:resource="#PMP-U301" />
+        <eg:hasMeasurement rdf:resource="#PMP-D101" />
+        <eg:hasMeasurement rdf:resource="#PMP-U201" />
+        <eg:hasMeasurement rdf:resource="#PMP-U401" />
+        <eg:hasMeasurement rdf:resource="#SV2-D201" />
+        <eg:hasMeasurement rdf:resource="#SV2-M201" />
+        <eg:hasMeasurement rdf:resource="#SV2-M202" />
+        <eg:hasMeasurement rdf:resource="#SV2-M301" />
+        <eg:hasMeasurement rdf:resource="#SV2-M302" />
+        <eg:hasMeasurement rdf:resource="#SV2-R401" />
+        <eg:hasMeasurement rdf:resource="#SV2-D301" />
+        <eg:hasMeasurement rdf:resource="#SV2-D401" />
+        <eg:hasMeasurement rdf:resource="#SV2-V101" />
+        <eg:hasMeasurement rdf:resource="#HTR-M201" />
+        <eg:hasMeasurement rdf:resource="#HTR-M301" />
+        <eg:hasMeasurement rdf:resource="#HTR-H406" />
+        <eg:hasMeasurement rdf:resource="#HTR-B101" />
+        <eg:hasMeasurement rdf:resource="#FAN-T103" />
+        <eg:hasMeasurement rdf:resource="#FAN-B101" />
+        <eg:hasMeasurement rdf:resource="#CR-K101" />
+        <eg:hasMeasurement rdf:resource="#EXT-B101" />
+        <eg:hasMeasurement rdf:resource="#AS-B103" />
+    </sosa:ObservationCollection>
+
+    <sosa:ObservationCollection rdf:ID="TimerMeasurementGroup">
+        <rdf:type rdf:resource="eg:TimerMeasurement" />
+        <eg:hasMeasurement rdf:resource="#SEQ-M200" />
+        <eg:hasMeasurement rdf:resource="#SEQ-M300" />
+        <eg:hasMeasurement rdf:resource="#SEQ-M400" />
+        <eg:hasMeasurement rdf:resource="#SEQ-X101" />
+    </sosa:ObservationCollection>
+
+    <sosa:ObservationCollection rdf:ID="StateMeasurementGroup">
+        <rdf:type rdf:resource="eg:StateMeasurement" />
+        <eg:hasMeasurement rdf:resource="#SOC-M200" />
+        <eg:hasMeasurement rdf:resource="#SOC-M300" />
+    </sosa:ObservationCollection>
+
+    <!-- ========== Sample converted measurement NamedIndividuals (pattern for full conversion)
+    ========== -->
+    <owl:NamedIndividual rdf:about="eg:TT-D101">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT-D101</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT-D101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PT-D101">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">PT-D101</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PT-D101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FT-H200">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT-H200</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT-H200</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ET-1001">
+        <rdf:type rdf:resource="eg:VoltageMeasurement" />
+        <rdfs:label xml:lang="en">ET-1001</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ET-1001</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Volt" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:IT-1101">
+        <rdf:type rdf:resource="eg:CurrentMeasurement" />
+        <rdfs:label xml:lang="en">IT-1101</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IT-1101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Ampere" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:H2T-B103">
+        <rdf:type rdf:resource="eg:HydrogenMeasurement" />
+        <rdfs:label xml:lang="en">H2T-B103</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">H2T-B103</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Kilogram" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PT-X101">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">PT-X101</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PT-X101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PT-X102">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">PT-X102</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PT-X102</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:LT-X101">
+        <rdf:type rdf:resource="eg:LevelMeasurement" />
+        <rdfs:label xml:lang="en">LT-X101</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">LT-X101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:CT-X101">
+        <rdf:type rdf:resource="eg:CompositionMeasurement" />
+        <rdfs:label xml:lang="en">CT-X101</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CT-X101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:SiemensPerMeter" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT-X101">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT-X101</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT-X101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT-X201">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT-X201</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT-X201</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT-U301">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT-U301</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT-U301</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:DT-X201">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">DT-X201</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DT-X201</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PT-U302">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">PT-U302</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PT-U302</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PT-U301">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">PT-U301</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PT-U301</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PMP-U301">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">PMP-U301</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PMP-U301</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PMP-D101">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">PMP-D101</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PMP-D101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ST-D101">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">ST-D101</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ST-D101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PMP-U401">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">PMP-U401</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PMP-U401</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ST-U401">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">ST-U401</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ST-U401</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SV2-D201">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">SV2-D201</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SV2-D201</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PMP-U201">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">PMP-U201</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PMP-U201</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PT-M201">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">PT-M201</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PT-M201</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PT-M301">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">PT-M301</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PT-M301</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT-M202">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT-M202</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT-M202</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT-M205">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT-M205</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT-M205</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT-M302">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT-M302</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT-M302</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT-M305">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT-M305</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT-M305</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:HTR-M201">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">HTR-M201</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HTR-M201</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:HTR-M301">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">HTR-M301</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HTR-M301</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SV2-M201">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">SV2-M201</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SV2-M201</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SV2-M301">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">SV2-M301</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SV2-M301</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SV2-R401">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">SV2-R401</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SV2-R401</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SV2-M202">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">SV2-M202</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SV2-M202</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SV2-M302">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">SV2-M302</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SV2-M302</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SEQ-M200">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">SEQ-M200</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SEQ-M200</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SOC-M200">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">SOC-M200</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SOC-M200</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FT-M200-1">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT-M200-1</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT-M200-1</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FT-M200-2">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT-M200-2</rdfs:label>
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT-M200-2</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SEQ-M300">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">SEQ-M300</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#ControlSignalMeasurementGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SEQ-M300</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SOC-M300">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">SOC-M300</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#SensorGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SOC-M300</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FT-M300-1">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT-M300-1</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT-M300-1</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FT-M300-2">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">FT-M300-2</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#FlowSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FT-M300-2</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:CubicMeterPerHour" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SEQ-M400">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">SEQ-M400</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#ControlSignalMeasurementGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SEQ-M400</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PMP-C501">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">PMP-C501</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#PumpGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PMP-C501</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT-B103">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT-B103</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#TemperatureSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT-B103</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT-T101">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT-T101</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#TemperatureSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT-T101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FAN-T103">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">FAN-T103</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#AuxiliaryDeviceGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FAN-T103</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:FAN-B101">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">FAN-B101</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#AuxiliaryDeviceGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FAN-B101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:HTR-B101">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">HTR-B101</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#AuxiliaryDeviceGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HTR-B101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:CT-D201">
+        <rdf:type rdf:resource="eg:FlowMeasurement" />
+        <rdfs:label xml:lang="en">CT-D201</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#SensorGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CT-D201</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:SiemensPerMeter" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT-D201">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT-D201</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#TemperatureSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT-D201</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:PT-D201">
+        <rdf:type rdf:resource="eg:PressureMeasurement" />
+        <rdfs:label xml:lang="en">PT-D201</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#PressureSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PT-D201</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Pascal" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:LT-D201">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">LT-D201</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#SensorGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">LT-D201</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:TT-B102">
+        <rdf:type rdf:resource="eg:TemperatureMeasurement" />
+        <rdfs:label xml:lang="en">TT-B102</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#TemperatureSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TT-B102</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:DegreeCelsius" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SV2-D301">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">SV2-D301</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#ValveGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SV2-D301</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:SV2-D401">
+        <rdf:type rdf:resource="eg:ControlSignalMeasurement" />
+        <rdfs:label xml:lang="en">SV2-D401</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#ValveGroup" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SV2-D401</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Percent" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:ET-1001">
+        <rdf:type rdf:resource="eg:VoltageMeasurement" />
+        <rdfs:label xml:lang="en">ET-1001</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#ElectricalSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ET-1001</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Volt" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="eg:IT-1101">
+        <rdf:type rdf:resource="eg:CurrentMeasurement" />
+        <rdfs:label xml:lang="en">IT-1101</rdfs:label>
+        <eg:isPartOfComponent rdf:resource="#ElectricalSensorSystem" />
+        <cd:storedInDatabaseTable rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            BER_System_2025_10_15_table</cd:storedInDatabaseTable>
+        <cd:storedInDatabaseColumn rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IT-1101</cd:storedInDatabaseColumn>
+        <cd:hasUnit rdf:resource="unit:Ampere" />
+        <dct:isPartOf rdf:resource="#BER_Dataset_2025_10_15" />
+    </owl:NamedIndividual>
+
+</rdf:RDF>

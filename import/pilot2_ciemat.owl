@@ -1,0 +1,570 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:eg="http://www.energyguard.eu/ontology#"
+         xmlns:saref="https://saref.etsi.org/core/"
+         xmlns:s4ener="https://saref.etsi.org/saref4ener/"
+         xmlns:sosa="http://www.w3.org/ns/sosa/"
+         xmlns:qudt="http://qudt.org/schema/qudt/"
+         xmlns:unit="http://qudt.org/vocab/unit/"
+         xmlns:dcat="http://www.w3.org/ns/dcat#"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+
+  <!-- Ontology header -->
+  <owl:Ontology rdf:about="http://www.ceder-energy.org/ontology">
+    <!-- Import authoritative, versioned ontologies so referenced IRIs resolve -->
+    <owl:imports rdf:resource="http://www.w3.org/ns/sosa/"/>
+    <owl:imports rdf:resource="https://saref.etsi.org/core/v4.1.1/"/>
+    <owl:imports rdf:resource="https://saref.etsi.org/saref4ener/v2.1.1/"/>
+    <owl:imports rdf:resource="http://qudt.org/schema/qudt/"/>
+    <owl:imports rdf:resource="http://qudt.org/vocab/unit/"/>
+    <owl:imports rdf:resource="http://www.w3.org/ns/dcat#"/>
+  </owl:Ontology>
+
+  <!-- ========================= -->
+  <!-- Classes -->
+  <!-- ========================= -->
+  <owl:Class rdf:about="eg:SystemComponent">
+    <rdfs:subClassOf rdf:resource="saref:Device" />
+  </owl:Class>
+
+  <owl:Class rdf:about="eg:Measurement">
+    <rdfs:subClassOf rdf:resource="s4ener:Measurement"/>
+    <rdfs:subClassOf rdf:resource="sosa:Observation"/>
+  </owl:Class>
+
+  <owl:Class rdf:about="eg:Unit">
+    <rdfs:subClassOf rdf:resource="s4ener:UnitOfMeasure"/>
+  </owl:Class>
+
+  <!-- ========================= -->
+  <!-- Physical classes  -->
+  <!-- ========================= -->
+
+  <owl:Class rdf:about="eg:Dataset">
+    <rdfs:subClassOf rdf:resource="dcat:Dataset"/>
+  </owl:Class>
+  
+  <owl:Class rdf:about="eg:SolarProduction">
+    <rdfs:subClassOf rdf:resource="eg:SystemComponent" />
+  </owl:Class>
+  <owl:Class rdf:about="eg:WindProduction">
+    <rdfs:subClassOf rdf:resource="eg:SystemComponent" />
+  </owl:Class>
+  <owl:Class rdf:about="eg:BatteryPower">
+    <rdfs:subClassOf rdf:resource="eg:SystemComponent" />
+  </owl:Class>
+  <owl:Class rdf:about="eg:DieselGeneratorPower">
+    <rdfs:subClassOf rdf:resource="eg:SystemComponent" />
+  </owl:Class>
+  <owl:Class rdf:about="eg:ThermalConsumption">
+    <rdfs:subClassOf rdf:resource="eg:SystemComponent" />
+  </owl:Class>
+  <owl:Class rdf:about="eg:HydroProduction">
+    <rdfs:subClassOf rdf:resource="eg:SystemComponent" />
+  </owl:Class>
+
+  <!-- ========================= -->
+  <!-- Logical classes for better grouping -->
+  <!-- ========================= -->
+
+  <!-- ========================= -->
+  <!-- Object Properties -->
+  <!-- ========================= -->
+  <owl:ObjectProperty rdf:about="eg:hasMeasurement">
+    <rdfs:domain rdf:resource="eg:SystemComponent" />
+    <rdfs:range rdf:resource="eg:Measurement"/>
+    <owl:equivalentProperty rdf:resource="s4ener:hasMeasurement"/>
+  </owl:ObjectProperty>
+
+  <!-- <owl:ObjectProperty rdf:ID="hasMeasurement">
+    <rdfs:domain rdf:resource="eg:Dataset" />
+    <rdfs:range rdf:resource="eg:Measurement" />
+    <owl:equivalentProperty rdf:resource="s4ener:hasMeasurement" />
+    <owl:equivalentProperty rdf:resource="saref:hasMeasurement" />
+  </owl:ObjectProperty> -->
+
+  <owl:ObjectProperty rdf:about="eg:hasSystemComponent">
+    <rdfs:domain rdf:resource="eg:SystemComponent" />
+    <rdfs:range rdf:resource="eg:SystemComponent" />
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="eg:hasUnit">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="qudt:Unit" />
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="eg:recordedInDataset">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <rdfs:range rdf:resource="eg:Dataset"/>
+    <owl:equivalentProperty rdf:resource="s4ener:recordedInDataset"/>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="eg:representsComponent">
+    <rdfs:domain rdf:resource="eg:Dataset"/>
+    <rdfs:range rdf:resource="eg:SystemComponent"/>
+    <owl:equivalentProperty rdf:resource="s4ener:representsComponent"/>
+  </owl:ObjectProperty>
+
+  <!-- <owl:ObjectProperty rdf:ID="eg:representsComponent">
+    <rdfs:domain rdf:resource="eg:Dataset" />
+    <rdfs:range rdf:resource="eg:SystemComponent" />
+    <rdfs:label>represents component</rdfs:label>
+  </owl:ObjectProperty> -->
+
+  <!-- ========================= -->
+  <!-- Data Properties -->
+  <!-- ========================= -->
+  <owl:DatatypeProperty rdf:about="eg:value">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <owl:equivalentProperty rdf:resource="s4ener:value"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="eg:timestamp">
+    <rdfs:domain rdf:resource="eg:Measurement"/>
+    <owl:equivalentProperty rdf:resource="sosa:resultTime"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="eg:filename">
+    <rdfs:domain rdf:resource="eg:Dataset"/>
+    <rdfs:range rdf:resource="xsd:string"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="eg:startTime">
+    <rdfs:domain rdf:resource="eg:Dataset"/>
+    <rdfs:range rdf:resource="xsd:dateTime"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="eg:endTime">
+    <rdfs:domain rdf:resource="eg:Dataset"/>
+    <rdfs:range rdf:resource="xsd:dateTime"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="eg:sampleRate">
+    <rdfs:domain rdf:resource="eg:Dataset"/>
+    <rdfs:range rdf:resource="xsd:float"/>
+  </owl:DatatypeProperty>
+
+
+  <!-- ========================= -->
+  <!-- Individuals (unchanged) -->
+  <!-- ========================= -->
+  <!-- PV Systems -->
+  <!-- EDIFICIO_ARFRISOL component removed; measurements remain as NamedIndividuals and are grouped under parent SystemComponents -->
+
+  <!-- Dataset instance that groups the individuals -->
+  <eg:Dataset rdf:ID="Dataset_2025_01_30">
+    <eg:filename rdf:datatype="xsd:string">PEPA_III_2025-01-30.csv</eg:filename>
+    <eg:startTime rdf:datatype="xsd:dateTime">2025-01-30T00:00:00</eg:startTime>
+    <eg:endTime rdf:datatype="xsd:dateTime">2025-01-30T23:59:59</eg:endTime>
+    <eg:sampleRate rdf:datatype="xsd:float">15</eg:sampleRate>
+
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <eg:representsComponent rdf:resource="eg:WindProductionGroup" />
+    <eg:representsComponent rdf:resource="eg:BatteryPowerGroup" />
+    <eg:representsComponent rdf:resource="eg:DieselGeneratorPowerGroup" />
+    <eg:representsComponent rdf:resource="eg:ThermalConsumptionGroup" />
+    <eg:representsComponent rdf:resource="eg:HydroProductionGroup" />
+
+    <dcat:distribution>
+      <dcat:Distribution>
+        <dcat:downloadURL rdf:resource="./data/RED_1sec_v2_2025-01-30.csv" />
+        <dcat:mediaType>text/csv</dcat:mediaType>
+      </dcat:Distribution>
+    </dcat:distribution>
+  </eg:Dataset>
+
+  <!-- Solar Production Group -->
+  <owl:NamedIndividual rdf:about="eg:SolarProductionGroup">
+    <rdf:type rdf:resource="eg:SolarProduction" />
+    <eg:hasMeasurement rdf:resource="eg:EDIFICIO_ARFRISOL_PV" />
+    <eg:hasMeasurement rdf:resource="eg:PARKING_ARFRISOL_PV" />
+    <eg:hasMeasurement rdf:resource="eg:PEPA_III_TOTAL_PV" />
+    <eg:hasMeasurement rdf:resource="eg:PEPA_III_INV1_PV" />
+    <eg:hasMeasurement rdf:resource="eg:PEPA_III_INV2_PV" />
+    <eg:hasMeasurement rdf:resource="eg:PEPA_III_MICROINV_PV" />
+    <eg:hasMeasurement rdf:resource="eg:PEPA_III_TRACKER3_PV" />
+    <eg:hasMeasurement rdf:resource="eg:PEPA_III_TRACKER5_PV" />
+    <eg:hasMeasurement rdf:resource="eg:PEPA_III_TRACKER6_1_PV" />
+    <eg:hasMeasurement rdf:resource="eg:PEPA_III_TRACKER6_2_PV" />
+    <eg:hasMeasurement rdf:resource="eg:PEPA_III_TRACKER7_PV" />
+    <eg:hasMeasurement rdf:resource="eg:PEPA_III_TRACKER8_PV" />
+    <eg:hasMeasurement rdf:resource="eg:RADIACION_SOLAR" />
+    <eg:hasMeasurement rdf:resource="eg:TURBINA_Production" />
+  </owl:NamedIndividual>
+
+  <!-- Wind and Aerogenerators Group -->
+  <owl:NamedIndividual rdf:about="eg:WindProductionGroup">
+    <rdf:type rdf:resource="eg:WindProduction" />
+    <eg:hasMeasurement rdf:resource="eg:ENNERA_3_5_Production" />
+    <eg:hasMeasurement rdf:resource="eg:WINDERA_4_2_Production" />
+  </owl:NamedIndividual>
+
+  <!-- Battery Systems Group -->
+  <owl:NamedIndividual rdf:about="eg:BatteryPowerGroup">
+    <rdf:type rdf:resource="eg:BatteryPower" />
+    <eg:hasMeasurement rdf:resource="eg:BATERIA_PEPA_I_CARGA" />
+    <eg:hasMeasurement rdf:resource="eg:BATERIA_PEPA_I_DESCARGA" />
+    <eg:hasMeasurement rdf:resource="eg:BATERIA_PEPA_II_CARGA" />
+    <eg:hasMeasurement rdf:resource="eg:BATERIA_NMC_PEPA_II" />
+    <eg:hasMeasurement rdf:resource="eg:BATERIA_REDOX" />
+    <eg:hasMeasurement rdf:resource="eg:BATERIA_LITIO_CARGA" />
+    <eg:hasMeasurement rdf:resource="eg:BATERIA_LITIO_DESCARGA" />
+  </owl:NamedIndividual>
+
+  <!-- Diesel group: generator power (single column measures generator) -->
+  <owl:NamedIndividual rdf:about="eg:DieselGeneratorPowerGroup">
+    <rdf:type rdf:resource="eg:DieselGeneratorPower" />
+    <eg:hasMeasurement rdf:resource="eg:GRUPO_DIESEL_Power" />
+  </owl:NamedIndividual>
+
+  <!-- Thermal consumption group: energy consumption across subsystems -->
+  <owl:NamedIndividual rdf:about="eg:ThermalConsumptionGroup">
+    <rdf:type rdf:resource="eg:ThermalConsumption" />
+    <eg:hasMeasurement rdf:resource="eg:ARFRISOL_GENERIC" />
+    <eg:hasMeasurement rdf:resource="eg:ED02" />
+    <eg:hasMeasurement rdf:resource="eg:LEVI" />
+    <eg:hasMeasurement rdf:resource="eg:ED03" />
+    <eg:hasMeasurement rdf:resource="eg:PEPA_I" />
+    <eg:hasMeasurement rdf:resource="eg:PEPA_III" />
+    <eg:hasMeasurement rdf:resource="eg:TURBINA_Production" />
+    <eg:hasMeasurement rdf:resource="eg:PEPA_II" />
+    <eg:hasMeasurement rdf:resource="eg:VATIMETRO_PEPA_III" />
+    <eg:hasMeasurement rdf:resource="eg:ACTARIS_Measurement" />
+  </owl:NamedIndividual>
+
+  <!-- Water Pumps / Hydro Group -->
+  <owl:NamedIndividual rdf:about="eg:HydroProductionGroup">
+    <rdf:type rdf:resource="eg:HydroProduction" />
+    <eg:hasMeasurement rdf:resource="eg:DEPOSITO_NIVEL" />
+    <eg:hasMeasurement rdf:resource="eg:DEPOSITO_NIVEL_LEVI" />
+    <eg:hasMeasurement rdf:resource="eg:DEPOSITO_NIVEL_INFERIOR" />
+    <eg:hasMeasurement rdf:resource="eg:BOMBAS" />
+    <eg:hasMeasurement rdf:resource="eg:RIOS" />
+    <eg:hasMeasurement rdf:resource="eg:ATLANTIC" />
+  </owl:NamedIndividual>
+
+  <!-- ========================= -->
+  <!-- Measurement Individuals in new format -->
+  <!-- ========================= -->
+
+  <!-- Solar Production -->
+  <owl:NamedIndividual rdf:about="eg:EDIFICIO_ARFRISOL_PV">
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <rdf:type rdf:resource="eg:SolarProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">EDIFICIO_ARFRISOL_PV</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PARKING_ARFRISOL_PV">
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <rdf:type rdf:resource="eg:SolarProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PARKING_ARFRISOL_PV</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PEPA_III_TOTAL_PV">
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <rdf:type rdf:resource="eg:SolarProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PEPA_III_TOTAL_PV</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PEPA_III_INV1_PV">
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <rdf:type rdf:resource="eg:SolarProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PEPA_III_INV1_PV</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PEPA_III_INV2_PV">
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <rdf:type rdf:resource="eg:SolarProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PEPA_III_INV2_PV</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PEPA_III_MICROINV_PV">
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <rdf:type rdf:resource="eg:SolarProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PEPA_III_MICROINV_PV</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PEPA_III_TRACKER3_PV">
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <rdf:type rdf:resource="eg:SolarProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PEPA_III_TRACKER3_PV</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PEPA_III_TRACKER5_PV">
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <rdf:type rdf:resource="eg:SolarProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PEPA_III_TRACKER5_PV</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PEPA_III_TRACKER6_1_PV">
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <rdf:type rdf:resource="eg:SolarProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PEPA_III_TRACKER6_1_PV</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PEPA_III_TRACKER6_2_PV">
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <rdf:type rdf:resource="eg:SolarProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PEPA_III_TRACKER6_2_PV</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PEPA_III_TRACKER7_PV">
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <rdf:type rdf:resource="eg:SolarProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PEPA_III_TRACKER7_PV</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PEPA_III_TRACKER8_PV">
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <rdf:type rdf:resource="eg:SolarProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PEPA_III_TRACKER8_PV</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <!-- Wind and Aerogenerators -->
+  <owl:NamedIndividual rdf:about="eg:ENNERA_3_5_Production">
+    <eg:representsComponent rdf:resource="eg:WindProductionGroup" />
+    <rdf:type rdf:resource="eg:WindProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">ENNERA_3_5_Production</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:WINDERA_4_2_Production">
+    <eg:representsComponent rdf:resource="eg:WindProductionGroup" />
+    <rdf:type rdf:resource="eg:WindProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">WINDERA_4_2_Production</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <!-- Battery Systems -->
+  <owl:NamedIndividual rdf:about="eg:BATERIA_PEPA_I_CARGA">
+    <eg:representsComponent rdf:resource="eg:BatteryPowerGroup" />
+    <rdf:type rdf:resource="eg:BatteryPower" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">BATERIA_PEPA_I_CARGA</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:BATERIA_PEPA_I_DESCARGA">
+    <eg:representsComponent rdf:resource="eg:BatteryPowerGroup" />
+    <rdf:type rdf:resource="eg:BatteryPower" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">BATERIA_PEPA_I_DESCARGA</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:BATERIA_PEPA_II_CARGA">
+    <eg:representsComponent rdf:resource="eg:BatteryPowerGroup" />
+    <rdf:type rdf:resource="eg:BatteryPower" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">BATERIA_PEPA_II_CARGA</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:BATERIA_NMC_PEPA_II">
+    <eg:representsComponent rdf:resource="eg:BatteryPowerGroup" />
+    <rdf:type rdf:resource="eg:BatteryPower" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">BATERIA_NMC_PEPA_II</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:BATERIA_REDOX">
+    <eg:representsComponent rdf:resource="eg:BatteryPowerGroup" />
+    <rdf:type rdf:resource="eg:BatteryPower" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">BATERIA_REDOX</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:BATERIA_LITIO_CARGA">
+    <eg:representsComponent rdf:resource="eg:BatteryPowerGroup" />
+    <rdf:type rdf:resource="eg:BatteryPower" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">BATERIA_LITIO_CARGA</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:BATERIA_LITIO_DESCARGA">
+    <eg:representsComponent rdf:resource="eg:BatteryPowerGroup" />
+    <rdf:type rdf:resource="eg:BatteryPower" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">BATERIA_LITIO_DESCARGA</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+  </owl:NamedIndividual>
+
+  <!-- Diesel and Thermal -->
+  <owl:NamedIndividual rdf:about="eg:GRUPO_DIESEL_Power">
+    <eg:representsComponent rdf:resource="eg:DieselGeneratorPowerGroup" />
+    <rdf:type rdf:resource="eg:DieselGeneratorPower" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">GRUPO_DIESEL_Power</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:ARFRISOL_GENERIC">
+    <eg:representsComponent rdf:resource="eg:DieselGeneratorPowerGroup" />
+    <rdf:type rdf:resource="eg:DieselGeneratorPower" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">ARFRISOL_GENERIC</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <!-- Thermal consumption measurements added to match grouped consumer columns -->
+  <owl:NamedIndividual rdf:about="eg:ED02">
+    <eg:representsComponent rdf:resource="eg:ThermalConsumptionGroup" />
+    <rdf:type rdf:resource="eg:ThermalConsumption" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">ED02</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:LEVI">
+    <eg:representsComponent rdf:resource="eg:ThermalConsumptionGroup" />
+    <rdf:type rdf:resource="eg:ThermalConsumption" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">LEVI</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:ED03">
+    <eg:representsComponent rdf:resource="eg:ThermalConsumptionGroup" />
+    <rdf:type rdf:resource="eg:ThermalConsumption" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">ED03</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PEPA_III">
+    <eg:representsComponent rdf:resource="eg:ThermalConsumptionGroup" />
+    <rdf:type rdf:resource="eg:ThermalConsumption" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PEPA_III</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PEPA_II">
+    <eg:representsComponent rdf:resource="eg:ThermalConsumptionGroup" />
+    <rdf:type rdf:resource="eg:ThermalConsumption" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PEPA_II</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWattHour" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:PEPA_I">
+    <eg:representsComponent rdf:resource="eg:DieselGeneratorPowerGroup" />
+    <rdf:type rdf:resource="eg:DieselGeneratorPower" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">PEPA_I</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:VATIMETRO_PEPA_III">
+    <eg:representsComponent rdf:resource="eg:DieselGeneratorPowerGroup" />
+    <rdf:type rdf:resource="eg:DieselGeneratorPower" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">VATIMETRO_PEPA_III</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:ACTARIS_Measurement">
+    <eg:representsComponent rdf:resource="eg:DieselGeneratorPowerGroup" />
+    <rdf:type rdf:resource="eg:DieselGeneratorPower" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">ACTARIS_Measurement</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <!-- Water Pumps -->
+  <owl:NamedIndividual rdf:about="eg:DEPOSITO_NIVEL">
+    <eg:representsComponent rdf:resource="eg:HydroProductionGroup" />
+    <rdf:type rdf:resource="eg:HydroProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">DEPOSITO_NIVEL</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:Liter" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:DEPOSITO_NIVEL_LEVI">
+    <eg:representsComponent rdf:resource="eg:HydroProductionGroup" />
+    <rdf:type rdf:resource="eg:HydroProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">DEPOSITO_NIVEL_LEVI</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:Liter" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:DEPOSITO_NIVEL_INFERIOR">
+    <eg:representsComponent rdf:resource="eg:HydroProductionGroup" />
+    <rdf:type rdf:resource="eg:HydroProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">DEPOSITO_NIVEL_INFERIOR</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:Liter" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:BOMBAS">
+    <eg:representsComponent rdf:resource="eg:HydroProductionGroup" />
+    <rdf:type rdf:resource="eg:HydroProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">BOMBAS</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:RIOS">
+    <eg:representsComponent rdf:resource="eg:HydroProductionGroup" />
+    <rdf:type rdf:resource="eg:HydroProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">RIOS</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:ATLANTIC">
+    <eg:representsComponent rdf:resource="eg:HydroProductionGroup" />
+    <rdf:type rdf:resource="eg:HydroProduction" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">ATLANTIC</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:RADIACION_SOLAR">
+    <eg:representsComponent rdf:resource="eg:SolarProductionGroup" />
+    <rdf:type rdf:resource="eg:SolarProductionGroup" />
+    <eg:storedInDatabaseTable rdf:datatype="xsd:string">pepa_iii_table</eg:storedInDatabaseTable>
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">RADIACION_SOLAR</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:WattPerSquareMeter" />
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="eg:TURBINA_Production">
+    <eg:representsComponent rdf:resource="eg:DieselGeneratorPowerGroup" />
+    <rdf:type rdf:resource="eg:DieselGeneratorPower" />
+    <eg:storedInDatabaseColumn rdf:datatype="xsd:string">TURBINA_Production</eg:storedInDatabaseColumn>
+    <eg:hasUnit rdf:resource="unit:KiloWatt" />
+  </owl:NamedIndividual>
+
+</rdf:RDF>

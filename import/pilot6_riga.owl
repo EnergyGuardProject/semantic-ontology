@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  ====================================================================
+  EGuard Pilot 4 - Riga Buildings Energy & Knowledge Management Ontology
+  ====================================================================
+  
+  PURPOSE:
+  This ontology models building energy data from Riga with focus on 
+  queryability and knowledge management. It defines fundamental concepts
+  and relationships for querying buildings, energy performance, geographic
+  locations, and environmental impact.
+  
+  SCOPE:
+  - Buildings: energy performance, physical characteristics, locations
+  - Energy: consumption, certificates, performance classes, HVAC systems
+  - Geography: addresses, neighborhoods, parcels, geometric representations
+  - Agents: organizations and persons involved in building management/ownership
+  
+  STANDARDS ALIGNMENT (EGuard Framework):
+  - REC (Real Estate Core): buildings, addresses, certificates, parcels
+  - BOT (Building Topology): spatial hierarchy, zones, spaces, elements
+  - QUDT (Quantities & Units): semantic units for all numeric properties
+  - FOAF (Friend of a Friend): agent, person, organization modeling
+  - SAREF (Smart Appliances Reference): energy systems as devices
+  - SOSA (Semantic Sensor Network): observation and measurement framework
+  - DCAT (Data Catalog Vocabulary): dataset and resource description
+  
+  DATA SOURCES:
+  - EU Building Performance Certificates (EPBD) from Riga
+  - Official geographic data (neighborhoods, addresses, coordinates)
+  - Building cadastral records (parcels, structural classification)
+  - Energy efficiency databases (consumption, heating systems)
+  
+  VERSION: 2.1 (with comprehensive W3C/ETSI standard alignments)
+  CREATED: 2026-01-20
+  ====================================================================
+-->
+<rdf:RDF xmlns="https://eguard.example.org/pilot4/"
+     xml:base="https://eguard.example.org/pilot4/"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:dcterms="http://purl.org/dc/terms/"
+     xmlns:vann="http://purl.org/vocab/vann/"
+     xmlns:eg="https://eguard.example.org/pilot4/"
+     xmlns:geo="http://www.opengis.net/ont/sf#"
+     xmlns:geom="http://data.ign.fr/def/geometrie#"
+     xmlns:rec="https://www.w3.org/ns/rec#"
+     xmlns:bot="https://w3id.org/bot#"
+     xmlns:qudt="http://qudt.org/schema/qudt/"
+     xmlns:unit="http://qudt.org/vocab/unit/"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:saref="https://saref.etsi.org/core/"
+     xmlns:s4ener="https://saref.etsi.org/saref4ener/"
+     xmlns:sosa="http://www.w3.org/ns/sosa/"
+     xmlns:dcat="http://www.w3.org/ns/dcat#">
+    
+    <!-- ================================================================ -->
+    <!-- ONTOLOGY METADATA & STANDARD IMPORTS -->
+    <!-- ================================================================ -->
+    <!-- The owl:imports statements below ensure seamless interoperability -->
+    <!-- with established W3C and ETSI standards for building and energy domains. -->
+    
+    <owl:Ontology rdf:about="https://eguard.example.org/pilot4/">
+        <owl:versionIRI rdf:resource="https://eguard.example.org/pilot4/v2.1/"/>
+        <dcterms:title xml:lang="en">EGuard Pilot 4 Buildings Energy Ontology</dcterms:title>
+        <dcterms:description xml:lang="en">Queryable ontology for building energy data from Riga. Defines fundamental concepts and relationships for querying buildings, energy performance, locations, and environmental impact. Aligned with EGuard framework standards: REC (Real Estate Core), BOT (Building Topology), QUDT (Units/Quantities), FOAF (Agents), and SAREF energy standards.</dcterms:description>
+        <dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-01-20</dcterms:created>
+        <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-01-20</dcterms:modified>
+        <dcterms:creator>EGuard Project</dcterms:creator>
+        <owl:versionInfo>2.1</owl:versionInfo>
+        <vann:preferredNamespacePrefix>pilot4</vann:preferredNamespacePrefix>
+        <vann:preferredNamespaceUri>https://eguard.example.org/pilot4/</vann:preferredNamespaceUri>
+        <!-- EGuard Framework Standard Imports -->
+        <owl:imports rdf:resource="https://www.w3.org/ns/rec#" />
+        <owl:imports rdf:resource="https://w3id.org/bot#" />
+        <owl:imports rdf:resource="http://qudt.org/schema/qudt/" />
+        <owl:imports rdf:resource="http://qudt.org/vocab/unit/" />
+        <owl:imports rdf:resource="http://xmlns.com/foaf/0.1/" />
+        <owl:imports rdf:resource="https://saref.etsi.org/core/" />
+        <owl:imports rdf:resource="https://saref.etsi.org/saref4ener/" />
+        <owl:imports rdf:resource="http://www.w3.org/ns/sosa/" />
+        <owl:imports rdf:resource="http://www.w3.org/ns/dcat#" />
+    </owl:Ontology>
+
+    <!-- ================================================================ -->
+    <!-- CLASS HIERARCHY OVERVIEW -->
+    <!-- ================================================================ -->
+    <!--
+      The ontology defines 12 core classes in the following hierarchy:
+      
+      BASE (GeoJSON Features):
+        Feature (geographic feature base class)
+          ├── Building (energy-consuming structure)
+          ├── Address (location reference)
+          ├── Neighborhood (administrative spatial zone, subclass of BOT:Zone)
+          ├── Parcel (cadastral land unit)
+          └── Geometry (GeoJSON geometry object)
+      
+      BUILDING TOPOLOGY (W3C BOT alignments):
+        Space (⊆ BOT:Space)
+          Bounded room/area with specific use within a building
+        
+        BuildingElement (⊆ BOT:Element)
+          Structural component of a building (walls, windows, doors, etc.)
+      
+      ENERGY & CERTIFICATION:
+        EnergyCertificate (≡ REC:Certificate)
+          Official EU EPBD energy performance certificate document
+        
+        EnergyPerformanceClass
+          A-G efficiency rating from building certificate
+        
+        EnergySystem (⊆ SAREF:Device)
+          Heating, cooling, ventilation, or other energy-related equipment
+        
+        BuildingUseKind (REC alignment)
+          Functional classification (residential, commercial, etc.)
+        
+        BuildingType
+          Structural type classification from Riga building database
+      
+      AGENTS (FOAF alignments):
+        Organization (⊆ FOAF:Organization)
+          Entity managing or owning building
+        
+        Person (⊆ FOAF:Person)
+          Individual stakeholder or contact
+      
+      All classes use RDF/OWL to enable SPARQL querying and semantic
+      reasoning across related building and energy domains.
+    -->
+    
+    <!-- ================================================================ -->
+    <!-- CLASSES - FEATURE TYPES -->
+    <!-- ================================================================ -->
+    
+    <owl:Class rdf:about="eg:Feature">
+        <rdfs:label xml:lang="en">Feature</rdfs:label>
+        <rdfs:comment xml:lang="en">GeoJSON Feature representing a spatial entity</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:Building">
+        <rdfs:label xml:lang="en">Building</rdfs:label>
+        <rdfs:comment xml:lang="en">A building structure with energy performance characteristics, physical dimensions, and geographic location</rdfs:comment>
+        <rdfs:subClassOf rdf:resource="eg:Feature"/>
+        <!-- DATA SOURCES: Buildings in the administrative territory of Riga - Existing buildings.csv; epc-18.11.2025.csv -->
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:Address">
+        <rdfs:label xml:lang="en">Address</rdfs:label>
+        <rdfs:comment xml:lang="en">Physical location address in Riga with optional geospatial coordinates</rdfs:comment>
+        <rdfs:subClassOf rdf:resource="eg:Feature"/>
+        <!-- DATA SOURCES: Riga addresses.csv; Riga addresses.kml -->
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:Neighborhood">
+        <rdfs:label xml:lang="en">Neighborhood</rdfs:label>
+        <rdfs:comment xml:lang="en">Administrative or geographic neighborhood district in Riga (apkaime). Derives from BOT:Zone for spatial hierarchy alignment.</rdfs:comment>
+        <rdfs:subClassOf rdf:resource="eg:Feature"/>
+        <rdfs:subClassOf rdf:resource="bot:Zone"/>
+        <!-- DATA SOURCES: Riga neighborhoods.csv; Riga neighborhoods.shp -->
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:Parcel">
+        <rdfs:label xml:lang="en">Parcel</rdfs:label>
+        <rdfs:comment xml:lang="en">Land parcel identified by cadastral code</rdfs:comment>
+        <rdfs:subClassOf rdf:resource="eg:Feature"/>
+        <!-- DATA SOURCES: Buildings in the administrative territory of Riga - Existing buildings.csv (parcelCode property) -->
+    </owl:Class>
+
+    <!-- ================================================================ -->
+    <!-- BUILDING TOPOLOGY CLASSES (aligned with W3C BOT) -->
+    <!-- ================================================================ -->
+    <!-- These classes define the spatial structure of buildings using the -->
+    <!-- Building Topology Ontology (BOT) standard for interoperability. -->
+    
+    <owl:Class rdf:about="eg:Space">
+        <rdfs:label xml:lang="en">Space</rdfs:label>
+        <rdfs:comment xml:lang="en">Bounded physical space within a building (apartment, room, etc.). Derives from BOT:Space for topological alignment.</rdfs:comment>
+        <rdfs:subClassOf rdf:resource="bot:Space"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:BuildingElement">
+        <rdfs:label xml:lang="en">Building Element</rdfs:label>
+        <rdfs:comment xml:lang="en">Physical building component (wall, window, door, etc.). Derives from BOT:Element for component hierarchy.</rdfs:comment>
+        <rdfs:subClassOf rdf:resource="bot:Element"/>
+    </owl:Class>
+        <!-- ================================================================ -->
+    <!-- ENERGY & CERTIFICATION CLASSES -->
+    <!-- ================================================================ -->
+    <!-- These classes represent energy-related aspects including -->
+    <!-- performance data, certificates, and system characteristics. -->
+        <owl:Class rdf:about="eg:EnergyCertificate">
+        <rdfs:label xml:lang="en">Energy Certificate</rdfs:label>
+        <rdfs:comment xml:lang="en">Official energy performance certificate document for a building. Aligned with REC:Certificate.</rdfs:comment>
+        <owl:equivalentClass rdf:resource="rec:Certificate" />
+        <!-- DATA SOURCES: epc-18.11.2025.csv; Building energy performance certificate factors and CO2 coefficients.csv -->
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:EnergyPerformanceClass">
+        <rdfs:label xml:lang="en">Energy Performance Class</rdfs:label>
+        <rdfs:comment xml:lang="en">Energy efficiency classification rating (A through G)</rdfs:comment>
+        <!-- DATA SOURCES: epc-18.11.2025.csv (energy performance ratings); Energy efficiency indicators for heating of multi-apartment buildings in Rīga.csv -->
+    </owl:Class>
+
+    <!-- ================================================================ -->
+    <!-- BUILDING CLASSIFICATION CLASSES -->
+    <!-- ================================================================ -->
+    <!-- These classes provide building use and structural type categorization -->
+    <!-- derived from Riga official building register and EPC data. -->
+    
+    <owl:Class rdf:about="eg:BuildingUseKind">
+        <rdfs:label xml:lang="en">Building Use Kind</rdfs:label>
+        <rdfs:comment xml:lang="en">Classification of building use purpose (residential, commercial, etc.)</rdfs:comment>
+        <!-- DATA SOURCES: epc-18.11.2025.csv (building use classifications); Buildings in the administrative territory of Riga - Existing buildings.csv -->
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:BuildingType">
+        <rdfs:label xml:lang="en">Building Type</rdfs:label>
+        <rdfs:comment xml:lang="en">Classification of building structural type and characteristics</rdfs:comment>
+        <!-- DATA SOURCES: Buildings in the administrative territory of Riga - Existing buildings.csv -->
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:EnergySystem">
+        <rdfs:label xml:lang="en">Energy System</rdfs:label>
+        <rdfs:comment xml:lang="en">Heating, cooling, ventilation, or renewable energy system. Aligned with SAREF:Device and SAREF4ENER.</rdfs:comment>
+        <rdfs:subClassOf rdf:resource="saref:Device" />
+        <!-- DATA SOURCES: Energy efficiency indicators for heating of multi-apartment buildings in Rīga.csv (heating system data); Buildings in the administrative territory of Riga - Existing buildings.csv -->
+    </owl:Class>
+
+    <owl:Class rdf:about="eg:Geometry">
+        <rdfs:label xml:lang="en">Geometry</rdfs:label>
+        <rdfs:comment xml:lang="en">GeoJSON geometry object (Point, Polygon, etc.)</rdfs:comment>
+        <!-- DATA SOURCES: Buildings in the administrative territory of Riga - Existing buildings.kml; Riga addresses.kml; Riga neighborhoods.shp; Riga streets.kml; Borders of Riga suburbs.kml; all KML and SHP geographic data files -->
+    </owl:Class>
+
+    
+    <!-- ================================================================ -->
+    <!-- AGENT CLASSES (aligned with FOAF - Friend of a Friend) -->
+    <!-- ================================================================ -->
+    <!-- These classes model people and organizations involved in building -->
+    <!-- ownership, management, and operation using FOAF standards. -->
+    
+    <owl:Class rdf:about="eg:Organization">
+        <rdfs:label xml:lang="en">Organization</rdfs:label>
+        <rdfs:comment xml:lang="en">Building owner, manager, or facility operator. Aligned with FOAF:Organization.</rdfs:comment>
+        <rdfs:subClassOf rdf:resource="foaf:Organization" />
+    </owl:Class>
+
+    <!-- ================================================================ -->
+    <!-- OBJECT PROPERTIES -->
+    <!-- ================================================================ -->    <!--
+      PROPERTY CATEGORIES:
+      
+      SPATIAL RELATIONSHIPS (geographic/location connections):
+        - hasGeometry: Feature → Geometry (GeoJSON representation)
+        - onParcel: Building → Parcel (cadastral location)
+        - hasAddress: Building → Address (postal/street location)
+        - locatedInNeighborhood: Building → Neighborhood (admin zone)
+      
+      STRUCTURAL RELATIONSHIPS (topological containment):
+        - containsSpace: Building → Space (rooms/areas within building, 
+                                          subproperty of BOT:hasSpace)
+      
+      CLASSIFICATION RELATIONSHIPS (type and use categorization):
+        - hasBuildingUseKind: Building → BuildingUseKind (functional use)
+        - hasBuildingType: Building → BuildingType (structural classification)
+        - hasEnergyPerformanceClass: Building → EnergyPerformanceClass (A-G rating)
+      
+      DOCUMENTATION RELATIONSHIPS (compliance and certification):
+        - hasEnergyCertificate: Building → EnergyCertificate (EU EPBD document)
+      
+      SYSTEM RELATIONSHIPS (equipment and infrastructure):
+        - hasEnergySystem: Building → EnergySystem (HVAC/heating systems,
+                                     subproperty of SAREF:hasFunction)
+      
+      STAKEHOLDER RELATIONSHIPS (people and organizations):
+        - hasOwner: Building → FOAF:Agent (owner or manager)
+    -->
+    <owl:ObjectProperty rdf:about="eg:hasGeometry">
+        <rdfs:label xml:lang="en">has Geometry</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a feature to its GeoJSON geometry</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Feature"/>
+        <rdfs:range rdf:resource="eg:Geometry"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:onParcel">
+        <rdfs:label xml:lang="en">on Parcel</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a building to its land parcel</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="eg:Parcel"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:hasAddress">
+        <rdfs:label xml:lang="en">has Address</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a building to its address location</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="eg:Address"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:locatedInNeighborhood">
+        <rdfs:label xml:lang="en">located in Neighborhood</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a building to the neighborhood where it is located</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="eg:Neighborhood"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:hasBuildingUseKind">
+        <rdfs:label xml:lang="en">has Building Use Kind</rdfs:label>
+        <rdfs:comment xml:lang="en">Specifies the primary use/purpose of the building</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="eg:BuildingUseKind"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:hasBuildingType">
+        <rdfs:label xml:lang="en">has Building Type</rdfs:label>
+        <rdfs:comment xml:lang="en">Specifies the structural type classification of the building</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="eg:BuildingType"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:hasEnergyCertificate">
+        <rdfs:label xml:lang="en">has Energy Certificate</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a building to its energy performance certificate</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="eg:EnergyCertificate"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:hasEnergyPerformanceClass">
+        <rdfs:label xml:lang="en">has Energy Performance Class</rdfs:label>
+        <rdfs:comment xml:lang="en">Assigns an energy efficiency class rating to a building</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="eg:EnergyPerformanceClass"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:hasOwner">
+        <rdfs:label xml:lang="en">has Owner</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a building to its owner organization or person. Aligned with FOAF.</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="foaf:Agent"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:hasEnergySystem">
+        <rdfs:label xml:lang="en">has Energy System</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a building to its energy systems (heating, cooling, etc.). Aligned with SAREF.</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="eg:EnergySystem"/>
+        <rdfs:subPropertyOf rdf:resource="saref:hasFunction" />
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="eg:containsSpace">
+        <rdfs:label xml:lang="en">contains Space</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a building to spaces it contains. Aligned with BOT.</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="eg:Space"/>
+        <rdfs:subPropertyOf rdf:resource="bot:hasSpace" />
+    </owl:ObjectProperty>
+
+    <!-- ================================================================ -->
+    <!-- DATATYPE PROPERTIES - Building Identification -->
+    <!-- ================================================================ -->    <!--
+      UNIQUE IDENTIFIERS AND CODES
+      These properties provide unique identifiers and reference codes for
+      buildings, parcels, and features used in Riga registration systems,
+      cadastral databases, and GIS implementations.
+    -->
+    <owl:DatatypeProperty rdf:about="eg:code">
+        <rdfs:label xml:lang="en">code</rdfs:label>
+        <rdfs:comment xml:lang="en">GeoJSON feature identifier (CODE)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Feature"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:objectCode">
+        <rdfs:label xml:lang="en">object Code</rdfs:label>
+        <rdfs:comment xml:lang="en">Building object code identifier (OBJECTCODE)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:parcelCode">
+        <rdfs:label xml:lang="en">parcel Code</rdfs:label>
+        <rdfs:comment xml:lang="en">Cadastral parcel code identifier (PARCELCODE)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Parcel"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:cadastralID">
+        <rdfs:label xml:lang="en">cadastral ID</rdfs:label>
+        <rdfs:comment xml:lang="en">Official cadastral registration identifier</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:buildingType">
+        <rdfs:label xml:lang="en">building Type</rdfs:label>
+        <rdfs:comment xml:lang="en">Type/category of building (residential, commercial, etc.)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <!-- ================================================================ -->
+    <!-- DATATYPE PROPERTIES - Location Information -->
+    <!-- ================================================================ -->
+    <!--
+      ADDRESS, NEIGHBORHOOD, AND GEOGRAPHIC COORDINATES
+      These properties capture address information, neighborhood/district
+      data, and geometric representations in both WKT (Well-Known Text)
+      and GeoJSON formats. All coordinate and geometry data sourced from
+      official Riga geographic databases and open data portals.
+    -->
+
+    <owl:DatatypeProperty rdf:about="eg:addressString">
+        <rdfs:label xml:lang="en">address String</rdfs:label>
+        <rdfs:comment xml:lang="en">Full address as text (street, number, city)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Address"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:neighborhoodName">
+        <rdfs:label xml:lang="en">neighborhood Name</rdfs:label>
+        <rdfs:comment xml:lang="en">Name of the neighborhood or district</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Neighborhood"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:geometryType">
+        <rdfs:label xml:lang="en">geometry Type</rdfs:label>
+        <rdfs:comment xml:lang="en">GeoJSON geometry type (Point, Polygon, MultiPolygon, etc.)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Geometry"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:coordinates">
+        <rdfs:label xml:lang="en">coordinates</rdfs:label>
+        <rdfs:comment xml:lang="en">GeoJSON coordinates as JSON array string</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Geometry"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:geometry">
+        <rdfs:label xml:lang="en">geometry</rdfs:label>
+        <rdfs:comment xml:lang="en">Geospatial representation in WKT format (POINT or POLYGON)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Address"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <!-- ================================================================ -->
+    <!-- DATATYPE PROPERTIES - Building Physical Characteristics -->
+    <!-- ================================================================ -->    <!--
+      STRUCTURAL DIMENSIONS AND COMPOSITION
+      These properties describe the physical structure of buildings:
+      - Dimensional data (areas measured in m²)
+      - Temporal data (construction and renovation years)
+      - Structural composition (floor counts, materials)
+      All quantities include QUDT unit annotations for semantic
+      interoperability and standardized comparison. Data sourced from
+      Riga building register, cadastral records, and EPC certificates.
+    -->
+    <owl:DatatypeProperty rdf:about="eg:areaScale">
+        <rdfs:label xml:lang="en">area Scale</rdfs:label>
+        <rdfs:comment xml:lang="en">Land parcel area in m² (AREA_SCALE). Unit: m²</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Parcel"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <qudt:hasUnit rdf:resource="unit:M2" />
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:totalArea">
+        <rdfs:label xml:lang="en">total Area</rdfs:label>
+        <rdfs:comment xml:lang="en">Total floor area in m². Unit: m²</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <qudt:hasUnit rdf:resource="unit:M2" />
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:expedientArea">
+        <rdfs:label xml:lang="en">expedient Area</rdfs:label>
+        <rdfs:comment xml:lang="en">Usable floor area in m² (ExpedientArea). Unit: m²</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <qudt:hasUnit rdf:resource="unit:M2" />
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:flatTotalArea">
+        <rdfs:label xml:lang="en">flat Total Area</rdfs:label>
+        <rdfs:comment xml:lang="en">Total area of residential units/flats in m² (FlatTotalArea). Unit: m²</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <qudt:hasUnit rdf:resource="unit:M2" />
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:groundFloors">
+        <rdfs:label xml:lang="en">ground Floors</rdfs:label>
+        <rdfs:comment xml:lang="en">Number of ground-level floors (BuildingGroundFloors)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:pregCount">
+        <rdfs:label xml:lang="en">peg Count</rdfs:label>
+        <rdfs:comment xml:lang="en">Total number of floors above ground (BuildingPregCount)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:undergroundFloors">
+        <rdfs:label xml:lang="en">underground Floors</rdfs:label>
+        <rdfs:comment xml:lang="en">Number of underground/basement floors (BuildingUndergroundFloors)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:buildingYear">
+        <rdfs:label xml:lang="en">building Year</rdfs:label>
+        <rdfs:comment xml:lang="en">Year of original construction</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:renovationYear">
+        <rdfs:label xml:lang="en">renovation Year</rdfs:label>
+        <rdfs:comment xml:lang="en">Year of last major renovation</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
+    </owl:DatatypeProperty>
+
+    <!-- ================================================================ -->
+    <!-- DATATYPE PROPERTIES - Building Classification -->
+    <!-- ================================================================ -->    <!--
+      FUNCTIONAL AND STRUCTURAL CATEGORIZATION
+      These properties provide textual labels and boolean flags for
+      building use and type classifications. They describe functional
+      categories (residential vs commercial) and structural types
+      derived from Riga building register and EPC database.
+    -->
+    <owl:DatatypeProperty rdf:about="eg:buildingUseKindName">
+        <rdfs:label xml:lang="en">building Use Kind Name</rdfs:label>
+        <rdfs:comment xml:lang="en">Name of building use classification in native language (BuildingUseKindName)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:BuildingUseKind"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:buildingKindName">
+        <rdfs:label xml:lang="en">building Kind Name</rdfs:label>
+        <rdfs:comment xml:lang="en">Name of building type classification in native language (BuildingKindName)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:BuildingType"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:isResidential">
+        <rdfs:label xml:lang="en">is Residential</rdfs:label>
+        <rdfs:comment xml:lang="en">Whether the building is classified as residential</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:buildingMaterials">
+        <rdfs:label xml:lang="en">building Materials</rdfs:label>
+        <rdfs:comment xml:lang="en">Primary construction materials used (MaterialKindName)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <!-- ================================================================ -->
+    <!-- DATATYPE PROPERTIES - Energy Consumption -->
+    <!-- ================================================================ -->    <!--
+      END-USE ENERGY DEMAND QUANTIFICATION
+      These properties quantify energy demand for different end-uses and
+      total consumption. All values are normalized per m² per year using
+      QUDT standard units (kWh/m²) to enable standardized comparison
+      across buildings of different sizes. Data sourced from EU EPBD
+      Building Performance Certificates (EPCs) for Riga.
+    -->
+    <owl:DatatypeProperty rdf:about="eg:heatingEnergyConsumption">
+        <rdfs:label xml:lang="en">heating Energy Consumption</rdfs:label>
+        <rdfs:comment xml:lang="en">Annual energy for heating in kWh/m². Unit: kWh/m²</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <qudt:hasUnit rdf:resource="unit:KilowattHour-PER-M2" />
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:hotWaterEnergyConsumption">
+        <rdfs:label xml:lang="en">hot Water Energy Consumption</rdfs:label>
+        <rdfs:comment xml:lang="en">Annual energy for hot water in kWh/m². Unit: kWh/m²</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <qudt:hasUnit rdf:resource="unit:KilowattHour-PER-M2" />
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:coolingEnergyConsumption">
+        <rdfs:label xml:lang="en">cooling Energy Consumption</rdfs:label>
+        <rdfs:comment xml:lang="en">Annual energy for cooling in kWh/m². Unit: kWh/m²</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <qudt:hasUnit rdf:resource="unit:KilowattHour-PER-M2" />
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:totalEnergyConsumption">
+        <rdfs:label xml:lang="en">total Energy Consumption</rdfs:label>
+        <rdfs:comment xml:lang="en">Total annual final energy consumption in kWh/m². Unit: kWh/m²</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <qudt:hasUnit rdf:resource="unit:KilowattHour-PER-M2" />
+    </owl:DatatypeProperty>
+
+    <!-- ================================================================ -->
+    <!-- DATATYPE PROPERTIES - Environmental Impact -->
+    <!-- ================================================================ -->    <!--
+      CARBON EMISSIONS QUANTIFICATION
+      These properties quantify CO2 emissions associated with building
+      energy use. Both absolute (tonnes/year) and normalized (per m²)
+      metrics are provided using QUDT standard units for standardized
+      comparison. Values calculated from energy consumption and grid
+      carbon intensity factors following EPBD methodology.
+    -->
+    <owl:DatatypeProperty rdf:about="eg:co2Emissions">
+        <rdfs:label xml:lang="en">CO2 Emissions</rdfs:label>
+        <rdfs:comment xml:lang="en">Annual CO2 emissions in tonnes. Unit: t CO2/year</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <qudt:hasUnit rdf:resource="unit:TonneMetric" />
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:co2EmissionsPerArea">
+        <rdfs:label xml:lang="en">CO2 Emissions Per Area</rdfs:label>
+        <rdfs:comment xml:lang="en">CO2 emissions per m² in kg CO2/m². Unit: kg/m²</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:Building"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <qudt:hasUnit rdf:resource="unit:KiloGram-PER-M2" />
+    </owl:DatatypeProperty>
+
+    <!-- ================================================================ -->
+    <!-- DATATYPE PROPERTIES - Energy Certificate Details -->
+    <!-- ================================================================ -->    <!--
+      EPBD CERTIFICATION METADATA
+      These properties describe the official energy performance certificates
+      issued for buildings according to EU Energy Performance of Buildings
+      Directive (EPBD, 2010/31/EU). Each certificate includes unique ID,
+      validity window (issue and expiry dates), certification purpose, and
+      current status (valid or expired). Data from Riga building registry.
+    -->
+    <owl:DatatypeProperty rdf:about="eg:certificateNumber">
+        <rdfs:label xml:lang="en">certificate Number</rdfs:label>
+        <rdfs:comment xml:lang="en">Unique energy certificate identifier</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:EnergyCertificate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:certificateStatus">
+        <rdfs:label xml:lang="en">certificate Status</rdfs:label>
+        <rdfs:comment xml:lang="en">Current status: valid, expired, or other</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:EnergyCertificate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:issueDate">
+        <rdfs:label xml:lang="en">issue Date</rdfs:label>
+        <rdfs:comment xml:lang="en">Certificate issuance date</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:EnergyCertificate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:expiryDate">
+        <rdfs:label xml:lang="en">expiry Date</rdfs:label>
+        <rdfs:comment xml:lang="en">Certificate expiration date</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:EnergyCertificate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="eg:certificationPurpose">
+        <rdfs:label xml:lang="en">certification Purpose</rdfs:label>
+        <rdfs:comment xml:lang="en">Purpose of certification (new construction, renovation, etc.)</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:EnergyCertificate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <!-- ================================================================ -->
+    <!-- DATATYPE PROPERTIES - Energy Performance Class -->
+    <!-- ================================================================ -->    <!--
+      ENERGY EFFICIENCY RATING SCALE
+      Energy performance class label using standard A-G scale where:
+      - A represents highest efficiency (best buildings)
+      - G represents lowest efficiency (worst buildings)
+      This is the primary indicator used in EU building policy frameworks,
+      public building registers, and transaction disclosure requirements.
+      Classification derived from total energy consumption (kWh/m²).
+    -->
+    <owl:DatatypeProperty rdf:about="eg:classLabel">
+        <rdfs:label xml:lang="en">class Label</rdfs:label>
+        <rdfs:comment xml:lang="en">Energy efficiency class: A, B, C, D, E, F, or G</rdfs:comment>
+        <rdfs:domain rdf:resource="eg:EnergyPerformanceClass"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+</rdf:RDF>
