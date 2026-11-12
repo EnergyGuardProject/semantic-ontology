@@ -3,10 +3,10 @@
 
     ontology/all_pilots_base.owl   (merged pilot ontologies: classes, properties, sample individuals)
   + pilot_metadata/*.xlsx          (dataset + variable metadata delivered by the pilots)
-  = import/all_pilots.owl          (the ONE file loaded by n10s)
+  = ontology/all_pilots.owl        (the ONE file loaded by n10s; generated, do not edit)
 
 Usage:
-    python3 scripts/ontology/build_all_pilots_owl.py            # writes import/all_pilots.owl
+    python3 scripts/ontology/build_all_pilots_owl.py            # writes ontology/all_pilots.owl
     python3 scripts/ontology/build_all_pilots_owl.py --check    # build + print stats, don't write
 
 Requires: rdflib, openpyxl.
@@ -64,7 +64,7 @@ from rdflib.namespace import DCAT, DCTERMS, OWL, RDF, RDFS, XSD
 ROOT = Path(__file__).resolve().parents[2]
 BASE_OWL = ROOT / "ontology" / "all_pilots_base.owl"
 META_DIR = ROOT / "pilot_metadata"
-OUT_OWL = ROOT / "import" / "all_pilots.owl"
+OUT_OWL = ROOT / "ontology" / "all_pilots.owl"
 
 BASE = "https://www.energyguard.eu/ontology"
 EG = Namespace(BASE + "#")

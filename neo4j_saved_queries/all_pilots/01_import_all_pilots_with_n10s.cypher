@@ -1,7 +1,7 @@
 // Name: Import all_pilots.owl with neosemantics (Docker/Linux)
-// Purpose: One-stop setup + import for /import/all_pilots.owl
+// Purpose: One-stop setup + import for /import/all_pilots.owl (= ontology/all_pilots.owl on the host)
 // Notes:
-// - import/all_pilots.owl is the ONE ontology file for all pilots (schema + pilot metadata).
+// - ontology/all_pilots.owl is the ONE ontology file for all pilots (schema + pilot metadata).
 //   It is generated — rebuild it after changing ontology/all_pilots_base.owl or pilot_metadata/*.xlsx:
 //     python3 scripts/ontology/build_all_pilots_owl.py
 // - Run on a clean graph if this is a fresh ontology load.

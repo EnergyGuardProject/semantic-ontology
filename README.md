@@ -9,9 +9,8 @@ The project combines OWL ontologies, Neo4j, and saved Cypher queries to support 
 ```
 ├── docker-compose.yaml            the Neo4j instance holding the ontology
 ├── docs/                          plain-language ontology guide, original design workbook
-├── ontology/                      base ontology + the original per-pilot OWL files
+├── ontology/                      all_pilots.owl (generated, loaded by Neo4j) + base ontology + original per-pilot files
 ├── pilot_metadata/                pilot metadata workbooks + data-lake mapping (CSV)
-├── import/                        the generated all_pilots.owl (mounted into Neo4j as /import)
 ├── scripts/                       build · load · visualise (see scripts/README.md)
 ├── neo4j_saved_queries/           import/mapping pipeline, Browser visualisation queries, utils
 ├── runtime/                       what Neo4j uses and writes: plugins, data, logs  (data/logs git-ignored)
@@ -42,16 +41,18 @@ docker compose up -d                      # container "neo4j-ontology", data in 
 scripts/neo4j/reload_ontology.sh          # load the ontology (backup -> reset -> import -> mapping -> validation)
 ```
 
-- Browser: `http://localhost:7476` · Bolt: `bolt://localhost:7689` · user `neo4j`, password in `docker-compose.yaml`
-- Ports are bound to localhost only. From your own machine: `ssh -L 7476:localhost:7476 -L 7689:localhost:7689 <server>`
-- The older live instance (container `neo4j`, ports 7474/7687) runs from `/home/atzortzis/neo4j`; its compose file
-  from this folder is in `archive/docker-compose.live-old.yaml`.
+- Browser: `http://localhost:7474` · Bolt: `bolt://localhost:7687` · user `neo4j`, password in `docker-compose.yaml`
+- Public: `neo4j.energy-guard.eu` (nginx-proxy-manager forwards to the container through the `nginxproxy_energyguard_net`
+  network, where it is known as `neo4j`)
+- Ports are bound to localhost only. From your own machine: `ssh -L 7474:localhost:7474 -L 7687:localhost:7687 <server>`
+- This replaces the former live instance (container `neo4j`, run from `/home/atzortzis/neo4j`, now stopped; its data
+  is untouched there). Its earlier compose file from this folder is in `archive/docker-compose.live-old.yaml`.
 
 ## Load ontology data
 
 > New to the ontology? Start with the plain-language walkthrough: [docs/ontology-guide.md](docs/ontology-guide.md).
 
-All pilots are imported into Neo4j from **one** generated file: `import/all_pilots.owl`.
+All pilots are imported into Neo4j from **one** generated file: `ontology/all_pilots.owl` (the folder is mounted read-only into Neo4j as `/import`).
 
 ```
 ontology/all_pilots_base.owl   merged pilot ontologies (classes, properties, sample individuals)
@@ -59,7 +60,7 @@ pilot_metadata/*.xlsx          dataset + variable metadata delivered by the pilo
         │
         └─ python3 scripts/ontology/build_all_pilots_owl.py   (needs: pip install rdflib openpyxl)
         ▼
-import/all_pilots.owl          the single file loaded with n10s
+ontology/all_pilots.owl        the single file loaded with n10s
 ```
 
 - `ontology/pilots/` keeps the original per-pilot OWL files for reference; they are not imported.

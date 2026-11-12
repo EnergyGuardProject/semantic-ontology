@@ -12,8 +12,8 @@ neo4j_saved_queries/
 ```
 
 All Python scripts run with the project venv: `neo4j-venv/bin/python …` (it has `neo4j`, `pyvis`, `networkx`).
-They connect to the project's Neo4j (`docker-compose.yaml`: `bolt://localhost:7689`, user `neo4j`, password
-`REDACTED`). Use `--uri bolt://localhost:7687` for the old live instance, or set `NEO4J_URI` / `NEO4J_PASSWORD`.
+They connect to the project's Neo4j (`docker-compose.yaml`: `bolt://localhost:7687`, user `neo4j`, password
+`REDACTED`). Use `--uri` or set `NEO4J_URI` / `NEO4J_PASSWORD` for another instance.
 
 ---
 
@@ -23,20 +23,16 @@ They connect to the project's Neo4j (`docker-compose.yaml`: `bolt://localhost:76
 # only when the data lake changed (finds where each dataset/variable lives; read-only)
 DATALAKE_PASSWORD=... python3 scripts/ontology/discover_data_lake.py
 
-# build import/all_pilots.owl from ontology/all_pilots_base.owl + pilot_metadata/
+# build ontology/all_pilots.owl from ontology/all_pilots_base.owl + pilot_metadata/
 python3 scripts/ontology/build_all_pilots_owl.py          # needs: pip install rdflib openpyxl
 
 # back up, empty, import, map and validate a Neo4j container
 scripts/neo4j/reload_ontology.sh                 # the project's instance (container "neo4j-ontology")
-scripts/neo4j/reload_ontology.sh neo4j           # the old live instance (container "neo4j")
+scripts/neo4j/reload_ontology.sh <container>     # any other Neo4j container
 ```
 
 `reload_ontology.sh` writes a JSON backup to `output/backups/` first, copies the OWL file into the folder the
-container mounts as `/import`, and logs everything to `output/logs/reload-<container>.txt`.
-
-> The live `neo4j` container was started from **`/home/atzortzis/neo4j`** (its own `docker-compose.yaml`,
-> `data/` and `import/`), not from this folder. The reload script handles that by copying the OWL file into
-> the container's own import folder.
+container mounts as `/import` (only needed for other containers; this project mounts `ontology/`), and logs everything to `output/logs/reload-<container>.txt`.
 
 ---
 
@@ -75,7 +71,7 @@ browser. Scroll to zoom, drag to move, hover a node for details.
 
 ## 3. Visualise in the Neo4j Browser (Cypher)
 
-Open the Browser (`http://localhost:7476`; the old live instance is on `http://localhost:7474`), paste a query from
+Open the Browser (`http://localhost:7474`, or `neo4j.energy-guard.eu`), paste a query from
 `neo4j_saved_queries/visualize/` and run it. Queries with a value on the first line (`WITH 'CEA' AS pilot`)
 are meant to be edited.
 

@@ -28,8 +28,8 @@ GREY = "#B0BEC5"
 
 def parser(description):
     p = argparse.ArgumentParser(description=description)
-    p.add_argument("--uri", default=os.environ.get("NEO4J_URI", "bolt://localhost:7689"),
-                   help="Bolt URI (default: this project's instance bolt://localhost:7689; old live instance: bolt://localhost:7687)")
+    p.add_argument("--uri", default=os.environ.get("NEO4J_URI", "bolt://localhost:7687"),
+                   help="Bolt URI (default: bolt://localhost:7687, the neo4j-ontology container)")
     p.add_argument("--user", default=os.environ.get("NEO4J_USER", "neo4j"))
     p.add_argument("--password", default=os.environ.get("NEO4J_PASSWORD", "REDACTED"))
     return p

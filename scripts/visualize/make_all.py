@@ -2,7 +2,6 @@
 """Generate every visualisation and an index page.
 
     neo4j-venv/bin/python scripts/visualize/make_all.py
-    neo4j-venv/bin/python scripts/visualize/make_all.py --uri bolt://localhost:7687   # old live instance
 
 Writes into output/visualizations/: index.html, structure.html, pilot_map.html, query_demo.txt,
 pilot_<name>.html (one per pilot), class_map.html, lake_coverage.html, structure.graphml, overview.txt.

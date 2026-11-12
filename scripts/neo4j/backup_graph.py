@@ -4,8 +4,7 @@
 A logical backup taken without stopping the database, meant for the small ontology graph.
 Run before scripts/neo4j/reload_ontology.sh replaces a graph.
 
-    neo4j-venv/bin/python scripts/neo4j/backup_graph.py                       # this project's instance (7689)
-    neo4j-venv/bin/python scripts/neo4j/backup_graph.py --uri bolt://localhost:7687   # old live instance
+    neo4j-venv/bin/python scripts/neo4j/backup_graph.py              # the neo4j-ontology container (7687)
 
 Writes output/backups/<name>_<timestamp>.json. Environment: NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD.
 """
@@ -22,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def main():
     ap = argparse.ArgumentParser(description="Export a Neo4j graph to JSON")
-    ap.add_argument("--uri", default=os.environ.get("NEO4J_URI", "bolt://localhost:7689"))
+    ap.add_argument("--uri", default=os.environ.get("NEO4J_URI", "bolt://localhost:7687"))
     ap.add_argument("--user", default=os.environ.get("NEO4J_USER", "neo4j"))
     ap.add_argument("--password", default=os.environ.get("NEO4J_PASSWORD", "REDACTED"))
     ap.add_argument("--name", default=None, help="file name prefix (default: from the port)")
@@ -30,7 +29,7 @@ def main():
 
     out_dir = ROOT / "output" / "backups"
     out_dir.mkdir(parents=True, exist_ok=True)
-    name = a.name or ("neo4j-ontology" if a.uri.endswith(":7689") else "neo4j_" + a.uri.rsplit(":", 1)[-1])
+    name = a.name or ("neo4j-ontology" if a.uri.endswith(":7687") else "neo4j_" + a.uri.rsplit(":", 1)[-1])
     path = out_dir / f"{name}_{datetime.now():%Y%m%d_%H%M%S}.json"
 
     with GraphDatabase.driver(a.uri, auth=(a.user, a.password)) as driver:

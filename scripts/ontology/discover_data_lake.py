@@ -42,7 +42,7 @@ import rdflib
 from rdflib.namespace import RDFS
 
 ROOT = Path(__file__).resolve().parents[2]
-OWL_FILE = ROOT / "import" / "all_pilots.owl"
+OWL_FILE = ROOT / "ontology" / "all_pilots.owl"
 BASE_OWL = ROOT / "ontology" / "all_pilots_base.owl"
 META = ROOT / "pilot_metadata"
 TABLES_CSV = META / "dataset_tables.csv"

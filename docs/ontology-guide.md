@@ -424,7 +424,7 @@ graph LR
     L[(data lake<br/>read-only)] --> D{{scripts/ontology/discover_data_lake.py}}
     D --> C[pilot_metadata/dataset_tables.csv<br/>sensor_map.csv]
     C --> S
-    S --> O[import/all_pilots.owl<br/>the ONE file Neo4j imports]
+    S --> O[ontology/all_pilots.owl<br/>the ONE file Neo4j imports]
     O --> N[(Neo4j)]
 ```
 
