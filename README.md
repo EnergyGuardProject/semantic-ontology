@@ -6,11 +6,18 @@ The project combines OWL ontologies, Neo4j, and saved Cypher queries to support 
 
 ## What is in this repository
 
-- `docker-compose.yaml` for running Neo4j with the required volumes and extensions
-- `import/` for OWL ontologies and sample source files
-- `neo4j_saved_queries/` for reusable Cypher queries and Neo4j tooling scripts
-- `scripts/` for Python utilities such as graph visualization and import checks
-- `data/`, `logs/`, and `plugins/` for the local Neo4j runtime
+```
+├── docker-compose.yaml            the Neo4j instance holding the ontology
+├── docs/                          plain-language ontology guide, original design workbook
+├── ontology/                      base ontology + the original per-pilot OWL files
+├── pilot_metadata/                pilot metadata workbooks + data-lake mapping (CSV)
+├── import/                        the generated all_pilots.owl (mounted into Neo4j as /import)
+├── scripts/                       build · load · visualise (see scripts/README.md)
+├── neo4j_saved_queries/           import/mapping pipeline, Browser visualisation queries, utils
+├── runtime/                       what Neo4j uses and writes: plugins, data, logs  (data/logs git-ignored)
+├── output/                        what the scripts write: backups, visualisations, logs (git-ignored)
+└── archive/                       no longer used: old compose files, scripts, queries, Neo4j data, jars
+```
 
 ## Purpose
 
@@ -28,42 +35,73 @@ The repository supports the EnergyGuard semantic model and ontology work by:
 - A Neo4j client such as the browser UI or Cypher shell
 - Python 3.12 if you plan to run the helper scripts
 
-## Run Neo4j locally
-
-Start the database with Docker Compose:
+## Run Neo4j
 
 ```bash
-docker compose up -d
+docker compose up -d                      # container "neo4j-ontology", data in runtime/data
+scripts/neo4j/reload_ontology.sh          # load the ontology (backup -> reset -> import -> mapping -> validation)
 ```
 
-Neo4j will be available at:
-
-- HTTP: `http://localhost:7474`
-- Bolt: `bolt://localhost:7687`
-
-The default credentials in this setup are configured in `docker-compose.yaml`.
+- Browser: `http://localhost:7476` · Bolt: `bolt://localhost:7689` · user `neo4j`, password in `docker-compose.yaml`
+- Ports are bound to localhost only. From your own machine: `ssh -L 7476:localhost:7476 -L 7689:localhost:7689 <server>`
+- The older live instance (container `neo4j`, ports 7474/7687) runs from `/home/atzortzis/neo4j`; its compose file
+  from this folder is in `archive/docker-compose.live-old.yaml`.
 
 ## Load ontology data
 
-The repository includes OWL files under `import/` and saved Cypher examples under `neo4j_saved_queries/`.
+> New to the ontology? Start with the plain-language walkthrough: [docs/ontology-guide.md](docs/ontology-guide.md).
 
-Common workflow:
+All pilots are imported into Neo4j from **one** generated file: `import/all_pilots.owl`.
 
-1. Start Neo4j.
-2. Run the n10s initialization query from `neo4j_saved_queries/n10s_installation/`.
-3. Import the desired OWL ontology from the `import/` directory.
-4. Explore the graph with the saved query set or your own Cypher queries.
+```
+ontology/all_pilots_base.owl   merged pilot ontologies (classes, properties, sample individuals)
+pilot_metadata/*.xlsx          dataset + variable metadata delivered by the pilots
+        │
+        └─ python3 scripts/ontology/build_all_pilots_owl.py   (needs: pip install rdflib openpyxl)
+        ▼
+import/all_pilots.owl          the single file loaded with n10s
+```
 
-## Visualization helpers
+- `ontology/pilots/` keeps the original per-pilot OWL files for reference; they are not imported.
+- Every dataset in the metadata becomes a `dcat:Dataset` linked from its pilot (`hasDataset`);
+  every column/signal becomes an `eg:Variable` linked from its dataset (`hasVariable`). Sensor
+  tags are matched to the existing measurement individuals, so metadata lands on the same node.
+- The pilot metadata is the source of truth: for sensors that exist in both, the metadata's
+  name (label + database column), unit and value range replace what the base ontology said.
+- For CIEMAT, BER, CEA and CARTIF, base content the metadata does not back is dropped: the
+  sensors and sample datasets of the original per-pilot ontologies (they were modelled from one
+  sample export each), measurement groups left empty, and references to nodes that exist nowhere.
+- Every dataset points to where its data really lives in the data lake (one PostgreSQL database
+  per pilot, time series in `public.f_tsdata`, REA tables in `gis`/`cadastre`); every variable to its
+  lake `sensor_id`, sensor pattern or column. `scripts/ontology/discover_data_lake.py` finds these (read-only,
+  credentials via `DATALAKE_PASSWORD`) and writes `pilot_metadata/dataset_tables.csv`,
+  `sensor_map.csv` and `lake_unmapped_sensors.csv`; the build reads them and never connects itself.
+- The build is deterministic: re-running with unchanged inputs gives a byte-identical file.
 
-The `scripts/` directory contains small Python utilities for querying Neo4j and rendering graph views, including:
+Workflow:
 
-- `scripts/simple_graph_viz.py`
-- `scripts/visualize_owl_import.py`
+1. Edit `ontology/all_pilots_base.owl` and/or the workbooks in `pilot_metadata/`, then rebuild.
+2. Start Neo4j.
+3. Run `neo4j_saved_queries/all_pilots/01_import_all_pilots_with_n10s.cypher` on a clean database.
+4. Or run `scripts/neo4j/reload_ontology.sh`, which does the reset, import (01), mapping (02) and validation (03).
+
+## Scripts and visualisation
+
+See [scripts/README.md](scripts/README.md): rebuild/reload commands, Python visualisations for the terminal
+(`scripts/visualize/`, output in `output/visualizations/`) and Cypher queries for the Neo4j Browser
+(`neo4j_saved_queries/visualize/`, with a Browser style file).
+
+Reload the live graph after a rebuild:
+
+```bash
+python3 scripts/ontology/build_all_pilots_owl.py
+scripts/neo4j/reload_ontology.sh            # backup -> reset -> import -> mapping -> validation
+neo4j-venv/bin/python scripts/visualize/make_all.py
+```
 
 ## Notes
 
-- `.gitignore` already excludes local runtime data such as `data/`, `logs/`, `plugins-enterprise/`, `neo4j-venv/`, and `certificates/`.
+- `.gitignore` excludes the container state (`runtime/data`, `runtime/logs`), generated `output/`, the venv and the large parts of `archive/`.
 - The repository is focused on the ontology and graph layer rather than application code.
 
 ## License

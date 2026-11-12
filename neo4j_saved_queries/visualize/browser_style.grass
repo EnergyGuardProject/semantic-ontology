@@ -1,0 +1,60 @@
+node {
+  diameter: 40px;
+  color: #CFD8DC;
+  border-color: #90A4AE;
+  border-width: 1px;
+  text-color-internal: #263238;
+  font-size: 10px;
+  caption: "{displayName}";
+}
+node.Pilot {
+  diameter: 80px;
+  color: #37474F;
+  border-color: #263238;
+  text-color-internal: #FFFFFF;
+  font-size: 14px;
+  caption: "{displayName}";
+}
+node.SubPilot {
+  diameter: 55px;
+  color: #607D8B;
+  text-color-internal: #FFFFFF;
+  caption: "{displayName}";
+}
+node.Dataset {
+  diameter: 55px;
+  color: #FFE082;
+  border-color: #FFB300;
+  caption: "{displayName}";
+}
+node.Measurement {
+  diameter: 30px;
+  color: #90CAF9;
+  border-color: #1E88E5;
+  caption: "{displayName}";
+}
+node.MeasurementGroup {
+  diameter: 45px;
+  color: #FFAB91;
+  border-color: #F4511E;
+  caption: "{displayName}";
+}
+node.OntologyClass {
+  diameter: 50px;
+  color: #A5D6A7;
+  border-color: #43A047;
+  caption: "{displayName}";
+}
+relationship {
+  color: #B0BEC5;
+  shaft-width: 1px;
+  font-size: 8px;
+  caption: "<type>";
+}
+relationship.INSTANCE_OF {
+  color: #43A047;
+}
+relationship.mp__hasDataset {
+  color: #FFB300;
+  shaft-width: 2px;
+}

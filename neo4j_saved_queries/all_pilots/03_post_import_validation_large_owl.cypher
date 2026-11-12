@@ -11,11 +11,13 @@ RETURN resources, count(r) AS relationships;
 MATCH (n:Resource)
 WITH n,
 CASE
-  WHEN n.uri CONTAINS '/pilot1/' THEN 'pilot1'
-  WHEN n.uri CONTAINS '/pilot2#' THEN 'pilot2'
-  WHEN n.uri CONTAINS '/pilot3/' THEN 'pilot3'
-  WHEN n.uri CONTAINS '/pilot4/' THEN 'pilot4'
-  WHEN n.uri CONTAINS '/pilot5/' THEN 'pilot5'
+  WHEN n.uri CONTAINS '/ontology/rdn' THEN 'RDN'
+  WHEN n.uri CONTAINS '/ontology/ciemat#' THEN 'CIEMAT'
+  WHEN n.uri CONTAINS '/ontology/ber#' THEN 'BER'
+  WHEN n.uri CONTAINS '/ontology/cea#' THEN 'CEA'
+  WHEN n.uri CONTAINS '/ontology/cartif#' THEN 'CARTIF'
+  WHEN n.uri CONTAINS '/ontology/rea#' THEN 'REA'
+  WHEN n.uri CONTAINS '/ontology/engreen#' THEN 'ENGREEN'
   ELSE 'other'
 END AS bucket
 RETURN bucket, count(*) AS nodes
@@ -27,18 +29,19 @@ RETURN type(r) AS predicate, count(*) AS freq
 ORDER BY freq DESC
 LIMIT 30;
 
-// 4) Mapping readiness: measurements missing db metadata
-MATCH (m:Measurement)
-WHERE m.eg__storedInDatabaseColumn IS NULL
-   OR m.eg__storedInDatabaseTable IS NULL
-RETURN count(m) AS measurements_missing_db_metadata;
+// 4) Data lake coverage per pilot (run after 02): how variables were located
+MATCH (p:Resource)-[:mp__hasDataset]->(d:Dataset)-[:eg__hasVariable]->(m:Measurement)
+WITH DISTINCT p, m
+RETURN p.rdfs__label[0] AS pilot, m.lakeMatch AS located_by, count(*) AS variables
+ORDER BY pilot, located_by;
 
-// 5) Mapping readiness: datasets without groups
-MATCH (d:Dataset)
-WHERE NOT (d)-[:HAS_GROUP]->(:MeasurementGroup)
-RETURN count(d) AS datasets_without_groups;
+// 5) Datasets without a data-lake location
+MATCH (p:Resource)-[:mp__hasDataset]->(d:Dataset)
+WHERE d.eg__storedInDatabase IS NULL
+RETURN p.rdfs__label[0] AS pilot, collect(d.displayName) AS datasets_not_in_lake
+ORDER BY pilot;
 
-// 6) Mapping readiness: groups without measurements
+// 6) Groups without measurements
 MATCH (g:MeasurementGroup)
 WHERE NOT (g)-[:HAS_MEASUREMENT]->(:Measurement)
 RETURN count(g) AS groups_without_measurements;
