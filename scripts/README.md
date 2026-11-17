@@ -12,16 +12,24 @@ neo4j_saved_queries/
 ```
 
 All Python scripts run with the project venv: `neo4j-venv/bin/python …` (it has `neo4j`, `pyvis`, `networkx`).
-They connect to the project's Neo4j (`docker-compose.yaml`: `bolt://localhost:7687`, user `neo4j`, password
-`REDACTED`). Use `--uri` or set `NEO4J_URI` / `NEO4J_PASSWORD` for another instance.
+They connect to the project's Neo4j (`docker-compose.yaml`: `bolt://localhost:7687`, user `neo4j`). Use `--uri` or
+set `NEO4J_URI` / `NEO4J_PASSWORD` for another instance.
+
+**Credentials and private inputs are not in git:**
+- `.env` (copy `.env.example`) holds `NEO4J_PASSWORD` and the data-lake connection (`DATALAKE_HOST`, `DATALAKE_PORT`,
+  `DATALAKE_USER`, `DATALAKE_PASSWORD`). Docker Compose and the scripts read it.
+- `pilot_metadata/` holds the partners' metadata workbooks. It is needed only to **rebuild** the ontology;
+  loading and querying use the committed `ontology/all_pilots.owl`.
+- `ontology/mappings/` (in git) holds where each dataset/variable lives in the lake; reports go to `output/reports/`.
 
 ---
 
 ## 1. Rebuild and reload the ontology
 
 ```bash
-# only when the data lake changed (finds where each dataset/variable lives; read-only)
-DATALAKE_PASSWORD=... python3 scripts/ontology/discover_data_lake.py
+# only when the data lake changed (finds where each dataset/variable lives; read-only).
+# Hand corrections go in ontology/mappings/sensor_map_overrides.csv: they are applied last and win.
+python3 scripts/ontology/discover_data_lake.py
 
 # build ontology/all_pilots.owl from ontology/all_pilots_base.owl + pilot_metadata/
 python3 scripts/ontology/build_all_pilots_owl.py          # needs: pip install rdflib openpyxl
@@ -78,6 +86,10 @@ are meant to be edited.
 | File | Shows | View |
 |---|---|---|
 | `00_one_example_path.cypher` | **Start here**: one sensor and everything it connects to (pilot, dataset, class, unit, group) | graph |
+| `11_hierarchy_overview.cypher` | **The whole hierarchy at a glance**: pilots → all datasets → 3 example variables each → class → `eg:Measurement`, with units and groups (like the guide's diagram) | graph |
+| `12_all_groups.cypher` | All sensor groups, attached to their pilot's datasets | graph |
+| `13_all_classes.cypher` | The full class hierarchy: shared `eg:` classes, pilot-specific classes, the pilot tree | graph |
+| `14_hierarchy_table.cypher` | The hierarchy as a table: pilot · dataset · variables · kinds of measurement · groups | table |
 | `01_pilot_tree.cypher` | Pilots → 7 pilots → their datasets | graph |
 | `02_one_pilot.cypher` | One pilot → datasets → variables | graph |
 | `03_dataset_variables_and_classes.cypher` | One dataset, its variables and their measurement class | graph |

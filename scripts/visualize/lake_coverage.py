@@ -19,8 +19,8 @@ WITH p, d, collect(DISTINCT v) AS vs
 RETURN p.displayName AS pilot, d.displayName AS dataset, d.eg__storedInDatabase IS NOT NULL AS located,
        [v IN vs | coalesce(v.lakeMatch, 'none')] AS matches, [v IN vs | v.uri] AS uris
 """
-KINDS = ["exact", "normalised", "pattern", "column", "timestamp", "none"]
-KIND_COLORS = {"exact": "#2E7D32", "normalised": "#66BB6A", "pattern": "#9CCC65", "column": "#26A69A",
+KINDS = ["exact", "normalised", "inferred", "manual", "pattern", "column", "timestamp", "none"]
+KIND_COLORS = {"exact": "#2E7D32", "normalised": "#66BB6A", "inferred": "#FFD54F", "manual": "#FFB300", "pattern": "#9CCC65", "column": "#26A69A",
                "timestamp": "#B0BEC5", "none": "#E57373"}
 
 

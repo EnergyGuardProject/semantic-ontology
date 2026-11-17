@@ -4,19 +4,27 @@
 Connects READ-ONLY to the data lake (one PostgreSQL database per pilot) and writes three
 editable files that scripts/ontology/build_all_pilots_owl.py reads (the build itself never connects):
 
-  pilot_metadata/dataset_tables.csv          dataset  -> database, table, layout
-  pilot_metadata/sensor_map.csv              variable -> lake sensor_id / pattern / column
-  pilot_metadata/lake_unmapped_sensors.csv   lake sensors no metadata variable describes
+  ontology/mappings/dataset_tables.csv       dataset  -> database, table, layout
+  ontology/mappings/sensor_map.csv           variable -> lake sensor_id / pattern / column
+  output/reports/lake_unmapped_sensors.csv   lake sensors no metadata variable describes (report)
 
 Rows marked source=manual in dataset_tables.csv / match=manual in sensor_map.csv are kept as
 they are on re-discovery, so hand corrections survive.
 
-Credentials come from the environment (never hard-code them):
-    DATALAKE_HOST (default REDACTED_HOST)  DATALAKE_PORT (default REDACTED_PORT)
-    DATALAKE_USER (default REDACTED_USER)  DATALAKE_PASSWORD (required)
+ontology/mappings/sensor_map_overrides.csv (hand-maintained, read here) is applied LAST and wins over the
+automatic matching. Use it when the data shows the automatic match is wrong or ambiguous:
+  columns: dataset, name, lake_sensor_id, lake_sensor_pattern, match, note
+  match:   inferred  decided by us from the data (e.g. 0 W at night = PV), to be confirmed by the partner
+           manual    confirmed by a person
+           none      we looked and there is no such sensor in the lake
+Also written: output/reports/lake_devices.csv (ENGREEN devices and their kind, inferred from their signals).
+
+Connection details come from the environment or from the git-ignored .env file at the repo root
+(see .env.example); none of them are kept in the code:
+    DATALAKE_HOST  DATALAKE_PORT  DATALAKE_USER  DATALAKE_PASSWORD
 
 Usage:
-    DATALAKE_PASSWORD=... python3 scripts/ontology/discover_data_lake.py
+    python3 scripts/ontology/discover_data_lake.py
 Requires: rdflib, psycopg2 (psycopg2-binary).
 
 How the lake stores data
@@ -34,7 +42,7 @@ import difflib
 import os
 import re
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 import psycopg2
@@ -44,10 +52,22 @@ from rdflib.namespace import RDFS
 ROOT = Path(__file__).resolve().parents[2]
 OWL_FILE = ROOT / "ontology" / "all_pilots.owl"
 BASE_OWL = ROOT / "ontology" / "all_pilots_base.owl"
-META = ROOT / "pilot_metadata"
-TABLES_CSV = META / "dataset_tables.csv"
-SENSOR_CSV = META / "sensor_map.csv"
-UNMAPPED_CSV = META / "lake_unmapped_sensors.csv"
+MAPPINGS = ROOT / "ontology" / "mappings"
+REPORTS = ROOT / "output" / "reports"
+TABLES_CSV = MAPPINGS / "dataset_tables.csv"
+SENSOR_CSV = MAPPINGS / "sensor_map.csv"
+OVERRIDES_CSV = MAPPINGS / "sensor_map_overrides.csv"
+UNMAPPED_CSV = REPORTS / "lake_unmapped_sensors.csv"
+DEVICES_CSV = REPORTS / "lake_devices.csv"
+
+
+def load_env(path=ROOT / ".env"):
+    """Fill os.environ from KEY=value lines in .env (variables already set win)."""
+    if path.exists():
+        for line in path.read_text(encoding="utf-8").splitlines():
+            key, sep, val = line.strip().partition("=")
+            if sep and key and not key.startswith("#"):
+                os.environ.setdefault(key.strip(), val.strip().strip("'\""))
 
 B = "https://www.energyguard.eu/ontology"
 EG = rdflib.Namespace(B + "#")
@@ -65,13 +85,14 @@ SENSOR_PILOTS = {"CIEMAT", "BER", "CEA", "CARTIF"}
 # ENGREEN: the lake keeps one sensor per device and signal (<device>_<signal>); the metadata
 # describes signal types. Map the metadata's source column -> sensor_id LIKE pattern.
 # ('_' is a LIKE wildcard, hence the escaping.)
+HUAWEI_ID = "_" * 16   # LIKE wildcards for the 16-character device id: excludes e.g. '<id>_reverse_active_cap'
 ENGREEN_SIGNALS = {
     "Operational_monitoring_dataset": {
-        "Active power(kW)": (r"%\_active\_power", "inverters and grid power sensors share this signal"),
-        "Active power(W)": (r"%\_active\_power", "inverters and grid power sensors share this signal"),
+        "Active power(kW)": (HUAWEI_ID + r"\_active\_power", "inverters report kW, grid meters report W (checked on the values)"),
+        "Active power(W)": (HUAWEI_ID + r"\_active\_power", "inverters report kW, grid meters report W (checked on the values)"),
         "Daily energy(kWh)": (r"%\_day\_cap", ""),
         "Total yield(kWh)": (r"%\_total\_cap", ""),
-        "Positive active energy(kWh)": (r"%\_active\_cap", ""),
+        "Positive active energy(kWh)": (HUAWEI_ID + r"\_active\_cap", ""),
         "Negative active energy(kWh)": (r"%\_reverse\_active\_cap", ""),
         "Batteria SOC(%)": (r"%\_battery\_soc", ""),
         "Potenza di carica e scarica(kW)": (r"%\_ch\_discharge\_power", ""),
@@ -84,6 +105,16 @@ ENGREEN_SIGNALS = {
 ENGREEN_LAKE_DATASETS = set(ENGREEN_SIGNALS)
 
 # REA monthly heat series lives in f_tsdata with one "sensor" per building
+# REA air quality: the lake keeps hourly '<station>_<pollutant>' sensors (since 2024-11)
+REA_SIGNALS = {
+    "Air_quality": {
+        "PM₂.₅ µg/m³": (r"%\_PM2.5\_60min", "hourly, one sensor per station"),
+        "PM₁₀ µg/m³": (r"%\_PM10\_60min", "hourly, one sensor per station"),
+        "NO₂ µg/m³": (r"%\_NO2", "hourly, one sensor per station"),
+        "SO₂ µg/m³": (r"%\_SO2", "hourly, one sensor per station"),
+        "O₃ µg/m³": (r"%\_O3", "hourly, one sensor per station"),
+    },
+}
 REA_LONG = {
     "Buildings_monthly_heat_series_ARCGIS_Server": {
         "Kadastra Nr.": "public.d_sensor.sensor_id",
@@ -94,17 +125,46 @@ REA_LONG = {
 COLUMN_ALIASES = {"geometry": "geom"}
 
 norm = lambda s: re.sub(r"[^a-z0-9]", "", str(s).lower())
-like_to_regex = lambda p: re.compile("^" + re.escape(p).replace("%", ".*").replace(r"\\_", "_") + "$")
+def like_to_regex(pattern):
+    """SQL LIKE pattern -> regex: % = any text, _ = any single character, backslash escapes."""
+    out, i = [], 0
+    while i < len(pattern):
+        ch = pattern[i]
+        if ch == "\\" and i + 1 < len(pattern):
+            out.append(re.escape(pattern[i + 1]))
+            i += 1
+        elif ch == "%":
+            out.append(".*")
+        elif ch == "_":
+            out.append(".")
+        else:
+            out.append(re.escape(ch))
+        i += 1
+    return re.compile("^" + "".join(out) + "$", re.S)
+
+
+def device_kind(signals):
+    """ENGREEN device type from the signals it has in the lake."""
+    if "inverter_state" in signals or "mppt_power" in signals:
+        return "inverter"
+    if "battery_soc" in signals:
+        return "battery"
+    if "reverse_active_cap" in signals or "meter_status" in signals:
+        return "grid meter"
+    if "0_total_act_energy" in signals:
+        return "Shelly meter"
+    return "other"
 
 
 def connect(db):
-    pw = os.environ.get("DATALAKE_PASSWORD")
-    if not pw:
-        sys.exit("DATALAKE_PASSWORD is not set")
-    c = psycopg2.connect(host=os.environ.get("DATALAKE_HOST", "REDACTED_HOST"),
-                         port=int(os.environ.get("DATALAKE_PORT", "REDACTED_PORT")),
-                         user=os.environ.get("DATALAKE_USER", "REDACTED_USER"),
-                         password=pw, dbname=db, connect_timeout=15)
+    load_env()
+    missing = [k for k in ("DATALAKE_HOST", "DATALAKE_PORT", "DATALAKE_USER", "DATALAKE_PASSWORD")
+               if not os.environ.get(k)]
+    if missing:
+        sys.exit("not set (environment or .env): " + ", ".join(missing))
+    c = psycopg2.connect(host=os.environ["DATALAKE_HOST"], port=int(os.environ["DATALAKE_PORT"]),
+                         user=os.environ["DATALAKE_USER"], password=os.environ["DATALAKE_PASSWORD"],
+                         dbname=db, connect_timeout=15)
     c.set_session(readonly=True, autocommit=True)
     cur = c.cursor()
     cur.execute("SET statement_timeout = '60s'")
@@ -139,6 +199,7 @@ def read_csv(path, key):
 
 
 def write_csv(path, fields, rows):
+    path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
         w.writeheader()
@@ -164,8 +225,15 @@ def main():
 
     old_tables = read_csv(TABLES_CSV, ("dataset",))
     old_sensors = read_csv(SENSOR_CSV, ("dataset", "variable"))
+    overrides = read_csv(OVERRIDES_CSV, ("dataset", "name"))
     table_rows, sensor_rows, used = [], [], defaultdict(set)
     device_dataset = {}  # ENGREEN device id -> dataset title
+    eng_signals = defaultdict(set)
+    for sid in lake["ENGREEN"]:
+        m = re.match(r"^([0-9a-f]{12}|\d{10,})_(.+)$", sid)
+        if m:
+            eng_signals[m.group(1)].add(m.group(2))
+    eng_devices = {dev: device_kind(sigs) for dev, sigs in eng_signals.items()}
 
     for d in datasets:
         pilot, key = d["pilot"], d["dataset"]
@@ -225,12 +293,26 @@ def main():
                     pattern, note = signals[v["column"]]
                     hits = [s for s in lake[pilot] if like_to_regex(pattern).match(s)]
                     if hits:
-                        row.update(lake_sensor_pattern=pattern, match="pattern", note=f"{len(hits)} lake sensors" + (f"; {note}" if note else ""))
+                        kinds = Counter(eng_devices.get(h.split("_", 1)[0], "other") for h in hits)
+                        what = ", ".join(f"{n} {k}" for k, n in sorted(kinds.items(), key=lambda x: -x[1]))
+                        row.update(lake_sensor_pattern=pattern, match="pattern",
+                                   note=f"{len(hits)} lake sensors ({what})" + (f"; {note}" if note else ""))
                         used[pilot].update(hits)
                         for h in hits:
                             device_dataset[h.split("_", 1)[0]] = d["title"]
                 elif norm(v["column"]) in TIMESTAMP_NAMES:
                     row.update(lake_column=TIMESTAMP_COLUMN, match="timestamp")
+                var_rows.append(row)
+        elif pilot == "REA" and short in REA_SIGNALS:
+            loc.update(database=DATABASES[pilot], table=LONG_TABLE, layout="long", source="lake")
+            for v in d["variables"]:
+                row = {"pilot": pilot, "dataset": key, "variable": v["iri"], "name": v["name"],
+                       "lake_sensor_id": "", "lake_sensor_pattern": "", "lake_column": "", "match": "none", "note": ""}
+                pattern, note = REA_SIGNALS[short].get(v["column"]) or REA_SIGNALS[short].get(v["name"]) or (None, "")
+                hits = [s for s in lake[pilot] if pattern and like_to_regex(pattern).match(s)]
+                if hits:
+                    row.update(lake_sensor_pattern=pattern, match="pattern", note=f"{len(hits)} lake sensors; {note}")
+                    used[pilot].update(hits)
                 var_rows.append(row)
         elif pilot == "REA" and short in REA_LONG:
             loc.update(database=DATABASES[pilot], table=LONG_TABLE, layout="long", source="lake")
@@ -258,6 +340,12 @@ def main():
         if not var_rows:
             var_rows = [{"pilot": pilot, "dataset": key, "variable": v["iri"], "name": v["name"], "lake_sensor_id": "",
                          "lake_sensor_pattern": "", "lake_column": "", "match": "none", "note": ""} for v in d["variables"]]
+        # hand-maintained overrides win over the automatic matching
+        for r in var_rows:
+            ov = overrides.get((key, r["name"]))
+            if ov:
+                r.update(lake_sensor_id=ov.get("lake_sensor_id", ""), lake_sensor_pattern=ov.get("lake_sensor_pattern", ""),
+                         lake_column="", match=ov.get("match") or "manual", note=ov.get("note", ""))
         # keep manual corrections
         if old_tables.get((key,), {}).get("source") == "manual":
             loc = {k: old_tables[(key,)].get(k, "") for k in loc}
@@ -267,6 +355,15 @@ def main():
                 r.update({k: old.get(k, "") for k in r})
         table_rows.append(loc)
         sensor_rows.extend(sorted(var_rows, key=lambda r: r["variable"]))
+
+    # which lake sensors are covered by the final mapping (automatic matches + overrides)
+    used = defaultdict(set)
+    for r in sensor_rows:
+        if r["lake_sensor_id"]:
+            used[r["pilot"]].add(r["lake_sensor_id"])
+        if r["lake_sensor_pattern"]:
+            rx = like_to_regex(r["lake_sensor_pattern"])
+            used[r["pilot"]].update(s for s in lake[r["pilot"]] if rx.match(s))
 
     # suggestions for what is still unmatched (never applied automatically)
     for r in sensor_rows:
@@ -308,13 +405,16 @@ def main():
             unmatched_names[r["pilot"]][norm(r["name"])] = (r["name"], dtitle)
     unmapped = []
     for pilot, sensors in sorted(lake.items()):
-        if pilot == "REA":
-            continue   # REA lake sensors are buildings (cadastre numbers), not variables
         used_norm = {norm(u): u for u in used[pilot]}
-        for sid in sorted(set(sensors) - used[pilot]):
+        candidates = set(sensors) - used[pilot]
+        if pilot == "REA":   # the building sensors (cadastre numbers) are rows of one dataset, not variables
+            candidates = {s for s in candidates if not s.isdigit()}
+        for sid in sorted(candidates):
             name, stype, freq = sensors[sid]
             n, hint = norm(sid), ""
-            if n in used_norm:
+            if pilot == "REA":
+                hint = "air-quality station sensor; this pollutant is not described in the metadata"
+            elif n in used_norm:
                 hint = f"same sensor id as mapped {used_norm[n]} except letter case (duplicate in the lake?)"
             elif n in base_names[pilot]:
                 hint = (f"described in the original {pilot} ontology ({base_names[pilot][n]}) "
@@ -324,6 +424,9 @@ def main():
             elif sid.endswith("_PV") and sid[:-3] in used[pilot]:
                 hint = (f"check: the metadata's PV signal is mapped to {sid[:-3]}; "
                         f"{sid} may be the PV one and {sid[:-3]} the consumption one")
+            elif any(sid.startswith(u + "_") and len(u) >= 4 for u in used[pilot]):
+                parent = max((u for u in used[pilot] if sid.startswith(u + "_") and len(u) >= 4), key=len)
+                hint = f"looks like a sub-signal (inverter / tracker / channel) of the mapped sensor {parent}"
             else:
                 stem = norm(re.sub(r"_\d+$", "", sid))
                 pool = unmatched_names[pilot] or meta_names[pilot]
@@ -353,9 +456,11 @@ def main():
     write_csv(TABLES_CSV, ["pilot", "dataset", "title", "database", "table", "layout", "source"], table_rows)
     write_csv(SENSOR_CSV, ["pilot", "dataset", "variable", "name", "lake_sensor_id", "lake_sensor_pattern",
                            "lake_column", "lake_sensor_type", "match", "note"], sensor_rows)
+    write_csv(DEVICES_CSV, ["pilot", "device_id", "kind", "signals", "example_signals"],
+              [{"pilot": "ENGREEN", "device_id": dev, "kind": eng_devices[dev], "signals": len(eng_signals[dev]),
+                "example_signals": ", ".join(sorted(eng_signals[dev])[:6])} for dev in sorted(eng_devices, key=lambda d: (eng_devices[d], d))])
     write_csv(UNMAPPED_CSV, ["pilot", "database", "sensor_id", "name", "sensor_type", "frequency_s", "hint"], unmapped)
 
-    from collections import Counter
     print("\ndatasets:", dict(Counter(r["source"] for r in table_rows)))
     for pilot in DATABASES:
         c = Counter(r["match"] for r in sensor_rows if r["pilot"] == pilot)

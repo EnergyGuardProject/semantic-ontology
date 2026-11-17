@@ -14,3 +14,7 @@ archive/runtime_old/
 archive/neosemantics-5.18.0.jar
 archive/lib/
 **/lib/
+pilot_metadata/
+
+# local secrets (see .env.example)
+.env

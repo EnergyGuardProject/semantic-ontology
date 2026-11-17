@@ -114,7 +114,7 @@ Each dataset carries the answers to the questions in the pilot metadata template
 | File format? | `eg:fileFormat` | CSV |
 | How are gaps marked? | `eg:missingValues` | *(not given by CEA: the field is simply absent)* |
 | Terms of use? | `eg:licence` | *(not given by CEA)* |
-| Who to ask? | `eg:dataOwnerContact` | CEA, REDACTED_NAME, … |
+| Who to ask? | `eg:dataOwnerContact` | CEA (organisation only: personal names and emails are not published) |
 | **Which data-lake database?** | `eg:storedInDatabase` | `TEF4_CEA` |
 | **Which table?** | `eg:storedInDatabaseTable` | `public.f_tsdata` |
 | **Rows per reading or columns per variable?** | `eg:tableLayout` | `long` |
@@ -122,7 +122,7 @@ Each dataset carries the answers to the questions in the pilot metadata template
 REA datasets also have `eg:sourceUrl` (open-data link), `eg:recordCount` and `eg:datasetType`
 (time series / geospatial / tabular).
 
-> **The data lake** (PostgreSQL, `REDACTED_HOST:REDACTED_PORT`) has **one database per pilot**:
+> **The data lake** (PostgreSQL, operated by CARTIF) has **one database per pilot**:
 > `TEF1_RDN`, `TEF2_CEDER` (CIEMAT), `TEF3_BER`, `TEF4_CEA`, `TEF5_CARTIF`, `TEF6_REA`, `TEF7_ENGREEN`.
 > Each stores its time series the same way, in a **long** table: one row per reading.
 >
@@ -133,11 +133,13 @@ REA datasets also have `eg:sourceUrl` (open-data link), `eg:recordCount` and `eg
 > ```
 >
 > REA also has **wide** tables (one column per variable) in the `gis` and `cadastre` schemas,
-> e.g. `gis.majas_energoefektivitates_raditaji`.
+> e.g. `gis.majas_energoefektivitates_raditaji`. Its `f_tsdata` holds two kinds of series: the monthly heat
+> consumption of about 6,300 buildings (2024) and, since November 2024, **hourly air-quality readings** from
+> Latvian monitoring stations (sensor ids like `Rīga-Kronvalda bulvāris_NO2`).
 >
-> 19 of the 41 datasets are located in the lake. The others (RDN, the ENGREEN price/GSE/mapping
+> 20 of the 41 datasets are located in the lake. The others (RDN, the ENGREEN price/GSE/mapping
 > datasets, several REA datasets) are not there yet and have no location.
-> The locations are in [`pilot_metadata/dataset_tables.csv`](../pilot_metadata/dataset_tables.csv).
+> The locations are in [`ontology/mappings/dataset_tables.csv`](../ontology/mappings/dataset_tables.csv).
 
 ---
 
@@ -176,25 +178,39 @@ The **database and table** are not repeated on each variable: they live on the d
 |---|---|
 | `exact` | the lake `sensor_id` is exactly the name in the metadata |
 | `normalised` | same name, different spelling (`AS-B103` → `AS_B103`, `HC-PMP-C501` → `PMP_C501_HC`, `temp_c` → `temp_c_1`) |
-| `pattern` | the lake keeps one sensor per device or channel; the pattern selects all of them |
+| `inferred` | decided by us **from the data itself** (e.g. 0 W at night = PV; −74…0 A = a stack current); to be confirmed by the partner. Listed in `ontology/mappings/sensor_map_overrides.csv` with the evidence |
+| `manual` | confirmed by a person |
+| `pattern` | the lake keeps one sensor per device or channel; the pattern (an SQL `LIKE`) selects all of them |
 | `column` | a real column of a wide table (REA) |
 | `timestamp` | the time column: `public.d_calendar.datetime` |
-| `none` | not found in the lake under this name (see `pilot_metadata/sensor_map.csv` for suggestions) |
+| `none` | not found in the lake under this name (see `ontology/mappings/sensor_map.csv` for suggestions) |
 
 Not every pilot fills every field. A variable only has the properties its pilot delivered.
 
 ### Controlled values
 
-Three fields use one fixed spelling, whatever the pilot wrote ("Float"/"float", "Measured"/"measured"):
+Three fields use one fixed spelling, whatever the pilot wrote ("Float"/"float", "Measured"/"measured").
+Where the data lake has the same concept, we use **the lake's own words**: the data types below are the PostgreSQL
+ones (`float` is PostgreSQL's `double precision`; the lake's time column is a `timestamp`).
 
 | Field | Allowed values |
 |---|---|
-| `eg:dataType` | `float`, `integer`, `boolean`, `text`, `date`, `datetime`, `geometry` |
+| `eg:dataType` | `float`, `integer`, `boolean`, `text`, `date`, `timestamp`, `geometry` |
 | `eg:variableKind` | `measured`, `calculated`, `setpoint`, `state`, `alarm`, `output`, `static`, `modelled`, … (lower case) |
 | `eg:aggregation` | `instantaneous`, `mean`, `sum`, `cumulative`, `none` |
 
 When the pilot's aggregation text says more (e.g. *"mean of the preceding hour"*), the original text is kept in
 `eg:aggregationNote`.
+
+**Units** also have one spelling each (`eg:unit`): `MWH`/`MWh` → `MWh`, `ºC`/`°C` → `°C`, `Bar`/`bar` → `bar`,
+`m2`/`m²` → `m²`, `kWh/m² gadā`/`kWh/m² per year` → `kWh/m²/year`, and so on. The lake has no unit column, so the
+QUDT / SI symbol decides. `mbarg` (gauge pressure) and `mBar` stay different on purpose.
+Units with no QUDT equivalent (`kWh/m²/year`, `Wp`, `LEL`, normal litres `NL/min`, BER's `step` and `word`) keep
+only the text unit.
+
+Some pilots wrote **a data type or a format in the unit column** ("Float64", "Polygon", "DD.MM.YYYY",
+"EPSG code (EPSG:3059)", "A / B / C"). Those are not units, so they don't go in `eg:unit`: the data type goes to
+`eg:dataType` (when the pilot gave none) and the format to **`eg:valueFormat`** (e.g. `DD.MM.YYYY`, `one of A / B / C`).
 
 > **Rule of thumb for finding data:** *dataset → database + table, variable → sensor_id.*
 > For BER's TT-D101 the ontology says: database `TEF3_BER`, table `public.f_tsdata`, sensor `TT_D101`:
@@ -244,12 +260,12 @@ How many classes live where:
 
 | Namespace | Classes |
 |---|---:|
-| `eg:` shared: `Measurement` and 17 quantity classes (Temperature, Pressure, Flow, Power, Energy, Current, Voltage, Speed, SolarRadiation, Composition, Volume, Timer, Efficiency, StateOfCharge, State, ControlSignal, Hydrogen), plus SystemComponent, Sensor, Battery, Variable | 22 |
+| `eg:` shared: `Measurement` and 18 quantity classes (Temperature, Pressure, Flow, Power, Energy, Current, Voltage, Speed, SolarRadiation, Composition, Volume, Timer, Efficiency, StateOfCharge, State, ControlSignal, Hydrogen, CloudCover), plus SystemComponent, Sensor, Battery, Variable, TimeColumn, IdentifierColumn | 25 |
 | RDN faults / time series | 3 / 2 |
 | CIEMAT | 7 |
-| BER / CEA / CARTIF | 4 / 6 / 9 |
+| BER / CEA / CARTIF | 2 / 7 / 10 |
 | REA | 14 |
-| ENGREEN | 10 |
+| ENGREEN | 11 |
 | Pilot tree (Pilots, Pilot, SubPilot, the 7 organisations, RDN's 2 sub-pilots) | 12 |
 
 ### How a sensor gets its measurement class
@@ -259,10 +275,15 @@ pilot (`:eg__PowerMeasurement` finds power at CIEMAT, BER, CARTIF and ENGREEN). 
 
 1. **the pilot metadata**: the unit (°C → Temperature, bar → Pressure, kW → Power, kWh → Energy, A → Current, …),
    else the sensor type ("Anemometer" → Speed), else the variable kind (state/alarm → State, output → ControlSignal);
-2. **only if the metadata says nothing**: the data lake's own sensor type.
+2. **only if the metadata says nothing**: the data lake's own sensor type;
+3. **last**: a boolean data type → State (an on/off signal).
+
+Columns of a time-series dataset that are not measurements get their own class instead: the time stamp column is an
+`eg:TimeColumn`, and columns that identify the object measured (REA's address and cadastre number) are an
+`eg:IdentifierColumn`. Both sit under `eg:Variable`, not under `eg:Measurement`.
 
 When the two disagree, the metadata wins. Every decision and disagreement is listed in
-`pilot_metadata/variable_classes_report.csv`. (Most disagreements are BER sensors that the lake types as
+`output/reports/variable_classes_report.csv`. (Most disagreements are BER sensors that the lake types as
 "Status" whatever they measure.) Static attributes, like REA's addresses or construction years, get no
 measurement class.
 
@@ -422,7 +443,7 @@ graph LR
     A[ontology/all_pilots_base.owl<br/>pilot vocabularies + pilot tree] --> S{{scripts/ontology/build_all_pilots_owl.py}}
     B[pilot_metadata/*.xlsx<br/>datasets + variables from the pilots] --> S
     L[(data lake<br/>read-only)] --> D{{scripts/ontology/discover_data_lake.py}}
-    D --> C[pilot_metadata/dataset_tables.csv<br/>sensor_map.csv]
+    D --> C[ontology/mappings/dataset_tables.csv<br/>sensor_map.csv]
     C --> S
     S --> O[ontology/all_pilots.owl<br/>the ONE file Neo4j imports]
     O --> N[(Neo4j)]
@@ -432,16 +453,16 @@ graph LR
 |---|---|---|
 | A dataset or variable description, unit, range | the pilot's workbook in `pilot_metadata/` | rebuild |
 | Where data lives (after the lake changes) | re-run `scripts/ontology/discover_data_lake.py` | rebuild |
-| A wrong or missing lake match | the row in `pilot_metadata/sensor_map.csv`, set `match` to `manual` | rebuild |
+| A wrong or missing lake match | add a row to `ontology/mappings/sensor_map_overrides.csv` (`match` = `inferred`, `manual` or `none`) | re-run discovery, rebuild |
 | A pilot class or relation | `ontology/all_pilots_base.owl` | rebuild |
 
 ```bash
 pip install rdflib openpyxl psycopg2-binary
-DATALAKE_PASSWORD=... python3 scripts/ontology/discover_data_lake.py   # only when the lake changed
+python3 scripts/ontology/discover_data_lake.py   # only when the lake changed
 python3 scripts/ontology/build_all_pilots_owl.py
 ```
 
-The discovery script also writes `pilot_metadata/lake_unmapped_sensors.csv`: sensors that are in the lake
+The discovery script also writes `output/reports/lake_unmapped_sensors.csv`: sensors that are in the lake
 but that no pilot metadata describes (worth asking the pilots about).
 
 Then load it into Neo4j with `scripts/neo4j/reload_ontology.sh` (backup, reset, import, mapping, validation),
@@ -484,15 +505,15 @@ and look at it with the scripts in `scripts/visualize/` or the Browser queries i
 ## 12. Known gaps
 
 - **RDN** has no metadata workbook yet: its 5 datasets are listed by name only.
-- **Not everything is in the lake yet:** 22 of 41 datasets have no location, and 488 variables are `none`
+- **Not everything is in the lake yet:** 21 of 41 datasets have no location, and 471 variables are `none`
   (mostly REA datasets without a table and the ENGREEN files that are not ingested).
-- **Names that differ between metadata and lake** (CIEMAT batteries and `[consumption]` signals, CEA `I_stack0N_mes`):
-  suggestions are in `sensor_map.csv`, to be confirmed with the pilots.
-- **Lake sensors without metadata** are listed in `pilot_metadata/lake_unmapped_sensors.csv`, each with a `hint`:
-  56 of them (47 CEA, 6 CIEMAT, 2 CARTIF, 1 BER) were described by the original pilot ontologies but are missing
-  from the pilot metadata; 612 ENGREEN ones are undescribed signals of devices whose other signals are mapped;
-  CARTIF has `Fan_State` and `Fan_state` as two sensors. RDN's 57 sensors wait for its metadata.
-- **Units without a clean QUDT match** (e.g. `NL/min`, `Wp`, `kWh/m²/year`) keep only the text unit (`eg:unit`).
+- **16 matches are `inferred`, not confirmed:** CIEMAT (12: PV vs consumption sensors, the batteries, TURBINA) and CEA
+  (4: `I_stack0N_mes` = `Istack0N`). The evidence for each is in `ontology/mappings/sensor_map_overrides.csv`.
+- **Lake sensors without metadata** are listed in `output/reports/lake_unmapped_sensors.csv`, each with a `hint`:
+  49 of them (43 CEA, 3 CIEMAT, 2 CARTIF, 1 BER) were described by the original pilot ontologies but are missing
+  from the pilot metadata; 628 ENGREEN ones are undescribed signals of devices whose other signals are mapped
+  (`output/reports/lake_devices.csv` gives each device's kind); 38 are REA air-quality sensors whose pollutant is not
+  in the metadata; CARTIF's `Fan_state` duplicates `Fan_State`. RDN's 57 sensors wait for its metadata.
 - **CIEMAT valid ranges** are taken as delivered, but some look shifted between columns in the source workbook.
-- **ENGREEN sample records** (users, sample measurements) from the original ontology are still included,
-  and a few of them reference records that don't exist.
+- **ENGREEN sample records** (one example user with a few measurements) from the original ontology are still
+  included; their references to records the original never defined have been removed.

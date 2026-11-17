@@ -2,7 +2,8 @@
 """Build the single EnergyGuard ontology file that is imported into Neo4j.
 
     ontology/all_pilots_base.owl   (merged pilot ontologies: classes, properties, sample individuals)
-  + pilot_metadata/*.xlsx          (dataset + variable metadata delivered by the pilots)
+  + pilot_metadata/*.xlsx          (dataset + variable metadata delivered by the pilots; not in git)
+  + ontology/mappings/*.csv        (where each dataset/variable lives in the data lake)
   = ontology/all_pilots.owl        (the ONE file loaded by n10s; generated, do not edit)
 
 Usage:
@@ -31,7 +32,7 @@ What it does
    rdfs:label, eg:storedInDatabaseColumn/Table and (when the metadata gives a unit)
    eg:unit / eg:unitUCUM / eg:hasUnit are replaced by the metadata values.
 5. Every dataset references one PostgreSQL table (eg:storedInDatabaseTable "schema.table"),
-   read from pilot_metadata/dataset_tables.csv. Datasets missing from that CSV get a default
+   read from ontology/mappings/dataset_tables.csv. Datasets missing from that CSV get a default
    name (<pilot>.<dataset_title_snake_case>) and are appended to it, so edit the CSV to point
    at the real tables and rebuild. Each variable carries its column (eg:storedInDatabaseColumn)
    and its dataset's table, which is what the 02/05 mapping queries read.
@@ -42,7 +43,7 @@ What it does
 7. Every time-series variable without a measurement class gets one (eg:TemperatureMeasurement,
    eg:PowerMeasurement, ...), decided from the metadata (unit, sensor type, kind) and only when
    that says nothing from the data lake's sensor type. Decisions and metadata/lake disagreements
-   are written to pilot_metadata/variable_classes_report.csv.
+   are written to output/reports/variable_classes_report.csv.
 """
 import argparse
 import csv
@@ -63,7 +64,9 @@ from rdflib.namespace import DCAT, DCTERMS, OWL, RDF, RDFS, XSD
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE_OWL = ROOT / "ontology" / "all_pilots_base.owl"
-META_DIR = ROOT / "pilot_metadata"
+META_DIR = ROOT / "pilot_metadata"          # partner workbooks (not in git)
+MAPPINGS_DIR = ROOT / "ontology" / "mappings"  # lake mappings (in git)
+REPORTS_DIR = ROOT / "output" / "reports"
 OUT_OWL = ROOT / "ontology" / "all_pilots.owl"
 
 BASE = "https://www.energyguard.eu/ontology"
@@ -190,6 +193,9 @@ def clean_base(g, stats):
         if isinstance(o, URIRef):
             o2 = fix_iri(o, sns, stats)
         elif isinstance(o, Literal):
+            if o.datatype and o.ill_typed:  # e.g. xsd:date "end" in the EnGreen source
+                stats["ill_typed_dropped"] += 1
+                continue
             txt = fix_mojibake(str(o))
             if txt != str(o):
                 stats["mojibake"] += 1
@@ -259,11 +265,11 @@ VOCAB_COMMENTS = {
     EG.fileFormat: "Format, delimiter, decimal separator.",
     EG.missingValues: "Marker used for missing data and its meaning.",
     EG.licence: "Terms of use.",
-    EG.dataOwnerContact: "Data owner / contact for follow-up questions.",
+    EG.dataOwnerContact: "Organisation that owns the data (personal names and emails are not published).",
     EG.unit: "Unit of measurement as text (as delivered by the pilot).",
     EG.sensorId: "Tag or asset identifier.",
     EG.sensorType: "Kind of sensor or equipment.",
-    EG.dataType: "float | integer | boolean | text | date | datetime | geometry (other text kept as delivered).",
+    EG.dataType: "float | integer | boolean | text | date | timestamp | geometry: the PostgreSQL / data-lake words (float = double precision); other text kept as delivered.",
     EG.variableKind: "measured | calculated | setpoint | state | alarm | output | static | modelled | … (lower case).",
     EG.validRange: "Expected range of values (free text).",
     EG.minValue: "Expected minimum value.",
@@ -272,11 +278,12 @@ VOCAB_COMMENTS = {
     EG.recordThreshold: "Difference between consecutive values that triggers a new record.",
     EG.aggregation: "instantaneous | mean | sum | cumulative | none.",
     EG.aggregationNote: "The pilot's original aggregation text when it carries detail beyond eg:aggregation (e.g. the period).",
+    EG.valueFormat: "How values are written when the pilot put it in the unit column (e.g. DD.MM.YYYY, EPSG:3059, one of A / B / C).",
     EG.sampling: "Sampling strategy / sampling time.",
     EG.signConvention: "Meaning of positive and negative values.",
     EG.codeList: "Meaning of coded values (states, alarms).",
     EG.subsystem: "Equipment / asset / subsystem the variable belongs to.",
-    EG.databaseServer: "Data lake server (host:port) holding the dataset.",
+    EG.databaseServer: "Data lake holding the dataset (the host address is not published).",
     EG.databaseSystem: "Database system of the data lake.",
     EG.storedInDatabase: "Data lake database holding the dataset (one per pilot, e.g. TEF3_BER).",
     EG.storedInDatabaseTable: "Table holding the dataset (schema.table). A variable's table is the table of its dataset.",
@@ -550,9 +557,9 @@ class MetadataWriter:
         self.g, self.stats = g, stats
         self.index = {}
         self.claimed = set()
-        self.tables = {}          # dataset IRI -> row of pilot_metadata/dataset_tables.csv
+        self.tables = {}          # dataset IRI -> row of ontology/mappings/dataset_tables.csv
         self.current_dataset = None
-        self.sensor_map = {}      # (dataset, variable) -> row of pilot_metadata/sensor_map.csv
+        self.sensor_map = {}      # (dataset, variable) -> row of ontology/mappings/sensor_map.csv
         self.located = set()
         self.unmapped_units = set()
         self.overridden = set()   # base nodes whose base name/unit/table were replaced by the metadata
@@ -600,6 +607,8 @@ class MetadataWriter:
         g.add((pilot_cls, MP.hasDataset, ds))
         for key, val in fields.items():
             prop = DATASET_FIELDS.get(key) or EG[key]
+            if prop == EG.dataOwnerContact:  # no personal names or emails in the public ontology
+                val = str(g.value(pilot_cls, RDFS.label) or val)
             g.add((ds, prop, Literal(val, lang="en") if prop in (DCTERMS.title, DCTERMS.description) else Literal(val)))
         d = delivered.get(norm(title)[:40])
         if d:
@@ -639,6 +648,14 @@ class MetadataWriter:
         if (node, RDF.type, EG.Variable) not in g:
             self.stats["vars_new" if (node, None, None) not in g else "vars_enriched"] += 1
         file_column = source or rec.get("feature name (latvian)") or name
+        value_format = None
+        if rec.get("unit"):
+            rec["unit"] = UNIT_SPELLING.get(rec["unit"].strip(), rec["unit"].strip())
+            if rec["unit"] in NOT_UNITS:
+                dtype, value_format = NOT_UNITS[rec.pop("unit")]
+                if dtype and not rec.get("data type"):
+                    rec["data type"] = dtype
+                self.stats["units_not_units"] += 1
         unit = rec.get("unit")
         if node not in self.overridden:
             # The pilot metadata is the source of truth: on first contact, drop what the base
@@ -667,6 +684,8 @@ class MetadataWriter:
             g.add((node, EG.dataLakeMatch, Literal(loc.get("match") or "none")))
             self.stats["variables_" + (loc.get("match") or "none")] += 0 if node in self.located else 1
             self.located.add(node)
+        if value_format:
+            g.add((node, EG.valueFormat, Literal(value_format)))
         if unit:
             q = qudt_unit(unit)
             if q is not None:
@@ -698,7 +717,7 @@ class MetadataWriter:
 # --------------------------------------------------------------------------------------
 DATA_TYPES = {"float": "float", "double": "float", "real": "float", "integer": "integer", "int": "integer",
               "boolean": "boolean", "bool": "boolean", "text": "text", "string": "text",
-              "datetime": "datetime", "date": "date", "geometry": "geometry"}
+              "datetime": "timestamp", "timestamp": "timestamp", "date": "date", "geometry": "geometry"}
 AGGREGATIONS = {"instantaneous": "instantaneous", "no": "none", "none": "none",
                 "mean": "mean", "average": "mean", "sum": "sum", "cumulative": "cumulative"}
 
@@ -731,6 +750,31 @@ def norm_aggregation(value):
 NORMALISERS = {EG.variableKind: norm_variable_kind, EG.dataType: norm_data_type, EG.aggregation: norm_aggregation}
 
 
+UNIT_SPELLING = {  # spelling variants of the same unit -> one symbol (QUDT / SI style)
+    "MWH": "MWh", "kwh": "kWh", "ºC": "°C", "m2": "m²", "m3": "m³", "Bar": "bar", "Year": "year", "Rpm": "rpm", "RPM": "rpm",
+    "W/m²K": "W/(m²K)", "kWh/m2": "kWh/m²",
+    "kWh/m2/year": "kWh/m²/year", "kwh/m2/year": "kWh/m²/year", "kWh/m²·year": "kWh/m²/year",
+    "kWh/m² per year": "kWh/m²/year", "kWh/m² gadā": "kWh/m²/year",     # 'gadā' = Latvian for 'per year'
+    "kgCO₂/m²·year": "kg CO₂/m²/year", "t CO₂/year": "tCO₂/year",
+    "l/m": "L/min", "m³/m²/h": "m³/(m²h)", "EUR/m2": "EUR/m²",
+}
+# Texts some pilots put in the unit column that are not units: data types, formats, allowed values.
+# -> (data type if the pilot gave none, value format kept in eg:valueFormat)
+NOT_UNITS = {
+    "Float64": ("float", None), "Integer": ("integer", None), "String": ("text", None),
+    "String (e.g., UTF-8)": ("text", "UTF-8"), "yes/no": ("boolean", None),
+    "Date": ("date", None), "date": ("date", None), "Data": ("date", None), "DD.MM.YYYY": ("date", "DD.MM.YYYY"),
+    "Datetime (Mon, Jun 2, 2025, 01:00)": ("timestamp", "Mon, Jun 2, 2025, 01:00"),
+    "Polygon": ("geometry", "Polygon"), "Polygon Z / MultiPolygon Z": ("geometry", "Polygon Z / MultiPolygon Z"),
+    "List of geometry types": ("text", "list of geometry types"),
+    "Float64 array [xmin, ymin, xmax, ymax]": ("float", "array [xmin, ymin, xmax, ymax]"),
+    "EPSG code (EPSG:3059)": ("text", "EPSG code, e.g. EPSG:3059"),
+    "DBF": (None, "DBF file"), "SHX binary": (None, "SHX binary file"),
+    "A / B/ C": ("text", "one of A / B / C"), "I / II / III": ("text", "one of I / II / III"),
+    "ranges": (None, "ranges"), "varies": (None, "varies"),
+    "Depending on the abbreviation": (None, "unit given by the ABBREVIATION column"),
+}
+# 'mbarg' (gauge pressure) and 'mBar' are different quantities and stay as delivered.
 QUDT = "http://qudt.org/vocab/unit/"
 UNIT_MAP = {  # metadata unit text -> QUDT unit id (only unambiguous ones)
     "°c": "DEG_C", "ºc": "DEG_C", "c": "DEG_C", "%": "PERCENT", "w": "W", "kw": "KiloW", "mw": "MegaW",
@@ -743,7 +787,13 @@ UNIT_MAP = {  # metadata unit text -> QUDT unit id (only unambiguous ones)
     "µg/m³": "MicroGM-PER-M3", "ug/m3": "MicroGM-PER-M3", "year": "YR", "°": "DEG", "db": "DeciB",
     "km/h": "KiloM-PER-HR", "ppm": "PPM", "w/m²k": "W-PER-M2-K", "w/m²k": "W-PER-M2-K",
     "w/m²k": "W-PER-M2-K", "kwh/m2": "KiloW-HR-PER-M2", "kwh/m²": "KiloW-HR-PER-M2",
+    # checked against qudt.org/vocab/unit (2026-11-13); the CO₂ units map to the mass-per-x unit,
+    # the text unit (eg:unit) keeps "CO₂"
+    "count": "NUM", "1/h": "PER-HR", "eur": "CCY_EUR", "eur/m²": "CCY_EUR-PER-M2", "€/mwh": "CCY_EUR-PER-MegaW-HR",
+    "kgco₂/m²": "KiloGM-PER-M2", "tco₂/year": "TONNE-PER-YR",
 }
+# no QUDT unit exists for: kWh/m²/year, kWh/year, m³/(m²h), kg CO₂/m²/year, kgCO₂/MWh, Wp, LEL, NL, NL/h,
+# NL/min, Nm3/h (normal litres / cubic metres), step, word -> text unit only
 
 
 def qudt_unit(text):
@@ -762,9 +812,10 @@ PILOT_SOURCES = [
     (read_rea, ("REA - Metadata.xlsx",), REA, MP.REA, "rea"),
     (read_engreen, ("RIN_P011_EnergyGuard_Metadata_ENGREEN_261106.xlsx",), ENGREEN, MP.ENGREEN, "engreen"),
 ]
-TABLES_CSV = META_DIR / "dataset_tables.csv"   # written by scripts/ontology/discover_data_lake.py
-SENSOR_CSV = META_DIR / "sensor_map.csv"       # written by scripts/ontology/discover_data_lake.py
-DATA_LAKE_SERVER = "REDACTED_HOST:REDACTED_PORT"
+TABLES_CSV = MAPPINGS_DIR / "dataset_tables.csv"   # written by scripts/ontology/discover_data_lake.py
+SENSOR_CSV = MAPPINGS_DIR / "sensor_map.csv"       # written by scripts/ontology/discover_data_lake.py
+# the server address is kept out of the public ontology on purpose
+DATA_LAKE_SERVER = "EnergyGuard data lake (operated by CARTIF)"
 
 
 def load_tables():
@@ -786,7 +837,7 @@ def add_metadata(g, stats):
     delivered_rows = read_delivered(META_DIR / "Metadata Format.xlsx")
     delivered = {norm(d.get("dataset name"))[:40]: d for d in delivered_rows if d.get("dataset name")}
     w = MetadataWriter(g, stats)
-    # table names: pilot_metadata/dataset_tables.csv wins; new datasets get a default name
+    # table names: ontology/mappings/dataset_tables.csv wins; new datasets get a default name
     configured = load_tables()
     w.sensor_map = load_sensor_map()
     for reader, args, ns, pilot_cls, schema in PILOT_SOURCES:
@@ -830,6 +881,40 @@ def _remove_node(g, node, removed):
     for b in owned:
         if (None, None, b) not in g:
             _remove_node(g, b, removed)
+
+
+# references in the source ontologies to records under another name (ENGREEN mixes 'User' and 'User1')
+REFERENCE_ALIASES = {BASE + "/engreen#MeasurementSeries_User1": BASE + "/engreen#MeasurementSeries_User"}
+
+
+def repair_references(g, stats):
+    """Point aliased references at the real record, declare used-but-undeclared pilot classes, drop
+    references to records that exist nowhere, and label timestamp individuals by their value."""
+    for old, new in REFERENCE_ALIASES.items():
+        for s, p in list(g.subject_predicates(URIRef(old))):
+            g.remove((s, p, URIRef(old)))
+            g.add((s, p, URIRef(new)))
+            stats["repaired_aliases"] += 1
+    pilot_ns = tuple(f"{BASE}/{p}#" for p in ("rdn", "ciemat", "ber", "cea", "cartif", "rea", "engreen"))
+    in_pilot = lambda x: isinstance(x, URIRef) and str(x).startswith(pilot_ns)
+    subjects = set(g.subjects())
+    for s, p, o in list(g):
+        if not in_pilot(o) or o in subjects:
+            continue
+        if p == RDF.type:   # used as a class but never declared, e.g. engreen:Timestamp
+            g.add((o, RDF.type, OWL.Class))
+            g.add((o, RDFS.label, Literal(re.sub(r"(?<=[a-z])(?=[A-Z])", " ", str(o).split("#")[-1]))))
+            subjects.add(o)
+            stats["declared_classes"] += 1
+            stats.setdefault("declared_list", []).append(str(o).split("/ontology/")[1])
+        else:
+            g.remove((s, p, o))
+            stats["pruned_dangling_refs"] += 1
+    ts_class = URIRef(BASE + "/engreen#Timestamp")
+    for ts in g.subjects(RDF.type, ts_class):
+        value = g.value(ts, URIRef(BASE + "/engreen#dateTime"))
+        if value is not None and g.value(ts, RDFS.label) is None:
+            g.add((ts, RDFS.label, Literal(str(value).replace("T", " ")[:16])))
 
 
 def prune_to_metadata(g, stats):
@@ -1021,7 +1106,15 @@ QUANTITIES = {  # class local name -> label
     "LevelMeasurement": "Level Measurement", "VolumeMeasurement": "Volume Measurement",
     "TimerMeasurement": "Timer Measurement", "EfficiencyMeasurement": "Efficiency Measurement",
     "StateOfChargeMeasurement": "State Of Charge Measurement", "StateMeasurement": "State Measurement",
-    "ControlSignalMeasurement": "Control Signal Measurement",
+    "ControlSignalMeasurement": "Control Signal Measurement", "CloudCoverMeasurement": "Cloud Cover Measurement",
+}
+# columns of a time-series dataset that are not measurements get their own classes (under eg:Variable)
+COLUMN_CLASSES = {"TimeColumn": ("Time Column", "The time stamp column of a time-series dataset."),
+                  "IdentifierColumn": ("Identifier Column", "A column that identifies the measured object (address, cadastre number, id).")}
+IDENTIFIER_NAME = re.compile(r"^\s*(adrese|address|kadastra|cadastral|.*\bid)\b", re.I)
+CLASS_OVERRIDES = {  # (variable local name) -> (class, why); only where the metadata says it in prose
+    "Buildings_monthly_heat_series_ARCGIS_Server__01_2021_current_month_current_year":
+        ("Energy", "metadata: the dataset holds the monthly heating consumption, 'based on the previous dataset' (Heating 2017-2024, MWh)"),
 }
 UNIT_CLASS = {  # metadata unit (normalised) -> class
     "°c": "Temperature", "ºc": "Temperature", "c": "Temperature",
@@ -1042,6 +1135,7 @@ SENSOR_TYPE_CLASS = [  # keyword in the metadata sensor type -> class (first mat
     ("temperature", "Temperature"), ("pressure", "Pressure"), ("flow", "Flow"), ("composition", "Composition"),
     ("level", "Level"), ("current", "Current"), ("voltage", "Voltage"), ("soc", "StateOfCharge"),
     ("pyranometer", "SolarRadiation"), ("anemometer", "Speed"), ("status", "State"), ("power", "Power"),
+    ("cloud", "CloudCover"),
 ]
 KIND_CLASS = {"state": "State", "alarm": "State", "output": "ControlSignal", "setpoint": "ControlSignal"}
 LAKE_CLASS = {  # data lake sensor type -> class
@@ -1049,9 +1143,9 @@ LAKE_CLASS = {  # data lake sensor type -> class
     "Pressure": "Pressure", "Flow": "Flow", "Power": "Power", "Electricity": "Energy", "ThermalEnergy": "Energy",
     "Current": "Current", "Voltage": "Voltage", "Speed": "Speed", "SolarRadiation": "SolarRadiation",
     "Volume": "Volume", "Status": "State", "Relay": "State", "Counter": "Timer", "Efficiency": "Efficiency",
-    "SoC": "StateOfCharge", "CO2": "Composition", "Gas": "Composition",
+    "SoC": "StateOfCharge", "CO2": "Composition", "Gas": "Composition", "CloudPercentage": "CloudCover",
 }
-CLASS_REPORT = META_DIR / "variable_classes_report.csv"
+CLASS_REPORT = REPORTS_DIR / "variable_classes_report.csv"
 
 
 def _class_from_metadata(unit, sensor_type, kind, name=""):
@@ -1081,7 +1175,24 @@ def classify_variables(g, stats, sensor_map, report_rows):
             if types & measurement_classes or any(str(t).endswith("Measurement") and "Group" not in str(t) for t in types):
                 continue
             kind = str(next(g.objects(v, EG.variableKind), ""))
-            if kind in ("static", "timestamp") or (v, EG.dataLakeMatch, Literal("timestamp")) in g:
+            label = str(next(g.objects(v, RDFS.label), ""))
+            column_cls = "TimeColumn" if kind == "timestamp" or (v, EG.dataLakeMatch, Literal("timestamp")) in g \
+                else ("IdentifierColumn" if IDENTIFIER_NAME.match(label) else None)
+            if column_cls:
+                cls = EG[column_cls]
+                g.add((v, RDF.type, cls))
+                if (cls, RDF.type, OWL.Class) not in g:
+                    g.add((cls, RDF.type, OWL.Class))
+                    g.add((cls, RDFS.subClassOf, EG.Variable))
+                    g.add((cls, RDFS.label, Literal(COLUMN_CLASSES[column_cls][0], lang="en")))
+                    g.add((cls, RDFS.comment, Literal(COLUMN_CLASSES[column_cls][1], lang="en")))
+                stats["classified_columns"] += 1
+                report_rows.append({"pilot": str(pilot_cls).split("#")[-1], "dataset": str(ds).split("#")[-1],
+                                    "variable": str(v).split("#")[-1], "class": column_cls,
+                                    "decided_by": "time column" if column_cls == "TimeColumn" else f"name {label}",
+                                    "metadata_says": "", "lake_says": "", "conflict": ""})
+                continue
+            if kind == "static":
                 continue
             meta_cls, why = _class_from_metadata(str(next(g.objects(v, EG.unit), "")),
                                                  str(next(g.objects(v, EG.sensorType), "")), kind,
@@ -1092,6 +1203,12 @@ def classify_variables(g, stats, sensor_map, report_rows):
             lake_cls = next(iter(lake_classes)) if len(lake_classes) == 1 else None
             chosen, source = (meta_cls, "metadata: " + why) if meta_cls else \
                 ((lake_cls, "data lake sensor type " + "/".join(sorted(lake_types))) if lake_cls else (None, ""))
+            if not chosen and str(v).split("#")[-1] in CLASS_OVERRIDES:
+                chosen, source = CLASS_OVERRIDES[str(v).split("#")[-1]]
+                meta_cls = chosen
+            if not chosen and str(next(g.objects(v, EG.dataType), "")) == "boolean":
+                chosen, source = "State", "metadata: data type boolean (an on/off signal)"
+                meta_cls = chosen
             if meta_cls and lake_cls and meta_cls != lake_cls:
                 stats["class_conflicts"] += 1
             if chosen:
@@ -1121,7 +1238,7 @@ def main():
     a = ap.parse_args()
 
     # rdflib logs a full traceback for literals that don't match their datatype (e.g. an
-    # xsd:date "end" in the EnGreen source); those are kept as-is, so keep the log quiet.
+    # xsd:date "end" in the EnGreen source); clean_base drops them, so keep the log quiet.
     logging.getLogger("rdflib.term").setLevel(logging.CRITICAL)
     stats = defaultdict(int)
     base = rdflib.Graph()
@@ -1131,6 +1248,7 @@ def main():
     add_metadata(g, stats)
     stats["pruned_list"] = []
     prune_to_metadata(g, stats)
+    repair_references(g, stats)
     class_report = []
     classify_variables(g, stats, load_sensor_map(), class_report)
     simplify(g, stats)
@@ -1141,15 +1259,19 @@ def main():
     for k in ("datasets", "vars_matched", "vars_enriched", "vars_new",
               "replaced_label", "replaced_storedInDatabaseColumn", "replaced_storedInDatabaseTable",
               "replaced_unit", "datasets_located", "variables_exact", "variables_normalised",
-              "variables_pattern", "variables_column", "variables_timestamp", "variables_none", "unmapped_units",
+              "variables_pattern", "variables_column", "variables_timestamp", "variables_inferred", "variables_manual",
+              "variables_none", "unmapped_units",
               "pruned_sensors", "pruned_datasets", "pruned_groups", "pruned_dangling_refs",
               "unified_Class", "unified_ObjectProperty", "unified_DatatypeProperty", "unified_copies",
               "unified_undefined_type_refs", "dropped_unused_properties", "dropped_membership_links", "dropped_headers",
-              "classified_from_metadata", "classified_from_lake", "not_classified", "class_conflicts", "classes_added"):
+              "classified_from_metadata", "classified_from_lake", "classified_columns", "not_classified", "class_conflicts",
+              "classes_added", "units_not_units", "repaired_aliases", "declared_classes"):
         print(f"  metadata {k}: {stats[k]}")
     if a.check:
         print("  pruned:", ", ".join(stats["pruned_list"]))
+        print("  declared classes:", ", ".join(stats.get("declared_list", [])))
     if not a.check:
+        CLASS_REPORT.parent.mkdir(parents=True, exist_ok=True)
         with CLASS_REPORT.open("w", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, fieldnames=["pilot", "dataset", "variable", "class", "decided_by",
                                               "metadata_says", "lake_says", "conflict"])

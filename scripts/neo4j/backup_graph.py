@@ -19,11 +19,23 @@ from neo4j import GraphDatabase
 ROOT = Path(__file__).resolve().parents[2]
 
 
+def env_password(root):
+    """NEO4J_PASSWORD from the environment, else from the git-ignored .env at the repo root."""
+    if os.environ.get("NEO4J_PASSWORD"):
+        return os.environ["NEO4J_PASSWORD"]
+    env = root / ".env"
+    if env.exists():
+        for line in env.read_text(encoding="utf-8").splitlines():
+            if line.startswith("NEO4J_PASSWORD="):
+                return line.split("=", 1)[1].strip().strip("'\"")
+    return None
+
+
 def main():
     ap = argparse.ArgumentParser(description="Export a Neo4j graph to JSON")
     ap.add_argument("--uri", default=os.environ.get("NEO4J_URI", "bolt://localhost:7687"))
     ap.add_argument("--user", default=os.environ.get("NEO4J_USER", "neo4j"))
-    ap.add_argument("--password", default=os.environ.get("NEO4J_PASSWORD", "REDACTED"))
+    ap.add_argument("--password", default=env_password(Path(__file__).resolve().parents[2]))
     ap.add_argument("--name", default=None, help="file name prefix (default: from the port)")
     a = ap.parse_args()
 

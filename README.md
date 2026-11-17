@@ -75,8 +75,8 @@ ontology/all_pilots.owl        the single file loaded with n10s
 - Every dataset points to where its data really lives in the data lake (one PostgreSQL database
   per pilot, time series in `public.f_tsdata`, REA tables in `gis`/`cadastre`); every variable to its
   lake `sensor_id`, sensor pattern or column. `scripts/ontology/discover_data_lake.py` finds these (read-only,
-  credentials via `DATALAKE_PASSWORD`) and writes `pilot_metadata/dataset_tables.csv`,
-  `sensor_map.csv` and `lake_unmapped_sensors.csv`; the build reads them and never connects itself.
+  connection details from the git-ignored `.env`) and writes `ontology/mappings/dataset_tables.csv`,
+  `sensor_map.csv` and the report `output/reports/lake_unmapped_sensors.csv`; the build reads them and never connects itself.
 - The build is deterministic: re-running with unchanged inputs gives a byte-identical file.
 
 Workflow:

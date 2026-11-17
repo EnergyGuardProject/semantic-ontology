@@ -213,7 +213,8 @@ MERGE (m)-[:BELONGS_TO_DATASET]->(d);
 // Measurement -> its class node. Types arrive as labels (eg__TemperatureMeasurement); this makes
 // them visible as edges, which the visualisation queries use.
 MATCH (m:Measurement)
-UNWIND [l IN labels(m) WHERE l ENDS WITH 'Measurement' AND l CONTAINS '__'] AS lbl
+UNWIND [l IN labels(m) WHERE (l ENDS WITH 'Measurement' AND l CONTAINS '__')
+                            OR l IN ['eg__TimeColumn', 'eg__IdentifierColumn']] AS lbl
 MATCH (c:OntologyClass {uri: n10s.rdf.fullUriFromShortForm(lbl)})
 MERGE (m)-[:INSTANCE_OF]->(c);
 

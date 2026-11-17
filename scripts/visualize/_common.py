@@ -6,6 +6,18 @@ from pathlib import Path
 
 from neo4j import GraphDatabase
 
+
+def env_password(root):
+    """NEO4J_PASSWORD from the environment, else from the git-ignored .env at the repo root."""
+    if os.environ.get("NEO4J_PASSWORD"):
+        return os.environ["NEO4J_PASSWORD"]
+    env = root / ".env"
+    if env.exists():
+        for line in env.read_text(encoding="utf-8").splitlines():
+            if line.startswith("NEO4J_PASSWORD="):
+                return line.split("=", 1)[1].strip().strip("'\"")
+    return None
+
 ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "output" / "visualizations"
 MP = "https://www.energyguard.eu/ontology/merged-pilots#"
@@ -31,7 +43,7 @@ def parser(description):
     p.add_argument("--uri", default=os.environ.get("NEO4J_URI", "bolt://localhost:7687"),
                    help="Bolt URI (default: bolt://localhost:7687, the neo4j-ontology container)")
     p.add_argument("--user", default=os.environ.get("NEO4J_USER", "neo4j"))
-    p.add_argument("--password", default=os.environ.get("NEO4J_PASSWORD", "REDACTED"))
+    p.add_argument("--password", default=env_password(Path(__file__).resolve().parents[2]))
     return p
 
 

@@ -25,7 +25,7 @@ services:
       - ./ontology:/import:ro   # n10s reads ontology/all_pilots.owl as file:///import/all_pilots.owl
       - ./runtime/plugins:/plugins
     environment:
-      NEO4J_AUTH: "neo4j/REDACTED"
+      NEO4J_AUTH: "neo4j/${NEO4J_PASSWORD:?set NEO4J_PASSWORD in .env}"   # only used when the database is first created
       NEO4J_dbms_security_procedures_unrestricted: "apoc.*,n10s.*"
       NEO4J_dbms_security_procedures_allowlist: "apoc.*,n10s.*,db.*,dbms.*"
       NEO4J_server_directories_import: "/import"

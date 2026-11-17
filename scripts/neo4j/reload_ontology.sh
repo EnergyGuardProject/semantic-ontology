@@ -5,12 +5,13 @@
 #   scripts/neo4j/reload_ontology.sh <other-container>  # any other Neo4j container with n10s + APOC
 #
 # Steps: backup (JSON) -> reset -> 01 import -> 02 mapping -> 03 validation.
-# Password: NEO4J_PASSWORD (default REDACTED).
+# Password: NEO4J_PASSWORD from the environment, else from the git-ignored .env at the repo root.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 
 CONTAINER="${1:-neo4j-ontology}"
-PASSWORD="${NEO4J_PASSWORD:-REDACTED}"
+PASSWORD="${NEO4J_PASSWORD:-$(sed -n 's/^NEO4J_PASSWORD=//p' .env 2>/dev/null)}"
+[ -n "$PASSWORD" ] || { echo "NEO4J_PASSWORD is not set (environment or .env)" >&2; exit 1; }
 Q=neo4j_saved_queries/all_pilots
 mkdir -p output/logs
 LOG="output/logs/reload-${CONTAINER}.txt"
