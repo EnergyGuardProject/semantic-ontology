@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Replace the graph in a Neo4j container with ontology/all_pilots.owl and map it.
 #
-#   scripts/neo4j/reload_ontology.sh                    # container "neo4j-ontology" (docker-compose.yaml)
-#   scripts/neo4j/reload_ontology.sh <other-container>  # any other Neo4j container with n10s + APOC
+#   utils/neo4j/reload_ontology.sh                    # container "neo4j-ontology" (docker-compose.yaml)
+#   utils/neo4j/reload_ontology.sh <other-container>  # any other Neo4j container with n10s + APOC
 #
 # Steps: backup (JSON) -> reset -> 01 import -> 02 mapping -> 03 validation.
 # Password: NEO4J_PASSWORD from the environment, else from the git-ignored .env at the repo root.
@@ -12,7 +12,7 @@ cd "$(dirname "$0")/../.."
 CONTAINER="${1:-neo4j-ontology}"
 PASSWORD="${NEO4J_PASSWORD:-$(sed -n 's/^NEO4J_PASSWORD=//p' .env 2>/dev/null)}"
 [ -n "$PASSWORD" ] || { echo "NEO4J_PASSWORD is not set (environment or .env)" >&2; exit 1; }
-Q=neo4j_saved_queries/all_pilots
+Q=utils/cypher
 mkdir -p output/logs
 LOG="output/logs/reload-${CONTAINER}.txt"
 
@@ -21,7 +21,7 @@ PORT=$(docker port "$CONTAINER" 7687/tcp | head -1 | sed 's/.*://')
 cypher() { docker exec -i "$CONTAINER" cypher-shell -u neo4j -p "$PASSWORD" --format plain; }
 
 echo "== 1/5 backup ($CONTAINER, bolt port $PORT)"
-NEO4J_URI="bolt://localhost:$PORT" NEO4J_PASSWORD="$PASSWORD" neo4j-venv/bin/python scripts/neo4j/backup_graph.py --name "$CONTAINER"
+NEO4J_URI="bolt://localhost:$PORT" NEO4J_PASSWORD="$PASSWORD" neo4j-venv/bin/python utils/neo4j/backup_graph.py --name "$CONTAINER"
 
 echo "== 2/5 reset"
 # statement by statement: graphconfig.drop / nsprefixes.removeAll fail harmlessly on a fresh database

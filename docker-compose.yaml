@@ -1,10 +1,10 @@
-# Neo4j instance holding the EnergyGuard ontology (ontology built by scripts/ontology/build_all_pilots_owl.py).
+# Neo4j instance holding the EnergyGuard ontology (ontology built by utils/ontology/build_all_pilots_owl.py).
 #
 #   docker compose up -d
 #   Browser: http://localhost:7474   Bolt: bolt://localhost:7687   (bound to localhost)
 #   public:  https://neo4j.energy-guard.eu  (nginx-proxy-manager -> host "neo4j", port 7474)
 #   from your own machine: ssh -L 7474:localhost:7474 -L 7687:localhost:7687 <server>
-#   load / reload the ontology: scripts/neo4j/reload_ontology.sh
+#   load / reload the ontology: utils/neo4j/reload_ontology.sh
 name: neo4j-ontology
 services:
   neo4j-ontology:

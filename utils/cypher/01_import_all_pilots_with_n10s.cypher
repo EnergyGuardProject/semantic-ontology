@@ -3,7 +3,7 @@
 // Notes:
 // - ontology/all_pilots.owl is the ONE ontology file for all pilots (schema + pilot metadata).
 //   It is generated — rebuild it after changing ontology/all_pilots_base.owl or pilot_metadata/*.xlsx:
-//     python3 scripts/ontology/build_all_pilots_owl.py
+//     python3 utils/ontology/build_all_pilots_owl.py
 // - Run on a clean graph if this is a fresh ontology load.
 // - Your docker-compose mounts ./import to Neo4j /import, so file:///import/all_pilots.owl is the correct container path.
 

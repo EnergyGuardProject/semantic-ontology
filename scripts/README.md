@@ -1,14 +1,14 @@
-# Scripts
+# Scripts (examples)
+
+Things to **try and learn from**. Nothing here is needed to build or load the graph; that lives in [`utils/`](../utils/README.md).
 
 ```
 scripts/
-├── ontology/      build the ontology file            (Python, terminal)
-├── neo4j/         back up and (re)load a Neo4j graph  (bash + Python, terminal)
-└── visualize/     look at the structure               (Python, terminal → HTML)
-neo4j_saved_queries/
-├── all_pilots/    00 reset · 01 import · 02 mapping · 03 validation (run by neo4j/reload_ontology.sh)
-├── visualize/     queries to paste into the Neo4j Browser
-└── utils/         generic helpers: schema, labels, all nodes, n10s check
+├── explore/       STANDALONE kit to let someone test the Neo4j from Python (copy the folder anywhere)
+├── visualize/     look at the structure                      (Python, terminal → HTML)
+└── cypher/
+    ├── browser/   queries to paste into the Neo4j Browser
+    └── inspect/   generic checks: schema, labels, all nodes, n10s installed
 ```
 
 All Python scripts run with the project venv: `neo4j-venv/bin/python …` (it has `neo4j`, `pyvis`, `networkx`).
@@ -24,27 +24,15 @@ set `NEO4J_URI` / `NEO4J_PASSWORD` for another instance.
 
 ---
 
-## 1. Rebuild and reload the ontology
+## Explore from Python (no Cypher)
 
-```bash
-# only when the data lake changed (finds where each dataset/variable lives; read-only).
-# Hand corrections go in ontology/mappings/sensor_map_overrides.csv: they are applied last and win.
-python3 scripts/ontology/discover_data_lake.py
-
-# build ontology/all_pilots.owl from ontology/all_pilots_base.owl + pilot_metadata/
-python3 scripts/ontology/build_all_pilots_owl.py          # needs: pip install rdflib openpyxl
-
-# back up, empty, import, map and validate a Neo4j container
-scripts/neo4j/reload_ontology.sh                 # the project's instance (container "neo4j-ontology")
-scripts/neo4j/reload_ontology.sh <container>     # any other Neo4j container
-```
-
-`reload_ontology.sh` writes a JSON backup to `output/backups/` first, copies the OWL file into the folder the
-container mounts as `/import` (only needed for other containers; this project mounts `ontology/`), and logs everything to `output/logs/reload-<container>.txt`.
+[`scripts/explore/`](explore/) is a **standalone kit** to hand to someone who should try the deployed Neo4j: a notebook,
+a helper (`eg.py`), `requirements.txt` and its own README. It depends on nothing else in this repository (copy the
+folder anywhere); the person only needs the Neo4j address and password.
 
 ---
 
-## 2. Visualise in the terminal / browser (Python)
+## 1. Visualise in the terminal / browser (Python)
 
 Run with `neo4j-venv/bin/python scripts/visualize/<script>`. Every script prints to the terminal and writes
 an HTML page to `output/visualizations/`.
@@ -77,10 +65,10 @@ browser. Scroll to zoom, drag to move, hover a node for details.
 
 ---
 
-## 3. Visualise in the Neo4j Browser (Cypher)
+## 2. Visualise in the Neo4j Browser (Cypher)
 
 Open the Browser (`http://localhost:7474`, or `neo4j.energy-guard.eu`), paste a query from
-`neo4j_saved_queries/visualize/` and run it. Queries with a value on the first line (`WITH 'CEA' AS pilot`)
+`scripts/cypher/browser/` and run it. Queries with a value on the first line (`WITH 'CEA' AS pilot`)
 are meant to be edited.
 
 | File | Shows | View |
@@ -101,7 +89,7 @@ are meant to be edited.
 | `09_not_in_the_lake.cypher` | Metadata variables not found in the data lake | table |
 | `10_schema.cypher` | Labels and relationship types of the whole graph | graph |
 
-**Nicer colours and captions:** in the Browser type `:style`, then drag `neo4j_saved_queries/visualize/browser_style.grass`
+**Nicer colours and captions:** in the Browser type `:style`, then drag `scripts/cypher/browser/browser_style.grass`
 onto the style panel (or paste its content). Pilots, datasets, variables, groups and classes get their own colour and
 show their name.
 

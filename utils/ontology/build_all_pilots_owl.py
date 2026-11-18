@@ -7,8 +7,8 @@
   = ontology/all_pilots.owl        (the ONE file loaded by n10s; generated, do not edit)
 
 Usage:
-    python3 scripts/ontology/build_all_pilots_owl.py            # writes ontology/all_pilots.owl
-    python3 scripts/ontology/build_all_pilots_owl.py --check    # build + print stats, don't write
+    python3 utils/ontology/build_all_pilots_owl.py            # writes ontology/all_pilots.owl
+    python3 utils/ontology/build_all_pilots_owl.py --check    # build + print stats, don't write
 
 Requires: rdflib, openpyxl.
 
@@ -592,7 +592,7 @@ class MetadataWriter:
         self.current_dataset = local
         row = (configured or {}).get(local) or {}
         self.tables[str(ds)] = row
-        if row.get("database"):  # where the data really lives (scripts/ontology/discover_data_lake.py)
+        if row.get("database"):  # where the data really lives (utils/ontology/discover_data_lake.py)
             g.add((ds, EG.databaseServer, Literal(DATA_LAKE_SERVER)))
             g.add((ds, EG.databaseSystem, Literal("PostgreSQL")))
             g.add((ds, EG.storedInDatabase, Literal(row["database"])))
@@ -812,8 +812,8 @@ PILOT_SOURCES = [
     (read_rea, ("REA - Metadata.xlsx",), REA, MP.REA, "rea"),
     (read_engreen, ("RIN_P011_EnergyGuard_Metadata_ENGREEN_261106.xlsx",), ENGREEN, MP.ENGREEN, "engreen"),
 ]
-TABLES_CSV = MAPPINGS_DIR / "dataset_tables.csv"   # written by scripts/ontology/discover_data_lake.py
-SENSOR_CSV = MAPPINGS_DIR / "sensor_map.csv"       # written by scripts/ontology/discover_data_lake.py
+TABLES_CSV = MAPPINGS_DIR / "dataset_tables.csv"   # written by utils/ontology/discover_data_lake.py
+SENSOR_CSV = MAPPINGS_DIR / "sensor_map.csv"       # written by utils/ontology/discover_data_lake.py
 # the server address is kept out of the public ontology on purpose
 DATA_LAKE_SERVER = "EnergyGuard data lake (operated by CARTIF)"
 

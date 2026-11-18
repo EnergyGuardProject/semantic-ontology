@@ -1,8 +1,8 @@
 // Name: Reset the graph (DESTRUCTIVE)
 // Purpose: Empty the database so 01_import_all_pilots_with_n10s.cypher can load the ontology cleanly.
 // Deletes ALL nodes and relationships, the n10s graph config and the n10s prefixes.
-// Back up first:  neo4j-venv/bin/python scripts/neo4j/backup_graph.py
-// Normally run through scripts/neo4j/reload_ontology.sh, not by hand.
+// Back up first:  neo4j-venv/bin/python utils/neo4j/backup_graph.py
+// Normally run through utils/neo4j/reload_ontology.sh, not by hand.
 
 // 1) delete everything, in batches
 MATCH (n)

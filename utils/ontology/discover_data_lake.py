@@ -2,7 +2,7 @@
 """Discover where each pilot dataset/variable actually lives in the EnergyGuard data lake.
 
 Connects READ-ONLY to the data lake (one PostgreSQL database per pilot) and writes three
-editable files that scripts/ontology/build_all_pilots_owl.py reads (the build itself never connects):
+editable files that utils/ontology/build_all_pilots_owl.py reads (the build itself never connects):
 
   ontology/mappings/dataset_tables.csv       dataset  -> database, table, layout
   ontology/mappings/sensor_map.csv           variable -> lake sensor_id / pattern / column
@@ -24,7 +24,7 @@ Connection details come from the environment or from the git-ignored .env file a
     DATALAKE_HOST  DATALAKE_PORT  DATALAKE_USER  DATALAKE_PASSWORD
 
 Usage:
-    python3 scripts/ontology/discover_data_lake.py
+    python3 utils/ontology/discover_data_lake.py
 Requires: rdflib, psycopg2 (psycopg2-binary).
 
 How the lake stores data

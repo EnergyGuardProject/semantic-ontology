@@ -11,8 +11,8 @@ The project combines OWL ontologies, Neo4j, and saved Cypher queries to support 
 ├── docs/                          plain-language ontology guide, original design workbook
 ├── ontology/                      all_pilots.owl (generated, loaded by Neo4j) + base ontology + original per-pilot files
 ├── pilot_metadata/                pilot metadata workbooks + data-lake mapping (CSV)
-├── scripts/                       build · load · visualise (see scripts/README.md)
-├── neo4j_saved_queries/           import/mapping pipeline, Browser visualisation queries, utils
+├── utils/                         build the ontology file · load it into Neo4j (see utils/README.md)
+├── scripts/                       examples: explore, visualise, Cypher queries (see scripts/README.md)
 ├── runtime/                       what Neo4j uses and writes: plugins, data, logs  (data/logs git-ignored)
 ├── output/                        what the scripts write: backups, visualisations, logs (git-ignored)
 └── archive/                       no longer used: old compose files, scripts, queries, Neo4j data, jars
@@ -38,7 +38,7 @@ The repository supports the EnergyGuard semantic model and ontology work by:
 
 ```bash
 docker compose up -d                      # container "neo4j-ontology", data in runtime/data
-scripts/neo4j/reload_ontology.sh          # load the ontology (backup -> reset -> import -> mapping -> validation)
+utils/neo4j/reload_ontology.sh          # load the ontology (backup -> reset -> import -> mapping -> validation)
 ```
 
 - Browser: `http://localhost:7474` · Bolt: `bolt://localhost:7687` · user `neo4j`, password in `docker-compose.yaml`
@@ -58,7 +58,7 @@ All pilots are imported into Neo4j from **one** generated file: `ontology/all_pi
 ontology/all_pilots_base.owl   merged pilot ontologies (classes, properties, sample individuals)
 pilot_metadata/*.xlsx          dataset + variable metadata delivered by the pilots
         │
-        └─ python3 scripts/ontology/build_all_pilots_owl.py   (needs: pip install rdflib openpyxl)
+        └─ python3 utils/ontology/build_all_pilots_owl.py   (needs: pip install rdflib openpyxl)
         ▼
 ontology/all_pilots.owl        the single file loaded with n10s
 ```
@@ -74,7 +74,7 @@ ontology/all_pilots.owl        the single file loaded with n10s
   sample export each), measurement groups left empty, and references to nodes that exist nowhere.
 - Every dataset points to where its data really lives in the data lake (one PostgreSQL database
   per pilot, time series in `public.f_tsdata`, REA tables in `gis`/`cadastre`); every variable to its
-  lake `sensor_id`, sensor pattern or column. `scripts/ontology/discover_data_lake.py` finds these (read-only,
+  lake `sensor_id`, sensor pattern or column. `utils/ontology/discover_data_lake.py` finds these (read-only,
   connection details from the git-ignored `.env`) and writes `ontology/mappings/dataset_tables.csv`,
   `sensor_map.csv` and the report `output/reports/lake_unmapped_sensors.csv`; the build reads them and never connects itself.
 - The build is deterministic: re-running with unchanged inputs gives a byte-identical file.
@@ -83,20 +83,20 @@ Workflow:
 
 1. Edit `ontology/all_pilots_base.owl` and/or the workbooks in `pilot_metadata/`, then rebuild.
 2. Start Neo4j.
-3. Run `neo4j_saved_queries/all_pilots/01_import_all_pilots_with_n10s.cypher` on a clean database.
-4. Or run `scripts/neo4j/reload_ontology.sh`, which does the reset, import (01), mapping (02) and validation (03).
+3. Run `utils/cypher/01_import_all_pilots_with_n10s.cypher` on a clean database.
+4. Or run `utils/neo4j/reload_ontology.sh`, which does the reset, import (01), mapping (02) and validation (03).
 
 ## Scripts and visualisation
 
-See [scripts/README.md](scripts/README.md): rebuild/reload commands, Python visualisations for the terminal
+See [utils/README.md](utils/README.md) for rebuild/reload, and [scripts/README.md](scripts/README.md) for examples: Python visualisations for the terminal
 (`scripts/visualize/`, output in `output/visualizations/`) and Cypher queries for the Neo4j Browser
-(`neo4j_saved_queries/visualize/`, with a Browser style file).
+(`scripts/cypher/browser/`, with a Browser style file).
 
 Reload the live graph after a rebuild:
 
 ```bash
-python3 scripts/ontology/build_all_pilots_owl.py
-scripts/neo4j/reload_ontology.sh            # backup -> reset -> import -> mapping -> validation
+python3 utils/ontology/build_all_pilots_owl.py
+utils/neo4j/reload_ontology.sh            # backup -> reset -> import -> mapping -> validation
 neo4j-venv/bin/python scripts/visualize/make_all.py
 ```
 

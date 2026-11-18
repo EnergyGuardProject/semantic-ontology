@@ -2,9 +2,9 @@
 """Export a Neo4j graph to a JSON file (nodes, relationships, n10s config and prefixes).
 
 A logical backup taken without stopping the database, meant for the small ontology graph.
-Run before scripts/neo4j/reload_ontology.sh replaces a graph.
+Run before utils/neo4j/reload_ontology.sh replaces a graph.
 
-    neo4j-venv/bin/python scripts/neo4j/backup_graph.py              # the neo4j-ontology container (7687)
+    neo4j-venv/bin/python utils/neo4j/backup_graph.py              # the neo4j-ontology container (7687)
 
 Writes output/backups/<name>_<timestamp>.json. Environment: NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD.
 """

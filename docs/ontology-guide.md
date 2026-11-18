@@ -440,9 +440,9 @@ You don't edit the big OWL file by hand. It is **generated**:
 
 ```mermaid
 graph LR
-    A[ontology/all_pilots_base.owl<br/>pilot vocabularies + pilot tree] --> S{{scripts/ontology/build_all_pilots_owl.py}}
+    A[ontology/all_pilots_base.owl<br/>pilot vocabularies + pilot tree] --> S{{utils/ontology/build_all_pilots_owl.py}}
     B[pilot_metadata/*.xlsx<br/>datasets + variables from the pilots] --> S
-    L[(data lake<br/>read-only)] --> D{{scripts/ontology/discover_data_lake.py}}
+    L[(data lake<br/>read-only)] --> D{{utils/ontology/discover_data_lake.py}}
     D --> C[ontology/mappings/dataset_tables.csv<br/>sensor_map.csv]
     C --> S
     S --> O[ontology/all_pilots.owl<br/>the ONE file Neo4j imports]
@@ -452,21 +452,21 @@ graph LR
 | To change… | Edit… | Then |
 |---|---|---|
 | A dataset or variable description, unit, range | the pilot's workbook in `pilot_metadata/` | rebuild |
-| Where data lives (after the lake changes) | re-run `scripts/ontology/discover_data_lake.py` | rebuild |
+| Where data lives (after the lake changes) | re-run `utils/ontology/discover_data_lake.py` | rebuild |
 | A wrong or missing lake match | add a row to `ontology/mappings/sensor_map_overrides.csv` (`match` = `inferred`, `manual` or `none`) | re-run discovery, rebuild |
 | A pilot class or relation | `ontology/all_pilots_base.owl` | rebuild |
 
 ```bash
 pip install rdflib openpyxl psycopg2-binary
-python3 scripts/ontology/discover_data_lake.py   # only when the lake changed
-python3 scripts/ontology/build_all_pilots_owl.py
+python3 utils/ontology/discover_data_lake.py   # only when the lake changed
+python3 utils/ontology/build_all_pilots_owl.py
 ```
 
 The discovery script also writes `output/reports/lake_unmapped_sensors.csv`: sensors that are in the lake
 but that no pilot metadata describes (worth asking the pilots about).
 
-Then load it into Neo4j with `scripts/neo4j/reload_ontology.sh` (backup, reset, import, mapping, validation),
-and look at it with the scripts in `scripts/visualize/` or the Browser queries in `neo4j_saved_queries/visualize/`
+Then load it into Neo4j with `utils/neo4j/reload_ontology.sh` (backup, reset, import, mapping, validation),
+and look at it with the scripts in `scripts/visualize/` or the Browser queries in `scripts/cypher/browser/`
 (see [scripts/README.md](../scripts/README.md)).
 
 **Ground rules the build follows**
