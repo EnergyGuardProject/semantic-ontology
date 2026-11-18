@@ -9342,6 +9342,7 @@
     <eg:updateFrequency>Cambiar por Daily updated CSV files</eg:updateFrequency>
   </owl:NamedIndividual>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#CloudCoverMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: cloud cover (%).</rdfs:comment>
     <rdfs:label xml:lang="en">Cloud Cover Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
@@ -10930,6 +10931,7 @@
     <eg:unit>MWh</eg:unit>
   </owl:NamedIndividual>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#TimerMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: elapsed or counted time (s, h), such as hour counters.</rdfs:comment>
     <rdfs:label xml:lang="en">Timer Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
@@ -13522,7 +13524,8 @@
     <eg:sourceColumnName>Kco_e</eg:sourceColumnName>
   </owl:NamedIndividual>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology/merged-pilots#REA">
-    <rdfs:label>REA (Riga Energy Agency)</rdfs:label>
+    <dcterms:title>Riga Energy Agency</dcterms:title>
+    <rdfs:label>REA</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology/merged-pilots#Pilot"/>
     <mp:hasDataset rdf:resource="https://www.energyguard.eu/ontology/rea#Dataset_3D_GEOMETRY_LOD1_LOD2"/>
     <mp:hasDataset>
@@ -13884,7 +13887,7 @@
     <eg:variableKind>modelled</eg:variableKind>
   </owl:NamedIndividual>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#Variable">
-    <rdfs:comment xml:lang="en">A column / signal / feature of a pilot dataset, described by the pilot metadata.</rdfs:comment>
+    <rdfs:comment xml:lang="en">A column of a pilot dataset (a sensor signal, calculated value, setpoint, state or attribute), described by the pilot metadata.</rdfs:comment>
     <rdfs:label xml:lang="en">Variable</rdfs:label>
   </owl:Class>
   <owl:NamedIndividual rdf:about="https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__gid">
@@ -14173,6 +14176,11 @@
     <engreen:measuredAt rdf:resource="https://www.energyguard.eu/ontology/engreen#TS_2025_09_14T00_00"/>
     <engreen:productionValue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.069</engreen:productionValue>
   </engreen:ProductionMeasurement>
+  <owl:Class rdf:about="https://www.energyguard.eu/ontology#EnergyMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: energy values (Wh, kWh, MWh): consumed, produced or cumulative.</rdfs:comment>
+    <rdfs:label xml:lang="en">Energy Measurement</rdfs:label>
+    <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
+  </owl:Class>
   <owl:NamedIndividual rdf:about="https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__geometry">
     <dcterms:description xml:lang="en">Polygon geometry of the building</dcterms:description>
     <rdf:type rdf:resource="https://www.energyguard.eu/ontology#Variable"/>
@@ -14191,6 +14199,7 @@
     <eg:unit>kWh/m²/year</eg:unit>
   </owl:NamedIndividual>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#CompositionMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: gas or fluid composition (ppm, LEL).</rdfs:comment>
     <rdfs:label xml:lang="en">Composition Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
@@ -14203,7 +14212,7 @@
     <eg:storedInDatabaseColumn>koordinate</eg:storedInDatabaseColumn>
   </owl:NamedIndividual>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#StateMeasurement">
-    <rdfs:comment>Operational states of components (e.g., SYS, MH1_Active, MH2_Empty).</rdfs:comment>
+    <rdfs:comment xml:lang="en">Measurement type: on/off or discrete operating state, status and alarm signals.</rdfs:comment>
     <rdfs:label xml:lang="en">State Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
@@ -14370,6 +14379,11 @@
     </rdnts:representsMeasure>
     <rdnts:unitOfMeasure rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kW</rdnts:unitOfMeasure>
   </rdnts:MeasurementType>
+  <owl:Class rdf:about="https://www.energyguard.eu/ontology#FlowMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: flow rates of gases or liquids (L/min, m³/h, kg/h).</rdfs:comment>
+    <rdfs:label xml:lang="en">Flow Measurement</rdfs:label>
+    <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
+  </owl:Class>
   <owl:NamedIndividual rdf:about="https://www.energyguard.eu/ontology/rea#Building_energy_performance_certificate_factors_and_CO2_coefficients__Co_emisijas_faktors">
     <dcterms:description xml:lang="en">Factor expressing CO₂ emissions per unit of energy consumed</dcterms:description>
     <rdf:type rdf:resource="https://www.energyguard.eu/ontology#Variable"/>
@@ -14403,6 +14417,7 @@
     <mp:hasDataset rdf:resource="https://www.energyguard.eu/ontology/cea#Dataset_CEA_MURPHY_test_bed_dataset"/>
   </owl:Class>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#VolumeMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: volumes (m³, L).</rdfs:comment>
     <rdfs:label xml:lang="en">Volume Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
@@ -14498,6 +14513,7 @@
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology/rea#Feature"/>
   </owl:Class>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#ControlSignalMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: control outputs and commands sent to equipment.</rdfs:comment>
     <rdfs:label xml:lang="en">Control Signal Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
@@ -14685,13 +14701,6 @@
     <rdfs:subClassOf rdf:resource="https://saref.etsi.org/saref4ener/EnergyConsumer"/>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#SystemComponent"/>
   </owl:Class>
-  <owl:Class rdf:about="https://www.energyguard.eu/ontology#Measurement">
-    <rdfs:comment>A time-stamped reading from any sensor or system (numeric, state, or signal).</rdfs:comment>
-    <rdfs:label>Measurement</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/sosa/Observation"/>
-    <rdfs:subClassOf rdf:resource="https://saref.etsi.org/core/Measurement"/>
-    <rdfs:subClassOf rdf:resource="https://saref.etsi.org/saref4ener/Measurement"/>
-  </owl:Class>
   <owl:NamedIndividual rdf:about="https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__lietd_plat">
     <dcterms:description xml:lang="en">Useful floor area of the building</dcterms:description>
     <rdf:type rdf:resource="https://www.energyguard.eu/ontology#Variable"/>
@@ -14719,7 +14728,7 @@
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#SystemComponent"/>
   </owl:Class>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#PressureMeasurement">
-    <rdfs:comment>Hydrogen-related pressure data (e.g., PTH403, PTH404).</rdfs:comment>
+    <rdfs:comment xml:lang="en">Measurement type: pressure readings (bar, mbar, Pa).</rdfs:comment>
     <rdfs:label xml:lang="en">Pressure Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
@@ -14752,6 +14761,7 @@
     <rdfs:subPropertyOf rdf:resource="https://www.energyguard.eu/ontology/rdn/timeseries#hasNetLoadValue"/>
   </qb:MeasureProperty>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#SpeedMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: speeds (m/s, rpm).</rdfs:comment>
     <rdfs:label xml:lang="en">Speed Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
@@ -14766,8 +14776,16 @@
     <eg:unit>mm</eg:unit>
   </owl:NamedIndividual>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#SolarRadiationMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: solar irradiance (W/m²).</rdfs:comment>
     <rdfs:label xml:lang="en">Solar Radiation Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
+  </owl:Class>
+  <owl:Class rdf:about="https://www.energyguard.eu/ontology#Measurement">
+    <rdfs:comment xml:lang="en">A time-stamped reading from a sensor or system (numeric, state or signal). Its subclasses are the measurement types (Temperature, Pressure, ...); a variable that is a measurement is an instance of one.</rdfs:comment>
+    <rdfs:label>Measurement</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/sosa/Observation"/>
+    <rdfs:subClassOf rdf:resource="https://saref.etsi.org/core/Measurement"/>
+    <rdfs:subClassOf rdf:resource="https://saref.etsi.org/saref4ener/Measurement"/>
   </owl:Class>
   <owl:NamedIndividual rdf:about="https://www.energyguard.eu/ontology/rea#Territorial_zones_for_the_selection_of_the_type_of_heat_supply__geometry">
     <dcterms:description xml:lang="en">Polygon geometry of the building</dcterms:description>
@@ -14798,6 +14816,7 @@
     <mp:hasDataset rdf:resource="https://www.energyguard.eu/ontology/ciemat#Dataset_CEDER_CIEMAT_Microgrid_Daily_Operational_Data_1_s"/>
   </owl:Class>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#CurrentMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: electric current (A).</rdfs:comment>
     <rdfs:label xml:lang="en">Current Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
@@ -14805,11 +14824,6 @@
     <rdfs:comment>Community of energy users sharing renewable energy resources.</rdfs:comment>
     <rdfs:label>Renewable Energy Community</rdfs:label>
     <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
-  </owl:Class>
-  <owl:Class rdf:about="https://www.energyguard.eu/ontology#FlowMeasurement">
-    <rdfs:comment>Hydrogen-related flow data (e.g., ELE_H2_Flow_Rate, FC_flow_Rate).</rdfs:comment>
-    <rdfs:label xml:lang="en">Flow Measurement</rdfs:label>
-    <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
   <owl:NamedIndividual rdf:about="https://www.energyguard.eu/ontology/rea#List_of_state_buildings__Nr_P_k">
     <dcterms:description xml:lang="en">Serial number of the building sample in the dataset</dcterms:description>
@@ -14893,7 +14907,7 @@
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#TemperatureMeasurement">
-    <rdfs:comment>Temperature readings from sensors or stacks (e.g., TT111, TT113, TT114).</rdfs:comment>
+    <rdfs:comment xml:lang="en">Measurement type: temperature readings (°C).</rdfs:comment>
     <rdfs:label xml:lang="en">Temperature Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
@@ -14904,11 +14918,12 @@
     <eg:sourceColumnName>Energoefektivitates_raditajs_fee_kwh_m_gada</eg:sourceColumnName>
   </owl:NamedIndividual>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#HydrogenMeasurement">
-    <rdfs:comment>Hydrogen-related data: flow, pressure, or storage (e.g., ELE_H2_Flow_Rate, FC_flow_Rate, MH1_accumulated_H2_NL).</rdfs:comment>
+    <rdfs:comment xml:lang="en">Measurement type: hydrogen-related data: flow, pressure or storage.</rdfs:comment>
     <rdfs:label>Hydrogen Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology#StateOfChargeMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: state of charge of a battery (%).</rdfs:comment>
     <rdfs:label xml:lang="en">State Of Charge Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
@@ -14936,6 +14951,16 @@
     <rdfs:label xml:lang="en">23:00:00</rdfs:label>
     <eg:dataLakeMatch>none</eg:dataLakeMatch>
   </owl:NamedIndividual>
+  <owl:Class rdf:about="https://www.energyguard.eu/ontology#VoltageMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: electric voltage (V).</rdfs:comment>
+    <rdfs:label xml:lang="en">Voltage Measurement</rdfs:label>
+    <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
+  </owl:Class>
+  <owl:Class rdf:about="https://www.energyguard.eu/ontology#EfficiencyMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: efficiency indicators.</rdfs:comment>
+    <rdfs:label xml:lang="en">Efficiency Measurement</rdfs:label>
+    <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
+  </owl:Class>
   <owl:NamedIndividual rdf:about="https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__ip_paterin">
     <dcterms:description xml:lang="en">Actual specific heating consumption for the last 12 months, based on district heating data.</dcterms:description>
     <rdf:type rdf:resource="https://www.energyguard.eu/ontology#Variable"/>
@@ -14945,15 +14970,15 @@
     <eg:storedInDatabaseColumn>ip_paterin</eg:storedInDatabaseColumn>
     <eg:unit>kWh/m²/year</eg:unit>
   </owl:NamedIndividual>
-  <owl:Class rdf:about="https://www.energyguard.eu/ontology#PowerMeasurement">
-    <rdfs:comment>Electrical power generation or consumption (e.g., POT_ELE, POT_PILA, HP_elect_pow, Resistor_Pow).</rdfs:comment>
-    <rdfs:label xml:lang="en">Power Measurement</rdfs:label>
-    <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
-  </owl:Class>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology/engreen#PhotovoltaicSystem">
     <rdfs:comment>Solar PV system.</rdfs:comment>
     <rdfs:label>Photovoltaic System</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology/engreen#EnergyAsset"/>
+  </owl:Class>
+  <owl:Class rdf:about="https://www.energyguard.eu/ontology#PowerMeasurement">
+    <rdfs:comment xml:lang="en">Measurement type: electrical or thermal power (W, kW, MW).</rdfs:comment>
+    <rdfs:label xml:lang="en">Power Measurement</rdfs:label>
+    <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology/cea#FlowSensorSystem">
     <rdfs:label>Flow Sensor System</rdfs:label>
@@ -14977,19 +15002,11 @@
     <rdfs:label xml:lang="en">Space</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://w3id.org/bot#Space"/>
   </owl:Class>
-  <owl:Class rdf:about="https://www.energyguard.eu/ontology#EnergyMeasurement">
-    <rdfs:label xml:lang="en">Energy Measurement</rdfs:label>
-    <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
-  </owl:Class>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology/ciemat#SolarProduction">
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#SystemComponent"/>
   </owl:Class>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology/ciemat#ThermalConsumption">
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#SystemComponent"/>
-  </owl:Class>
-  <owl:Class rdf:about="https://www.energyguard.eu/ontology#VoltageMeasurement">
-    <rdfs:label xml:lang="en">Voltage Measurement</rdfs:label>
-    <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology/cartif#ElectricalMeasurement">
     <rdfs:comment>Electrical quantities such as current, voltage and SOC (A, V, %).</rdfs:comment>
@@ -14999,10 +15016,6 @@
   <owl:Class rdf:about="https://www.energyguard.eu/ontology/engreen#BatteryMeasurement">
     <rdfs:comment>Battery SOC and energy flow observation.</rdfs:comment>
     <rdfs:label>Battery Measurement</rdfs:label>
-    <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
-  </owl:Class>
-  <owl:Class rdf:about="https://www.energyguard.eu/ontology#EfficiencyMeasurement">
-    <rdfs:label xml:lang="en">Efficiency Measurement</rdfs:label>
     <rdfs:subClassOf rdf:resource="https://www.energyguard.eu/ontology#Measurement"/>
   </owl:Class>
   <owl:Class rdf:about="https://www.energyguard.eu/ontology/rdn/faults#PhaseVoltageDA">

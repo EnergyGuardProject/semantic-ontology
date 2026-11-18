@@ -1705,7 +1705,8 @@
       </owl:DatatypeProperty>
     </mp:hasPropertyEntity>
     <mp:hasClassEntity rdf:resource="https://www.energyguard.eu/ontology/rea#Building"/>
-    <rdfs:label>REA (Riga Energy Agency)</rdfs:label>
+    <rdfs:label>REA</rdfs:label>
+    <dcterms:title>Riga Energy Agency</dcterms:title>
   </owl:Class>
   <ciemat:ThermalConsumption rdf:about="https://www.energyguard.eu/ontology/ciemat#ED03">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>

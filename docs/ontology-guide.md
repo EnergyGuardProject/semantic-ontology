@@ -260,7 +260,7 @@ How many classes live where:
 
 | Namespace | Classes |
 |---|---:|
-| `eg:` shared: `Measurement` and 18 quantity classes (Temperature, Pressure, Flow, Power, Energy, Current, Voltage, Speed, SolarRadiation, Composition, Volume, Timer, Efficiency, StateOfCharge, State, ControlSignal, Hydrogen, CloudCover), plus SystemComponent, Sensor, Battery, Variable, TimeColumn, IdentifierColumn | 25 |
+| `eg:` shared: `Measurement` and 18 measurement types (Temperature, Pressure, Flow, Power, Energy, Current, Voltage, Speed, SolarRadiation, Composition, Volume, Timer, Efficiency, StateOfCharge, State, ControlSignal, Hydrogen, CloudCover), plus SystemComponent, Sensor, Battery, Variable, TimeColumn, IdentifierColumn | 25 |
 | RDN faults / time series | 3 / 2 |
 | CIEMAT | 7 |
 | BER / CEA / CARTIF | 2 / 7 / 10 |
@@ -270,7 +270,7 @@ How many classes live where:
 
 ### How a sensor gets its measurement class
 
-Every **time-series** variable has a quantity class, so one label finds the same kind of signal in every
+Every **time-series** variable has a measurement class (its measurement type), so one label finds the same kind of signal in every
 pilot (`:eg__PowerMeasurement` finds power at CIEMAT, BER, CARTIF and ENGREEN). The class is decided in this order:
 
 1. **the pilot metadata**: the unit (°C → Temperature, bar → Pressure, kW → Power, kWh → Energy, A → Current, …),

@@ -46,7 +46,7 @@ an HTML page to `output/visualizations/`.
 | `pilot_map.py` | **What is in it**: pilots → datasets → kinds of measurement ("Temperature ×19"), all pilots on one page. Terminal outline + `pilot_map.html` |
 | `pilot_map.py --pilot CEA` | The same for one pilot |
 | `query_demo.py` | **How to use it**: six everyday questions, the Cypher query for each and the answer |
-| `query_demo.py --sensor PT305 --kind Pressure --topic heating` | The same questions about another sensor / quantity / topic |
+| `query_demo.py --sensor PT305 --measurement-type Pressure --topic heating` | The same questions about another sensor / measurement type / topic |
 | `class_map.py` | Which measurement classes each pilot has: terminal matrix + `class_map.html` |
 | `pilot_graph.py --pilot BER [--groups]` / `--all` | Every variable of a pilot as a node, coloured by class |
 
@@ -82,7 +82,7 @@ are meant to be edited.
 | `02_one_pilot.cypher` | One pilot → datasets → variables | graph |
 | `03_dataset_variables_and_classes.cypher` | One dataset, its variables and their measurement class | graph |
 | `04_measurement_classes.cypher` | The shared class hierarchy under `eg:Measurement` | graph |
-| `05_same_quantity_across_pilots.cypher` | One kind of measurement (e.g. pressure) in every pilot | graph |
+| `05_same_measurement_type_across_pilots.cypher` | One measurement type (e.g. pressure) in every pilot | graph |
 | `06_sensor_groups.cypher` | A pilot's sensor groups and their sensors | graph |
 | `07_where_is_the_data.cypher` | Every dataset's data-lake database/table and coverage | table |
 | `08_find_a_variable.cypher` | Search a variable → description, unit, and a ready-to-run **SQL** query for its data | table |

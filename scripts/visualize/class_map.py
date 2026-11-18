@@ -39,7 +39,7 @@ def main():
       "interaction": {"hover": true, "navigationButtons": true}
     }""")
     net.add_node(EG + "Measurement", label="Measurement", shape="ellipse", color="#37474F",
-                 font={"color": "#FFFFFF", "size": 22}, title="eg:Measurement (all measured quantities)")
+                 font={"color": "#FFFFFF", "size": 22}, title="eg:Measurement (all measurement types)")
     totals = defaultdict(int)
     for u in usage:
         totals[u["uri"]] += u["n"]

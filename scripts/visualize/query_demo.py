@@ -3,7 +3,7 @@
 
     neo4j-venv/bin/python scripts/visualize/query_demo.py                       # all questions
     neo4j-venv/bin/python scripts/visualize/query_demo.py --question 3          # just one
-    neo4j-venv/bin/python scripts/visualize/query_demo.py --sensor PT-U301 --kind Pressure --topic heating
+    neo4j-venv/bin/python scripts/visualize/query_demo.py --sensor PT-U301 --measurement-type Pressure --topic heating
 
 Every query shown can be pasted as-is into the Neo4j Browser (replace $parameters by values, or set them
 with  :param sensor => 'TT-D101').
@@ -21,14 +21,14 @@ OPTIONAL MATCH (d)-[:eg__hasVariable]->(v)
 RETURN p.displayName AS pilot, count(DISTINCT d) AS datasets, count(DISTINCT v) AS variables
 ORDER BY variables DESC""", {}),
 
-    ("Which pilots measure {kind}, and with how many sensors?",
-     "Every variable has a shared measurement class, so one label finds the same quantity in all pilots.",
+    ("Which pilots measure {measurement_type}, and with how many sensors?",
+     "Every variable has a shared measurement class, so one label finds the same measurement type in all pilots.",
      """
 MATCH (p:Pilot)-[:mp__hasDataset]->(:Dataset)-[:eg__hasVariable]->(v)-[:INSTANCE_OF]->(c)
-WHERE c.localName = $kind + 'Measurement'
+WHERE c.localName = $measurement_type + 'Measurement'
 RETURN p.displayName AS pilot, count(DISTINCT v) AS sensors,
        collect(DISTINCT v.displayName)[0..6] AS examples
-ORDER BY sensors DESC""", {"kind": "kind"}),
+ORDER BY sensors DESC""", {"measurement_type": "measurement_type"}),
 
     ("What is sensor {sensor}, and where are its readings?",
      "Follow variable -> dataset -> data lake; the result includes the SQL to fetch the data.",
@@ -57,13 +57,13 @@ RETURN p.displayName AS pilot, d.displayName AS dataset, d.eg__temporalCoverage[
        coalesce(d.eg__storedInDatabase[0], 'not in the lake') AS database
 ORDER BY pilot""", {"topic": "topic"}),
 
-    ("Which measured quantities does each pilot have?",
+    ("Which measurement types does each pilot have?",
      "One row per pilot, listing its kinds of measurement.",
      """
 MATCH (p:Pilot)-[:mp__hasDataset]->(:Dataset)-[:eg__hasVariable]->(v)-[:INSTANCE_OF]->(c)
-WITH p, replace(c.localName, 'Measurement', '') AS kind, count(DISTINCT v) AS n
+WITH p, replace(c.localName, 'Measurement', '') AS mtype, count(DISTINCT v) AS n
 ORDER BY n DESC
-RETURN p.displayName AS pilot, collect(kind + ' ' + n) AS quantities
+RETURN p.displayName AS pilot, collect(mtype + ' ' + n) AS measurement_types
 ORDER BY pilot""", {}),
 ]
 
@@ -84,11 +84,11 @@ def main():
     p = parser("Everyday questions answered with Cypher")
     p.add_argument("--question", type=int, help=f"only question 1..{len(QUESTIONS)}")
     p.add_argument("--sensor", default="TT-D101", help="a variable name (default TT-D101, a BER temperature)")
-    p.add_argument("--kind", default="Temperature",
-                   help="a measured quantity: Temperature, Pressure, Flow, Power, Energy, Current, Voltage, ...")
+    p.add_argument("--measurement-type", default="Temperature",
+                   help="a measurement type: Temperature, Pressure, Flow, Power, Energy, Current, Voltage, ...")
     p.add_argument("--topic", default="building", help="a word to look for in dataset titles/descriptions")
     a = p.parse_args()
-    values = {"sensor": a.sensor, "kind": a.kind, "topic": a.topic}
+    values = {"sensor": a.sensor, "measurement_type": a.measurement_type, "topic": a.topic}
 
     for i, (question, how, query, params) in enumerate(QUESTIONS, 1):
         if a.question and a.question != i:

@@ -318,7 +318,7 @@ def slug(text, maxlen=80):
 def declare_vocab(g):
     g.add((EG.Variable, RDF.type, OWL.Class))
     g.add((EG.Variable, RDFS.label, Literal("Variable", lang="en")))
-    g.add((EG.Variable, RDFS.comment, Literal("A column / signal / feature of a pilot dataset, described by the pilot metadata.", lang="en")))
+    g.add((EG.Variable, RDFS.comment, Literal("A column of a pilot dataset (a sensor signal, calculated value, setpoint, state or attribute), described by the pilot metadata.", lang="en")))
     g.add((DCAT.Dataset, RDF.type, OWL.Class))
     g.add((DCAT.Dataset, RDFS.label, Literal("Dataset", lang="en")))
     for prop, dom, rng, label in [
@@ -1094,10 +1094,10 @@ def simplify(g, stats):
 # --------------------------------------------------------------------------------------
 # 7. Measurement classes for time-series variables
 # --------------------------------------------------------------------------------------
-# One shared eg: class per measured quantity. A variable's class is decided from the pilot
+# One shared eg: class per measurement type. A variable's class is decided from the pilot
 # metadata first (unit, then sensor type, then variable kind); the data lake's own sensor type
 # is used only when the metadata says nothing. Disagreements are reported, metadata wins.
-QUANTITIES = {  # class local name -> label
+MEASUREMENT_TYPES = {  # class local name -> label
     "TemperatureMeasurement": "Temperature Measurement", "PressureMeasurement": "Pressure Measurement",
     "FlowMeasurement": "Flow Measurement", "PowerMeasurement": "Power Measurement",
     "EnergyMeasurement": "Energy Measurement", "CurrentMeasurement": "Current Measurement",
@@ -1108,6 +1108,31 @@ QUANTITIES = {  # class local name -> label
     "StateOfChargeMeasurement": "State Of Charge Measurement", "StateMeasurement": "State Measurement",
     "ControlSignalMeasurement": "Control Signal Measurement", "CloudCoverMeasurement": "Cloud Cover Measurement",
 }
+# What each measurement type means. Written onto the shared eg: classes after classification, replacing the
+# pilot-specific comments some of them arrived with (those named one pilot's sensors).
+MEASUREMENT_TYPE_DEFINITIONS = {
+    "Temperature": "temperature readings (°C).",
+    "Pressure": "pressure readings (bar, mbar, Pa).",
+    "Flow": "flow rates of gases or liquids (L/min, m³/h, kg/h).",
+    "Power": "electrical or thermal power (W, kW, MW).",
+    "Energy": "energy values (Wh, kWh, MWh): consumed, produced or cumulative.",
+    "Current": "electric current (A).",
+    "Voltage": "electric voltage (V).",
+    "Speed": "speeds (m/s, rpm).",
+    "SolarRadiation": "solar irradiance (W/m²).",
+    "Composition": "gas or fluid composition (ppm, LEL).",
+    "Level": "fill level of a tank.",
+    "Volume": "volumes (m³, L).",
+    "Timer": "elapsed or counted time (s, h), such as hour counters.",
+    "Efficiency": "efficiency indicators.",
+    "StateOfCharge": "state of charge of a battery (%).",
+    "State": "on/off or discrete operating state, status and alarm signals.",
+    "ControlSignal": "control outputs and commands sent to equipment.",
+    "CloudCover": "cloud cover (%).",
+    "Hydrogen": "hydrogen-related data: flow, pressure or storage.",
+}
+MEASUREMENT_COMMENT = ("A time-stamped reading from a sensor or system (numeric, state or signal). Its subclasses are the "
+                       "measurement types (Temperature, Pressure, ...); a variable that is a measurement is an instance of one.")
 # columns of a time-series dataset that are not measurements get their own classes (under eg:Variable)
 COLUMN_CLASSES = {"TimeColumn": ("Time Column", "The time stamp column of a time-series dataset."),
                   "IdentifierColumn": ("Identifier Column", "A column that identifies the measured object (address, cadastre number, id).")}
@@ -1217,7 +1242,7 @@ def classify_variables(g, stats, sensor_map, report_rows):
                 if (cls, RDF.type, OWL.Class) not in g:
                     g.add((cls, RDF.type, OWL.Class))
                     g.add((cls, RDFS.subClassOf, EG.Measurement))
-                    g.add((cls, RDFS.label, Literal(QUANTITIES[chosen + "Measurement"], lang="en")))
+                    g.add((cls, RDFS.label, Literal(MEASUREMENT_TYPES[chosen + "Measurement"], lang="en")))
                     stats["classes_added"] += 1
                 stats["classified_from_" + ("metadata" if meta_cls else "lake")] += 1
             else:
@@ -1228,6 +1253,19 @@ def classify_variables(g, stats, sensor_map, report_rows):
                 "decided_by": source, "metadata_says": meta_cls or "", "lake_says": "/".join(sorted(lake_types)),
                 "conflict": "yes" if (meta_cls and lake_cls and meta_cls != lake_cls) else "",
             })
+
+
+def describe_measurement_types(g):
+    """Give eg:Measurement and each shared measurement type one consistent comment ('Measurement type: ...')."""
+    def set_comment(cls, text):
+        for old in list(g.objects(cls, RDFS.comment)):
+            g.remove((cls, RDFS.comment, old))
+        g.add((cls, RDFS.comment, Literal(text, lang="en")))
+    set_comment(EG.Measurement, MEASUREMENT_COMMENT)
+    for short, definition in MEASUREMENT_TYPE_DEFINITIONS.items():
+        cls = EG[short + "Measurement"]
+        if (cls, RDF.type, OWL.Class) in g:
+            set_comment(cls, "Measurement type: " + definition)
 
 
 def main():
@@ -1252,6 +1290,7 @@ def main():
     class_report = []
     classify_variables(g, stats, load_sensor_map(), class_report)
     simplify(g, stats)
+    describe_measurement_types(g)   # after simplify: it merges pilot classes (and their comments) into the shared ones
 
     print(f"base triples: {len(base)}  after clean-up: {n_base}  final: {len(g)}")
     for k in ("eg_ref", "struct_pred", "mojibake", "file_iri", "curie", "qudt_units_fixed"):
