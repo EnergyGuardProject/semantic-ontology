@@ -4,7 +4,7 @@
 #   utils/neo4j/reload_ontology.sh                    # container "neo4j-ontology" (docker-compose.yaml)
 #   utils/neo4j/reload_ontology.sh <other-container>  # any other Neo4j container with n10s + APOC
 #
-# Steps: backup (JSON) -> reset -> 01 import -> 02 mapping -> 03 validation.
+# Steps: backup (JSON) -> reset -> 01 import -> 02 mapping (its last row is the count check).
 # Password: NEO4J_PASSWORD from the environment, else from the git-ignored .env at the repo root.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
@@ -20,10 +20,10 @@ docker ps --format '{{.Names}}' | grep -qx "$CONTAINER" || { echo "container $CO
 PORT=$(docker port "$CONTAINER" 7687/tcp | head -1 | sed 's/.*://')
 cypher() { docker exec -i "$CONTAINER" cypher-shell -u neo4j -p "$PASSWORD" --format plain; }
 
-echo "== 1/5 backup ($CONTAINER, bolt port $PORT)"
+echo "== 1/4 backup ($CONTAINER, bolt port $PORT)"
 NEO4J_URI="bolt://localhost:$PORT" NEO4J_PASSWORD="$PASSWORD" neo4j-venv/bin/python utils/neo4j/backup_graph.py --name "$CONTAINER"
 
-echo "== 2/5 reset"
+echo "== 2/4 reset"
 # statement by statement: graphconfig.drop / nsprefixes.removeAll fail harmlessly on a fresh database
 : > "$LOG"
 cypher <<< "MATCH (n) CALL (n) { DETACH DELETE n } IN TRANSACTIONS OF 10000 ROWS;" >> "$LOG" 2>&1
@@ -31,7 +31,7 @@ cypher <<< "CALL n10s.graphconfig.drop();" >> "$LOG" 2>&1 || true
 cypher <<< "CALL n10s.nsprefixes.removeAll();" >> "$LOG" 2>&1 || true
 cypher <<< "MATCH (n) RETURN count(n) AS nodes_left;" | tail -1 | sed 's/^/nodes left: /'
 
-echo "== 3/5 import ontology/all_pilots.owl"
+echo "== 3/4 import ontology/all_pilots.owl"
 # another container may mount a different folder as /import: copy the freshly built file there
 IMPORT_DIR=$(docker inspect "$CONTAINER" --format '{{range .Mounts}}{{if eq .Destination "/import"}}{{.Source}}{{end}}{{end}}')
 if [ -n "$IMPORT_DIR" ] && [ "$(realpath "$IMPORT_DIR")" != "$(realpath ontology)" ]; then
@@ -42,11 +42,8 @@ cypher < "$Q/01_import_all_pilots_with_n10s.cypher" >> "$LOG" 2>&1
 grep -A1 "^terminationStatus" "$LOG" | tail -1 | cut -d, -f1-3 | sed 's/^/status, triples loaded, parsed: /'
 grep -q '^"OK"' "$LOG" || { echo "import failed, see $LOG"; exit 1; }
 
-echo "== 4/5 mapping"
+echo "== 4/4 mapping"
 cypher < "$Q/02_map_all_pilots_all_in_one.cypher" >> "$LOG" 2>&1
 tail -2 "$LOG"
 
-echo "== 5/5 validation"
-cypher < "$Q/03_post_import_validation_large_owl.cypher" >> "$LOG" 2>&1
-sed -n '/^pilot, located_by/,/^pilot, datasets_not_in_lake/p' "$LOG" | sed '$d'
 echo "done (full log: $LOG)"

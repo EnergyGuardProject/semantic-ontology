@@ -56,6 +56,14 @@ CALL n10s.nsprefixes.add('foaf', 'http://xmlns.com/foaf/0.1/');
 CALL n10s.nsprefixes.add('geo', 'http://www.w3.org/2003/01/geo/wgs84_pos#');
 CALL n10s.nsprefixes.add('vann', 'http://purl.org/vocab/vann/');
 CALL n10s.nsprefixes.add('xsd', 'http://www.w3.org/2001/XMLSchema#');
+CALL n10s.nsprefixes.add('skos', 'http://www.w3.org/2004/02/skos/core#');
+CALL n10s.nsprefixes.add('prov', 'http://www.w3.org/ns/prov#');
+CALL n10s.nsprefixes.add('dqv', 'http://www.w3.org/ns/dqv#');
+CALL n10s.nsprefixes.add('vcard', 'http://www.w3.org/2006/vcard/ns#');
+CALL n10s.nsprefixes.add('geosparql', 'http://www.opengis.net/ont/geosparql#');
+CALL n10s.nsprefixes.add('quantitykind', 'http://qudt.org/vocab/quantitykind/');
+CALL n10s.nsprefixes.add('prop', 'https://www.energyguard.eu/ontology/property#');
+CALL n10s.nsprefixes.add('csvw', 'http://www.w3.org/ns/csvw#');
 
 // 4) Import OWL from Neo4j import directory
 CALL n10s.rdf.import.fetch(
@@ -70,12 +78,9 @@ RETURN count(n) AS resource_nodes;
 MATCH ()-[r]->()
 RETURN count(r) AS relationships;
 
-// 6) Pilot metadata: datasets and variables per pilot
-//    (suffix match so it works whatever prefix n10s assigned to the namespaces)
-MATCH (p:Resource)-[h]->(ds:Resource)
-WHERE type(h) ENDS WITH '__hasDataset'
-OPTIONAL MATCH (ds)-[v]->(var:Resource)
-WHERE type(v) ENDS WITH '__hasVariable'
+// 6) Pilot metadata: datasets and variables per pilot (suffix-free: uses the standard dct:publisher link)
+MATCH (ds:dcat__Dataset)-[:dcterms__publisher]->(p:Resource)
+OPTIONAL MATCH (ds)-[:sch__variableMeasured]->(var:Resource)
 RETURN p.rdfs__label AS pilot,
        count(DISTINCT ds) AS datasets,
        count(DISTINCT var) AS variables

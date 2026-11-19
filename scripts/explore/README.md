@@ -35,6 +35,7 @@ eg.connect("bolt://<host>:7687", "neo4j", "<password>")   # or set the NEO4J_* v
 eg.pilots()                         # which pilots exist and how big they are
 eg.datasets("hydrogen")             # datasets mentioning a word (no argument: all)
 eg.measurement_types()              # every measurement type (optionally for one pilot)
+eg.equipment()                      # every piece of equipment and the variables it hosts
 eg.variables(pilot="BER")          # every variable of one pilot (add a measurement type: eg.variables("Temperature", "BER"))
 eg.find("storage tank")             # search variables by words in their name or description
 eg.variable("TT-D101")              # what it is and its data lake sensor id
@@ -47,4 +48,4 @@ Every function that returns a result gives a list of dicts (wrap it in `pandas.D
 ## What the ontology is
 A **catalogue**: it says which datasets and variables exist for each pilot and where their numbers live in the data
 lake. It does not contain the measurements themselves.
-Tree: **pilot → dataset → variable**; each variable also has a **measurement type** (Temperature, Pressure, ...).
+Tree: **pilot → dataset → variable**; each variable also has a **measurement type** (Temperature, Pressure, ...), a unit, and often the **equipment** that hosts it.

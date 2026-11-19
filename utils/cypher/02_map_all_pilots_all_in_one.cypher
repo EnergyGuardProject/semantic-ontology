@@ -1,241 +1,81 @@
-// Name: All-in-one mapping for all_pilots ontology
-// Purpose: Full mapping pipeline in a single script (the only mapping script needed).
+// Name: Convenience layer for the all_pilots ontology
+// Purpose: after the import, add short labels, shortcut properties and canonical relationships on top of the
+//          standard terms, so the saved queries stay short. Nothing here changes the imported RDF.
 // Run after 01_import_all_pilots_with_n10s.cypher.
+//
+//   Labels         Pilot (foaf:Organization that publishes datasets), Dataset (dcat:Dataset), Variable (eg:Variable),
+//                  MeasurementType (sosa:ObservableProperty), Platform (sosa:Platform), Unit (QUDT unit)
+//   Relationships  (Pilot)-[:HAS_DATASET]->(Dataset)        (Dataset)-[:HAS_VARIABLE]->(Variable)
+//                  (Variable)-[:OF_TYPE]->(MeasurementType) (Variable)-[:HOSTED_BY]->(Platform)
+//                  (Variable)-[:HAS_UNIT]->(Unit)
+//   Shortcuts      displayName; on variables lakeSensorId, lakeSensorPattern, lakeColumn, lakeMatch, measurementType;
+//                  on datasets database, dbTable, dbTables, tableLayout
 
-// -----------------------------------------------------------------------------
 // A) Constraints and indexes
-// -----------------------------------------------------------------------------
-CREATE CONSTRAINT dataset_uri IF NOT EXISTS
-FOR (d:Dataset)
-REQUIRE d.uri IS UNIQUE;
+CREATE CONSTRAINT dataset_uri IF NOT EXISTS FOR (d:Dataset) REQUIRE d.uri IS UNIQUE;
+CREATE CONSTRAINT variable_uri IF NOT EXISTS FOR (v:Variable) REQUIRE v.uri IS UNIQUE;
+CREATE CONSTRAINT unit_uri IF NOT EXISTS FOR (u:Unit) REQUIRE u.uri IS UNIQUE;
+CREATE INDEX resource_local_name_idx IF NOT EXISTS FOR (r:Resource) ON (r.localName);
 
-CREATE CONSTRAINT measurement_group_uri IF NOT EXISTS
-FOR (g:MeasurementGroup)
-REQUIRE g.uri IS UNIQUE;
+// B) Short name of every resource
+MATCH (n:Resource) SET n.localName = coalesce(n.localName, split(replace(n.uri, '#', '/'), '/')[-1]);
 
-CREATE CONSTRAINT measurement_uri IF NOT EXISTS
-FOR (m:Measurement)
-REQUIRE m.uri IS UNIQUE;
-
-CREATE CONSTRAINT unit_uri IF NOT EXISTS
-FOR (u:Unit)
-REQUIRE u.uri IS UNIQUE;
-
-CREATE INDEX measurement_code_idx IF NOT EXISTS
-FOR (m:Measurement)
-ON (m.code);
-
-CREATE INDEX measurement_table_idx IF NOT EXISTS
-FOR (m:Measurement)
-ON (m.dbTable);
-
-CREATE INDEX resource_local_name_idx IF NOT EXISTS
-FOR (r:Resource)
-ON (r.localName);
-
-// -----------------------------------------------------------------------------
-// B) Helper properties for all resources
-// -----------------------------------------------------------------------------
-MATCH (n:Resource)
-SET n.localName = coalesce(
-      n.localName,
-      split(replace(n.uri, '#', '/'), '/')[-1]
-    ),
-    n.namespace = coalesce(
-      n.namespace,
-      substring(n.uri, 0, size(n.uri) - size(split(replace(n.uri, '#', '/'), '/')[-1]))
-    );
-
-// -----------------------------------------------------------------------------
-// C) Mark ontology schema artifacts (keep separate from domain instances)
-// The import uses handleRDFTypes: LABELS, so rdf:type arrives as node labels
-// (owl__Class, eg__TemperatureMeasurement, ...), not as rdf__type relationships.
-// -----------------------------------------------------------------------------
-MATCH (c:owl__Class) SET c:OntologyClass;
-MATCH (p:owl__ObjectProperty) SET p:OntologyObjectProperty;
-MATCH (p:owl__DatatypeProperty) SET p:OntologyDatatypeProperty;
-
-// -----------------------------------------------------------------------------
-// D) Semantic labels
-// -----------------------------------------------------------------------------
-// Datasets: everything a pilot links with hasDataset (all are dcat:Dataset)
-MATCH (p:Resource)-[r]->(d:Resource)
-WHERE type(r) ENDS WITH '__hasDataset'
-SET d:Dataset;
-
+// C) Short labels (types arrive as labels like dcat__Dataset because the import uses handleRDFTypes: LABELS)
 MATCH (d:dcat__Dataset) SET d:Dataset;
+MATCH (:dcat__Dataset)-[:dcterms__publisher]->(p:Resource) SET p:Pilot;
+MATCH (v:eg__Variable) SET v:Variable;
+MATCH (t:sosa__ObservableProperty) SET t:MeasurementType;
+MATCH (p:sosa__Platform) SET p:Platform;
+MATCH (u:Resource) WHERE u.uri STARTS WITH 'http://qudt.org/vocab/unit/' SET u:Unit;
 
-// Groups: whatever bundles sensors with hasMeasurement (some pilots type their groups
-// with a measurement class, so the structure is the reliable signal)
-MATCH (g:Resource)-[:eg__hasMeasurement]->()
-SET g:MeasurementGroup;
+// Pilot nodes carry the pilot's name as a label too (BER, CEA, ...)
+MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/rdn' SET n:RDN;
+MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/ciemat#' SET n:CIEMAT;
+MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/ber#' SET n:BER;
+MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/cea#' SET n:CEA;
+MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/cartif#' SET n:CARTIF;
+MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/rea#' SET n:REA;
+MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/engreen#' SET n:ENGREEN;
 
+// D) A readable name for everything that has one (n10s stores values as lists: take the first)
 MATCH (n:Resource)
-WHERE any(l IN labels(n) WHERE l ENDS WITH '__MeasurementGroup')
-SET n:MeasurementGroup;
+WITH n, head([x IN [n.rdfs__label, n.skos__prefLabel, n.dcterms__title, n.qudt__symbol] WHERE x IS NOT NULL]) AS first
+SET n.displayName = coalesce(CASE WHEN first IS :: LIST<ANY> THEN first[0] ELSE first END, n.localName);
 
-// Measurements: every variable of a dataset, plus individuals typed with a *Measurement class
-MATCH (d:Resource)-[r]->(v:Resource)
-WHERE type(r) ENDS WITH '__hasVariable'
-SET v:Measurement;
+// E) Canonical relationships (the RDF relationships stay too)
+MATCH (d:Dataset)-[:dcterms__publisher]->(p:Pilot) MERGE (p)-[:HAS_DATASET]->(d);
+MATCH (d:Dataset)-[:sch__variableMeasured]->(v:Variable) MERGE (d)-[:HAS_VARIABLE]->(v);
+MATCH (v:Variable)-[:qudt__hasUnit]->(u:Unit) MERGE (v)-[:HAS_UNIT]->(u);
+MATCH (v:Variable)-[r]->(t:MeasurementType) WHERE type(r) IN ['sosa__observes', 'eg__relatesToProperty'] MERGE (v)-[:OF_TYPE]->(t);
+MATCH (v:Variable)-[:sosa__isHostedBy]->(p:Platform) MERGE (v)-[:HOSTED_BY]->(p);
 
-MATCH (i:Resource)
-WHERE NOT i:OntologyClass AND NOT i:MeasurementGroup
-  AND any(l IN labels(i) WHERE l ENDS WITH 'Measurement' AND l CONTAINS '__')
-SET i:Measurement;
-
-// measurementType = the most specific measurement class, e.g. 'TemperatureMeasurement'
-MATCH (i:Measurement)
-WITH i, [l IN labels(i) WHERE l ENDS WITH 'Measurement' AND l CONTAINS '__' | split(l, '__')[1]] AS types
-WHERE size(types) > 0
-SET i.measurementType = coalesce(i.measurementType, types[0]);
-
-// -----------------------------------------------------------------------------
-// E) Fallback labels (sample individuals of pilots without metadata, e.g. RDN)
-// -----------------------------------------------------------------------------
-MATCH (n:Resource)
-WHERE n.eg__storedInDatabaseColumn IS NOT NULL AND NOT n:Dataset
-SET n:Measurement;
-
-MATCH (u:Resource)
-WHERE u.uri STARTS WITH 'http://qudt.org/vocab/unit/'
-SET u:Unit;
-
-// -----------------------------------------------------------------------------
-// F) Pilot labels (one per organisation)
-// -----------------------------------------------------------------------------
-MATCH (n:Resource)
-WHERE n.uri CONTAINS '/ontology/rdn'
-SET n:RDN;
-
-MATCH (n:Resource)
-WHERE n.uri CONTAINS '/ontology/ciemat#'
-SET n:CIEMAT;
-
-MATCH (n:Resource)
-WHERE n.uri CONTAINS '/ontology/ber#'
-SET n:BER;
-
-MATCH (n:Resource)
-WHERE n.uri CONTAINS '/ontology/cea#'
-SET n:CEA;
-
-MATCH (n:Resource)
-WHERE n.uri CONTAINS '/ontology/cartif#'
-SET n:CARTIF;
-
-MATCH (n:Resource)
-WHERE n.uri CONTAINS '/ontology/rea#'
-SET n:REA;
-
-MATCH (n:Resource)
-WHERE n.uri CONTAINS '/ontology/engreen#'
-SET n:ENGREEN;
-
-// Pilot nodes: label them and give them a readable name (they are classes of the pilot tree)
-MATCH (:Resource {uri: 'https://www.energyguard.eu/ontology/merged-pilots#Pilots'})-[:mp__hasPilot]->(p)
-SET p:Pilot, p.displayName = coalesce(p.rdfs__label[0], p.localName);
-
-MATCH (:Pilot)-[:mp__hasSubPilot]->(s)
-SET s:SubPilot, s.displayName = coalesce(s.rdfs__label[0], s.localName);
-
-MATCH (c:OntologyClass) WHERE c.displayName IS NULL
-SET c.displayName = coalesce(c.rdfs__label[0], c.localName);
-
-// -----------------------------------------------------------------------------
-// G) Property normalization
-// n10s stores values as lists (handleMultival: 'ARRAY'); take the first element.
-// Where the data lives (see docs/ontology-guide.md):
-//   dataset  -> eg:storedInDatabase (TEF<n>_<pilot>), eg:storedInDatabaseTable, eg:tableLayout
-//   variable -> eg:dataLakeSensorId | eg:dataLakeSensorPattern (long layout, public.f_tsdata)
-//               eg:storedInDatabaseColumn (wide tables, or d_calendar.datetime for timestamps)
-// -----------------------------------------------------------------------------
-MATCH (m:Measurement)
-WITH m,
-     CASE WHEN m.rdfs__label IS :: LIST<ANY> THEN m.rdfs__label[0] ELSE m.rdfs__label END AS label,
-     CASE WHEN m.eg__dataLakeSensorId IS :: LIST<ANY> THEN m.eg__dataLakeSensorId[0] ELSE m.eg__dataLakeSensorId END AS sid,
-     CASE WHEN m.eg__dataLakeSensorPattern IS :: LIST<ANY> THEN m.eg__dataLakeSensorPattern[0] ELSE m.eg__dataLakeSensorPattern END AS pattern,
-     CASE WHEN m.eg__storedInDatabaseColumn IS :: LIST<ANY> THEN m.eg__storedInDatabaseColumn[0] ELSE m.eg__storedInDatabaseColumn END AS col,
-     CASE WHEN m.eg__dataLakeMatch IS :: LIST<ANY> THEN m.eg__dataLakeMatch[0] ELSE m.eg__dataLakeMatch END AS how
-SET m.displayName = coalesce(m.displayName, label, m.localName),
-    m.lakeSensorId = sid,
-    m.lakeSensorPattern = pattern,
-    m.lakeColumn = col,
-    m.lakeMatch = coalesce(how, 'none'),
-    m.code = coalesce(sid, pattern, col);
-
-MATCH (d:Dataset)-[r]->(m:Measurement)
-WHERE type(r) ENDS WITH '__hasVariable'
-WITH m, d,
-     CASE WHEN d.eg__storedInDatabase IS :: LIST<ANY> THEN d.eg__storedInDatabase[0] ELSE d.eg__storedInDatabase END AS db,
-     CASE WHEN d.eg__storedInDatabaseTable IS :: LIST<ANY> THEN d.eg__storedInDatabaseTable ELSE [d.eg__storedInDatabaseTable] END AS tables,
-     CASE WHEN d.eg__tableLayout IS :: LIST<ANY> THEN d.eg__tableLayout[0] ELSE d.eg__tableLayout END AS layout
+// F) Where the data lives: the lake table is on the dataset's distribution
+MATCH (d:Dataset)-[:dcat__distribution]->(x)
+WITH d, x,
+     CASE WHEN x.eg__storedInDatabase IS :: LIST<ANY> THEN x.eg__storedInDatabase[0] ELSE x.eg__storedInDatabase END AS db,
+     CASE WHEN x.eg__storedInDatabaseTable IS :: LIST<ANY> THEN x.eg__storedInDatabaseTable ELSE [x.eg__storedInDatabaseTable] END AS tables,
+     CASE WHEN x.eg__tableLayout IS :: LIST<ANY> THEN x.eg__tableLayout[0] ELSE x.eg__tableLayout END AS layout
 WHERE db IS NOT NULL
-UNWIND tables AS tbl
-WITH m, collect(DISTINCT db) AS dbs, collect(DISTINCT layout) AS layouts, collect(DISTINCT tbl) AS tbls
-SET m.database = dbs[0], m.databases = dbs, m.dbTable = tbls[0], m.dbTables = tbls, m.tableLayout = layouts[0];
+SET d.database = db, d.dbTable = tables[0], d.dbTables = tables, d.tableLayout = layout;
 
-// pilots without metadata (RDN samples) still carry table/column on the measurement itself
-MATCH (m:Measurement)
-WHERE m.dbTable IS NULL AND m.eg__storedInDatabaseTable IS NOT NULL
-SET m.dbTable = CASE WHEN m.eg__storedInDatabaseTable IS :: LIST<ANY> THEN m.eg__storedInDatabaseTable[0]
-                     ELSE m.eg__storedInDatabaseTable END;
+// G) Shortcut properties on variables
+MATCH (v:Variable)
+WITH v,
+     CASE WHEN v.eg__dataLakeSensorId IS :: LIST<ANY> THEN v.eg__dataLakeSensorId[0] ELSE v.eg__dataLakeSensorId END AS sid,
+     CASE WHEN v.eg__dataLakeSensorPattern IS :: LIST<ANY> THEN v.eg__dataLakeSensorPattern[0] ELSE v.eg__dataLakeSensorPattern END AS pattern,
+     CASE WHEN v.eg__storedInDatabaseColumn IS :: LIST<ANY> THEN v.eg__storedInDatabaseColumn[0] ELSE v.eg__storedInDatabaseColumn END AS col,
+     CASE WHEN v.eg__dataLakeMatch IS :: LIST<ANY> THEN v.eg__dataLakeMatch[0] ELSE v.eg__dataLakeMatch END AS how
+SET v.lakeSensorId = sid, v.lakeSensorPattern = pattern, v.lakeColumn = col,
+    v.lakeMatch = coalesce(how, 'none');     // no match recorded means the variable is not in the lake
 
-MATCH (m:Measurement)
-SET m.hasDbMetadata = (m.dbTable IS NOT NULL AND m.code IS NOT NULL);
+MATCH (v:Variable)-[:OF_TYPE]->(t:MeasurementType) SET v.measurementType = t.displayName;
 
-MATCH (n:Resource)
-WHERE (n:Dataset OR n:MeasurementGroup OR n:Unit) AND n.displayName IS NULL
-SET n.displayName = coalesce(
-      CASE WHEN n.rdfs__label IS :: LIST<ANY> THEN n.rdfs__label[0] ELSE n.rdfs__label END,
-      n.localName);
-
-// -----------------------------------------------------------------------------
-// H) Canonical relationships (the original RDF relationships are kept)
-// After the ontology clean-up every pilot uses the shared eg: predicates.
-// -----------------------------------------------------------------------------
-MATCH (d:Dataset)-[:eg__hasGroup]->(g:MeasurementGroup)
-MERGE (d)-[:HAS_GROUP]->(g);
-
-MATCH (g:MeasurementGroup)-[r]->(m:Measurement)
-WHERE type(r) IN ['eg__hasMeasurement', 'engreen__hasMeasurements']
-MERGE (g)-[:HAS_MEASUREMENT]->(m);
-
-MATCH (m:Measurement)-[:eg__hasUnit]->(u:Unit)
-MERGE (m)-[:HAS_UNIT]->(u);
-
-MATCH (d:Dataset)-[:eg__hasVariable]->(m:Measurement)
-MERGE (m)-[:BELONGS_TO_DATASET]->(d);
-
-MATCH (m:Measurement)-[:dcterms__isPartOf]->(d:Dataset)
-MERGE (m)-[:BELONGS_TO_DATASET]->(d);
-
-// Measurement -> its class node. Types arrive as labels (eg__TemperatureMeasurement); this makes
-// them visible as edges, which the visualisation queries use.
-MATCH (m:Measurement)
-UNWIND [l IN labels(m) WHERE (l ENDS WITH 'Measurement' AND l CONTAINS '__')
-                            OR l IN ['eg__TimeColumn', 'eg__IdentifierColumn']] AS lbl
-MATCH (c:OntologyClass {uri: n10s.rdf.fullUriFromShortForm(lbl)})
-MERGE (m)-[:INSTANCE_OF]->(c);
-
-// Derived: a group belongs to the datasets of its measurements
-MATCH (g:MeasurementGroup)-[:HAS_MEASUREMENT]->(m:Measurement)-[:BELONGS_TO_DATASET]->(d:Dataset)
-MERGE (g)-[:BELONGS_TO_DATASET]->(d);
-
-MATCH (m:Measurement)-[:BELONGS_TO_DATASET]->(d:Dataset)
-WITH m, count(DISTINCT d) AS n
-SET m.datasetCount = n;
-
-// -----------------------------------------------------------------------------
-// I) Final quality snapshot (each count runs on its own, so an empty one shows 0)
-// -----------------------------------------------------------------------------
+// H) Final quality snapshot (each count runs on its own, so an empty one shows 0)
+CALL () { MATCH (p:Pilot) RETURN count(p) AS pilots }
 CALL () { MATCH (d:Dataset) RETURN count(d) AS datasets }
-CALL () { MATCH (g:MeasurementGroup) RETURN count(g) AS groups }
-CALL () { MATCH (m:Measurement) RETURN count(m) AS measurements }
-CALL () { MATCH ()-[r:HAS_GROUP]->() RETURN count(r) AS hasGroupEdges }
-CALL () { MATCH ()-[r:HAS_MEASUREMENT]->() RETURN count(r) AS hasMeasurementEdges }
+CALL () { MATCH (v:Variable) RETURN count(v) AS variables }
+CALL () { MATCH ()-[r:HAS_DATASET]->() RETURN count(r) AS hasDatasetEdges }
+CALL () { MATCH ()-[r:OF_TYPE]->() RETURN count(r) AS ofTypeEdges }
+CALL () { MATCH ()-[r:HOSTED_BY]->() RETURN count(r) AS hostedByEdges }
 CALL () { MATCH ()-[r:HAS_UNIT]->() RETURN count(r) AS hasUnitEdges }
-CALL () { MATCH ()-[r:BELONGS_TO_DATASET]->() RETURN count(r) AS belongsToDatasetEdges }
-CALL () { MATCH (m:Measurement) WHERE NOT coalesce(m.hasDbMetadata, false) RETURN count(m) AS measurements_missing_db_metadata }
-RETURN datasets, groups, measurements, hasGroupEdges, hasMeasurementEdges, hasUnitEdges,
-       belongsToDatasetEdges, measurements_missing_db_metadata;
+RETURN pilots, datasets, variables, hasDatasetEdges, ofTypeEdges, hostedByEdges, hasUnitEdges;

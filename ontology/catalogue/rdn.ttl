@@ -1,0 +1,29 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix mp: <https://www.energyguard.eu/ontology/merged-pilots#> .
+
+<https://www.energyguard.eu/ontology/rdn#Dataset_Customer_information> a dcat:Dataset ;
+    dcterms:description "Customer information: dataset of the RDN pilot, listed by title only. The pilot has not yet delivered a description or variable metadata."@en ;
+    dcterms:publisher mp:RDN ;
+    dcterms:title "Customer information"@en .
+
+<https://www.energyguard.eu/ontology/rdn#Dataset_Electrical_network_characteristics> a dcat:Dataset ;
+    dcterms:description "Electrical network characteristics: dataset of the RDN pilot, listed by title only. The pilot has not yet delivered a description or variable metadata."@en ;
+    dcterms:publisher mp:RDN ;
+    dcterms:title "Electrical network characteristics"@en .
+
+<https://www.energyguard.eu/ontology/rdn#Dataset_Network_Topology> a dcat:Dataset ;
+    dcterms:description "Network Topology: dataset of the RDN pilot, listed by title only. The pilot has not yet delivered a description or variable metadata."@en ;
+    dcterms:publisher mp:RDN ;
+    dcterms:title "Network Topology"@en .
+
+<https://www.energyguard.eu/ontology/rdn#Dataset_Solar_PV_information> a dcat:Dataset ;
+    dcterms:description "Solar PV information: dataset of the RDN pilot, listed by title only. The pilot has not yet delivered a description or variable metadata."@en ;
+    dcterms:publisher mp:RDN ;
+    dcterms:title "Solar PV information"@en .
+
+<https://www.energyguard.eu/ontology/rdn#Dataset_power_flow_simulation_results> a dcat:Dataset ;
+    dcterms:description "power flow simulation results: dataset of the RDN pilot, listed by title only. The pilot has not yet delivered a description or variable metadata."@en ;
+    dcterms:publisher mp:RDN ;
+    dcterms:title "power flow simulation results"@en .
+

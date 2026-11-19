@@ -1,0 +1,53 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix eg: <https://www.energyguard.eu/ontology#> .
+@prefix mp: <https://www.energyguard.eu/ontology/merged-pilots#> .
+
+# The single entry point: one DCAT catalogue holding every dataset of every pilot.
+# Generated from the dataset list; when a dataset is added to a pilot file, add its IRI here too.
+mp:EnergyGuardCatalogue a dcat:Catalog ;
+    dcterms:title "EnergyGuard data catalogue"@en ;
+    dcterms:description "Catalogue of the datasets delivered by the EnergyGuard pilots and where each is stored in the EnergyGuard data lake."@en ;
+    dcat:service eg:DataLakeService ;
+    dcat:dataset
+<https://www.energyguard.eu/ontology/ber#Dataset_PEM_Electrolyzer_14kW>,
+        <https://www.energyguard.eu/ontology/ber#Dataset_PEM_Electrolyzer_7kW>,
+        <https://www.energyguard.eu/ontology/cartif#Dataset_CARTIF_hydrogen_test_bench_operational_data_15_s>,
+        <https://www.energyguard.eu/ontology/cea#Dataset_CEA_MURPHY_test_bed_dataset>,
+        <https://www.energyguard.eu/ontology/ciemat#Dataset_CEDER_CIEMAT_Microgrid_Daily_Operational_Data_1_s>,
+        <https://www.energyguard.eu/ontology/engreen#Dataset_GME_CSUD_Hourly_Electricity_Price_Dataset>,
+        <https://www.energyguard.eu/ontology/engreen#Dataset_Operational_monitoring_dataset>,
+        <https://www.energyguard.eu/ontology/engreen#Dataset_Shelly_consumer_monitoring_dataset>,
+        <https://www.energyguard.eu/ontology/engreen#Dataset_The_Antrodoco_REC_Mapping_Dataset>,
+        <https://www.energyguard.eu/ontology/engreen#Dataset_The_GSE_Historical_Metering_Dataset>,
+        <https://www.energyguard.eu/ontology/engreen#Dataset_The_Weather_Dataset>,
+        <https://www.energyguard.eu/ontology/rdn#Dataset_Customer_information>,
+        <https://www.energyguard.eu/ontology/rdn#Dataset_Electrical_network_characteristics>,
+        <https://www.energyguard.eu/ontology/rdn#Dataset_Network_Topology>,
+        <https://www.energyguard.eu/ontology/rdn#Dataset_Solar_PV_information>,
+        <https://www.energyguard.eu/ontology/rdn#Dataset_power_flow_simulation_results>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_3D_GEOMETRY_LOD1_LOD2>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Air_quality>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Air_temperature>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Borders_of_Riga_and_Riga_suburbs_A_Riga_border>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Borders_of_Riga_and_Riga_suburbs_B_Riga_suburb_borders>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Building_and_heating_consumption_data_Heating_2017_2024_xlsx>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Building_energy_certificates_SCCB_Open_Data_Portal>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Building_energy_performance_certificate_factors_and_CO2_coefficients>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Buildings_monthly_heat_series_ARCGIS_Server>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_EPC_data_from_energy_audits_pdfs_bis_files_BIS_Format_for_year_2018>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_EPC_data_from_energy_audits_pdfs_bis_files_BIS_Format_for_year_2019>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Energy_performance_of_renovated_buildings>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Environmentally_degrading_buildings>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Humidity>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_List_of_state_buildings>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Meteorological_data>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Noise_levels>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Riga_neighborhoods>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Riga_series_results>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Riga_streets_and_addresses_A_streets>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Riga_streets_and_addresses_B_addresses>,
+        <https://www.energyguard.eu/ontology/rea#Dataset_Territorial_zones_for_the_selection_of_the_type_of_heat_supply> .

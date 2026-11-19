@@ -9,7 +9,7 @@
     eg.variable(name)                          # a variable name                 -> where it lives (dataset, data lake sensor id)
     eg.describe(name)                          # a variable name                 -> PRINTS a card of everything known
     eg.tree(pilot, per_dataset=4)              # a pilot                         -> PRINTS pilot > datasets > variables
-    eg.subsystems()                            #                                 -> subsystems with counts
+    eg.equipment()                             #                                 -> equipment with counts
     eg.readings_sql(name, n=10)                # a variable name                 -> the SQL text for its readings
     eg.connect(uri, user, password)            # (optional, see below)           -> connects to Neo4j
 
@@ -54,7 +54,7 @@ def connect(uri=None, user=None, password=None):
 
 
 def _q(cypher, **params):
-    # n10s stores most values as lists (hence the [0]) and prefixes names (eg__, mp__); only this file needs to know.
+    # n10s stores most values as lists (hence the [0]) and prefixes names (eg__, dcterms__); only this file needs to know.
     if _driver is None:
         connect()
     records, _, _ = _driver.execute_query(cypher, params, routing_="r")
@@ -64,8 +64,8 @@ def _q(cypher, **params):
 def pilots():
     """Which pilots exist, with how many datasets and variables?"""
     return _q("""
-MATCH (p:Pilot)-[:mp__hasDataset]->(d:Dataset)
-OPTIONAL MATCH (d)-[:eg__hasVariable]->(v)
+MATCH (p:Pilot)-[:HAS_DATASET]->(d:Dataset)
+OPTIONAL MATCH (d)-[:HAS_VARIABLE]->(v)
 RETURN p.displayName AS pilot, count(DISTINCT d) AS datasets, count(DISTINCT v) AS variables
 ORDER BY variables DESC""")
 
@@ -73,55 +73,56 @@ ORDER BY variables DESC""")
 def datasets(text=None, pilot=None):
     """Datasets whose title or description mentions a word, e.g. 'building'. No word: all datasets."""
     return _q("""
-MATCH (p:Pilot)-[:mp__hasDataset]->(d:Dataset)
+MATCH (p:Pilot)-[:HAS_DATASET]->(d:Dataset)
 WHERE ($pilot IS NULL OR p.displayName STARTS WITH $pilot)
   AND ($text IS NULL OR toLower(d.displayName) CONTAINS toLower($text)
        OR any(x IN coalesce(d.dcterms__description, []) WHERE toLower(x) CONTAINS toLower($text)))
 RETURN p.displayName AS pilot, d.displayName AS dataset,
-       coalesce(d.eg__storedInDatabase[0], 'not in the lake') AS database
+       coalesce(d.database, 'not in the lake') AS database
 ORDER BY pilot""", text=text, pilot=pilot)
 
 
 def measurement_types(pilot=None):
-    """Every measurement type (Temperature, Pressure, ... the `measurement_type` for variables()) with a short
-    description and its number of variables; optionally only one pilot's."""
+    """Every measurement type (Temperature, Pressure, ... the `measurement_type` for variables()) with its definition
+    and number of variables; optionally only one pilot's."""
     return _q("""
-MATCH (p:Pilot)-[:mp__hasDataset]->(:Dataset)-[:eg__hasVariable]->(v)-[:INSTANCE_OF]->(c)
-WHERE c.localName ENDS WITH 'Measurement' AND ($pilot IS NULL OR p.displayName STARTS WITH $pilot)
-RETURN replace(c.localName, 'Measurement', '') AS measurement_type,
-       replace(coalesce(c.rdfs__comment[0], ''), 'Measurement type: ', '') AS description,
+MATCH (p:Pilot)-[:HAS_DATASET]->(:Dataset)-[:HAS_VARIABLE]->(v)-[:OF_TYPE]->(t:MeasurementType)
+WHERE $pilot IS NULL OR p.displayName STARTS WITH $pilot
+RETURN t.displayName AS measurement_type, coalesce(t.skos__definition[0], '') AS description,
        count(DISTINCT v) AS variables
 ORDER BY variables DESC""", pilot=pilot)
 
 
-def subsystems():
-    """Every subsystem (the equipment or part of the installation a variable belongs to: dryer, Battery, Heat pump, ...) with its variable count."""
+def equipment():
+    """Every piece of equipment (a tank, a dryer, a battery, a heat pump, ...) with its pilot and variable count."""
     return _q("""
-MATCH (:Dataset)-[:eg__hasVariable]->(v)
-WHERE v.eg__subsystem IS NOT NULL
-RETURN v.eg__subsystem[0] AS subsystem, count(DISTINCT v) AS variables
-ORDER BY variables DESC""")
+MATCH (p:Pilot)-[:HAS_DATASET]->(:Dataset)-[:HAS_VARIABLE]->(v)-[:HOSTED_BY]->(e:Platform)
+RETURN p.displayName AS pilot, e.displayName AS equipment, count(DISTINCT v) AS variables
+ORDER BY pilot, variables DESC""")
+
+
+subsystems = equipment   # old name, kept so existing notebooks keep working
 
 
 def variables(measurement_type=None, pilot=None):
     """Variables (each a sensor or a column of a dataset), optionally of one measurement type (Temperature, Pressure, ...) and/or one pilot.
     No arguments: every variable, including those without a measurement type."""
     return _q("""
-MATCH (p:Pilot)-[:mp__hasDataset]->(d:Dataset)-[:eg__hasVariable]->(v)
+MATCH (p:Pilot)-[:HAS_DATASET]->(d:Dataset)-[:HAS_VARIABLE]->(v)
 WHERE $pilot IS NULL OR p.displayName STARTS WITH $pilot
-OPTIONAL MATCH (v)-[:INSTANCE_OF]->(c) WHERE c.localName ENDS WITH 'Measurement'
-WITH p, d, v, c WHERE $mtype IS NULL OR c.localName = $mtype + 'Measurement'
+OPTIONAL MATCH (v)-[:OF_TYPE]->(c:MeasurementType)
+WITH p, d, v, c WHERE $mtype IS NULL OR c.displayName = $mtype
 RETURN DISTINCT p.displayName AS pilot, d.displayName AS dataset, v.displayName AS variable,
-       replace(coalesce(c.localName, ''), 'Measurement', '') AS measurement_type, v.eg__unit[0] AS unit
+       coalesce(c.displayName, '') AS measurement_type, coalesce(head([(v)-[:HAS_UNIT]->(u) | u.displayName]), v.sch__unitText[0]) AS unit
 ORDER BY pilot, dataset, variable""", mtype=measurement_type, pilot=pilot)
 
 
 def variable(name):
     """What is this variable, and what is its id in the data lake? One row per dataset that contains it."""
     return _q("""
-MATCH (p:Pilot)-[:mp__hasDataset]->(d:Dataset)-[:eg__hasVariable]->(v {displayName: $name})
+MATCH (p:Pilot)-[:HAS_DATASET]->(d:Dataset)-[:HAS_VARIABLE]->(v {displayName: $name})
 RETURN p.displayName AS pilot, d.displayName AS dataset, v.dcterms__description[0] AS meaning,
-       v.eg__unit[0] AS unit, v.lakeSensorId AS data_lake_sensor_id""", name=name)
+       coalesce(head([(v)-[:HAS_UNIT]->(u) | u.displayName]), v.sch__unitText[0]) AS unit, v.lakeSensorId AS data_lake_sensor_id""", name=name)
 
 
 sensor = variable   # old name, kept so existing notebooks keep working
@@ -142,36 +143,38 @@ def readings_sql(name, n=10):
 def find(text, pilot=None, limit=50):
     """Search variables by a word in their name, description or data lake sensor id, e.g. 'storage tank' or 'pressure'."""
     return _q("""
-MATCH (p:Pilot)-[:mp__hasDataset]->(d:Dataset)-[:eg__hasVariable]->(v)
+MATCH (p:Pilot)-[:HAS_DATASET]->(d:Dataset)-[:HAS_VARIABLE]->(v)
 WHERE ($pilot IS NULL OR p.displayName STARTS WITH $pilot)
   AND (toLower(v.displayName) CONTAINS toLower($t)
        OR toLower(coalesce(v.lakeSensorId, '')) CONTAINS toLower($t)
        OR any(x IN coalesce(v.dcterms__description, []) WHERE toLower(x) CONTAINS toLower($t)))
 RETURN p.displayName AS pilot, d.displayName AS dataset, v.displayName AS variable,
-       v.dcterms__description[0] AS meaning, v.eg__unit[0] AS unit,
-       replace(coalesce(v.measurementType, ''), 'Measurement', '') AS measurement_type
+       v.dcterms__description[0] AS meaning, coalesce(head([(v)-[:HAS_UNIT]->(u) | u.displayName]), v.sch__unitText[0]) AS unit,
+       coalesce(v.measurementType, '') AS measurement_type
 ORDER BY pilot, dataset, variable LIMIT $limit""", t=text, pilot=pilot, limit=limit)
 
 
 _CARD = [("meaning", "Meaning"), ("measurement_type", "Measurement type"), ("unit", "Unit"), ("range", "Valid range"),
          ("kind", "Kind"), ("dtype", "Data type"), ("sampling", "Sampling"), ("aggregation", "Aggregation"),
-         ("subsystem", "Subsystem"), ("data_lake_sensor_id", "Data lake sensor id"), ("data_lake_match", "Data lake match"),
+         ("equipment", "Equipment"), ("data_lake_sensor_id", "Data lake sensor id"), ("data_lake_match", "Data lake match"),
          ("database", "Database"), ("table", "Table")]
 
 
 def describe(name):
     """Print everything the ontology knows about one variable (one card per dataset that contains it)."""
     rows = _q("""
-MATCH (p:Pilot)-[:mp__hasDataset]->(d:Dataset)-[:eg__hasVariable]->(v {displayName: $name})
-RETURN p.displayName AS pilot, d.displayName AS dataset, d.eg__location[0] AS location,
-       d.eg__temporalCoverage[0] AS period, d.eg__updateFrequency[0] AS updates,
+MATCH (p:Pilot)-[:HAS_DATASET]->(d:Dataset)-[:HAS_VARIABLE]->(v {displayName: $name})
+RETURN p.displayName AS pilot, d.displayName AS dataset,
+       head([(d)-[:dcterms__spatial]->(s) | s.displayName]) AS location,
+       head([(d)-[:dcterms__temporal]->(t) | t.displayName]) AS period,
+       head([(d)-[:dcterms__accrualPeriodicity]->(f) | f.localName]) AS updates,
        v.dcterms__description[0] AS meaning,
-       replace(coalesce(v.measurementType, ''), 'Measurement', '') AS measurement_type, v.eg__unit[0] AS unit,
-       coalesce(v.eg__minValue[0], '?') + ' to ' + coalesce(v.eg__maxValue[0], '?') AS range,
+       coalesce(v.measurementType, '') AS measurement_type, coalesce(head([(v)-[:HAS_UNIT]->(u) | u.displayName]), v.sch__unitText[0]) AS unit,
+       coalesce(v.sch__minValue[0] + ' to ' + v.sch__maxValue[0], replace(v.skos__note[0], 'Valid range: ', ''), '-') AS range,
        v.eg__variableKind[0] AS kind, v.eg__dataType[0] AS dtype, v.eg__sampling[0] AS sampling,
-       v.eg__aggregation[0] AS aggregation, v.eg__subsystem[0] AS subsystem,
+       v.eg__aggregation[0] AS aggregation, head([(v)-[:HOSTED_BY]->(e) | e.displayName]) AS equipment,
        v.lakeSensorId AS data_lake_sensor_id, v.eg__dataLakeMatch[0] AS data_lake_match,
-       d.eg__storedInDatabase[0] AS database, d.eg__storedInDatabaseTable[0] AS table""", name=name)
+       d.database AS database, d.dbTable AS table""", name=name)
     if not rows:
         print(f"No variable called '{name}'. Try eg.find('{name}') or eg.variables().")
     for r in rows:
@@ -184,9 +187,9 @@ RETURN p.displayName AS pilot, d.displayName AS dataset, d.eg__location[0] AS lo
 def tree(pilot, per_dataset=4):
     """Print one pilot as a tree: pilot -> datasets -> first variables of each."""
     rows = _q("""
-MATCH (p:Pilot)-[:mp__hasDataset]->(d:Dataset)
+MATCH (p:Pilot)-[:HAS_DATASET]->(d:Dataset)
 WHERE p.displayName STARTS WITH $pilot
-OPTIONAL MATCH (d)-[:eg__hasVariable]->(v)
+OPTIONAL MATCH (d)-[:HAS_VARIABLE]->(v)
 WITH p, d, collect(DISTINCT v.displayName) AS vs
 RETURN p.displayName AS pilot, d.displayName AS dataset, vs ORDER BY dataset""", pilot=pilot)
     if not rows:

@@ -1,0 +1,111 @@
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix sosa:    <http://www.w3.org/ns/sosa/> .
+@prefix dqv:     <http://www.w3.org/ns/dqv#> .
+@prefix qudt:    <http://qudt.org/schema/qudt/> .
+@prefix eg:      <https://www.energyguard.eu/ontology#> .
+@prefix schema:  <http://schema.org/> .
+
+# Rules of the EnergyGuard metadata template, checked on every build (utils/ontology/validate_shapes.py).
+# Violation = the file is wrong. Warning = worth fixing with the pilot. Info = known gap.
+
+eg:OntologyShape a sh:NodeShape ;
+    sh:targetClass owl:Ontology ;
+    sh:property [ sh:path owl:versionInfo ; sh:minCount 1 ; sh:message "The ontology needs a version." ] ;
+    sh:property [ sh:path dcterms:license ; sh:minCount 1 ; sh:message "The ontology needs a licence." ] .
+
+eg:DatasetShape a sh:NodeShape ;
+    sh:targetClass dcat:Dataset ;
+    sh:property [ sh:path dcterms:title ; sh:minCount 1 ; sh:message "A dataset needs a title." ] ;
+    sh:property [ sh:path dcterms:publisher ; sh:minCount 1 ; sh:maxCount 1 ; sh:message "A dataset needs exactly one publisher (its pilot)." ] ;
+    sh:property [ sh:path dcterms:description ; sh:minCount 1 ; sh:severity sh:Warning ; sh:message "The pilot gave no description for this dataset." ] ;
+    sh:property [ sh:path eg:tableLayout ; sh:in ( "long" "wide" ) ; sh:message "tableLayout is long or wide." ] ;
+    sh:property [ sh:path dcat:temporalResolution ; sh:datatype xsd:duration ; sh:message "temporalResolution is an xsd:duration." ] ;
+    sh:property [ sh:path dcterms:temporal ; sh:node eg:PeriodShape ] .
+
+eg:PeriodShape a sh:NodeShape ;
+    sh:property [ sh:path dcat:startDate ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path dcat:endDate ; sh:maxCount 1 ] .
+
+eg:DistributionShape a sh:NodeShape ;
+    sh:targetClass dcat:Distribution ;
+    sh:property [ sh:path eg:storedInDatabase ; sh:minCount 1 ; sh:maxCount 1 ; sh:message "A lake distribution names its database." ] ;
+    sh:property [ sh:path eg:storedInDatabaseTable ; sh:minCount 1 ; sh:message "A lake distribution names its table." ] ;
+    sh:property [ sh:path eg:tableLayout ; sh:in ( "long" "wide" ) ] .
+
+eg:VariableShape a sh:NodeShape ;
+    sh:targetClass eg:Variable ;
+    sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:message "A variable needs a name." ] ;
+    sh:property [ sh:path eg:dataType ; sh:maxCount 1 ;
+        sh:in ( "float" "integer" "boolean" "text" "date" "timestamp" "geometry" ) ;
+        sh:message "dataType must be one of float, integer, boolean, text, date, timestamp, geometry." ] ;
+    sh:property [ sh:path eg:variableKind ; sh:maxCount 1 ;
+        sh:in ( "measured" "calculated" "setpoint" "state" "alarm" "output" "static" "modelled" "timestamp" "identifier" ) ;
+        sh:message "variableKind is not one of the agreed values." ] ;
+    sh:property [ sh:path eg:aggregation ; sh:maxCount 1 ;
+        sh:in ( "instantaneous" "mean" "sum" "cumulative" "none" ) ;
+        sh:message "aggregation must be instantaneous, mean, sum, cumulative or none." ] ;
+    sh:property [ sh:path eg:dataLakeMatch ; sh:maxCount 1 ;
+        sh:in ( "exact" "normalised" "inferred" "manual" "pattern" "column" "timestamp" "none" ) ;
+        sh:message "dataLakeMatch is not one of the agreed values." ] ;
+    sh:property [ sh:path schema:unitText ; sh:maxCount 1 ; sh:message "A variable has one unit." ] ;
+    sh:closed false .
+
+eg:VariableDescriptionShape a sh:NodeShape ;
+    sh:targetClass eg:Variable ;
+    sh:property [ sh:path dcterms:description ; sh:minCount 1 ; sh:severity sh:Info ;
+        sh:message "No description for this variable." ] .
+
+eg:RangeShape a sh:NodeShape ;
+    sh:severity sh:Warning ;
+    sh:targetClass eg:Variable ;
+    sh:sparql [
+        sh:message "minValue is larger than maxValue." ;
+        sh:select """PREFIX schema: <http://schema.org/>
+            SELECT $this WHERE { $this schema:minValue ?lo ; schema:maxValue ?hi .
+              FILTER (datatype(?lo) != <http://www.w3.org/2001/XMLSchema#string> && xsd:double(str(?lo)) > xsd:double(str(?hi))) }""" ] .
+
+eg:SensorShape a sh:NodeShape ;
+    sh:targetClass sosa:Sensor ;
+    sh:property [ sh:path sosa:observes ; sh:minCount 1 ; sh:class sosa:ObservableProperty ;
+        sh:message "A sensor must observe an observable property." ] .
+
+eg:ObservablePropertyShape a sh:NodeShape ;
+    sh:targetClass sosa:ObservableProperty ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ] ;
+    sh:property [ sh:path skos:inScheme ; sh:minCount 1 ] ;
+    sh:property [ sh:path qudt:hasQuantityKind ; sh:minCount 1 ; sh:severity sh:Info ;
+        sh:message "No QUDT quantity kind for this measurement type." ] .
+
+eg:ProvenanceShape a sh:NodeShape ;
+    sh:targetClass eg:Variable ;
+    sh:sparql [
+        sh:message "A match that was inferred or confirmed needs its provenance (eg:dataLakeEvidence)." ;
+        sh:select """PREFIX eg: <https://www.energyguard.eu/ontology#>
+            SELECT $this WHERE { $this eg:dataLakeMatch ?m . FILTER (str(?m) IN ("inferred", "manual"))
+              FILTER NOT EXISTS { $this eg:dataLakeEvidence ?l } }""" ] .
+
+eg:RangeQualityShape a sh:NodeShape ;
+    sh:severity sh:Warning ;
+    sh:targetClass eg:Variable ;
+    sh:sparql [
+        sh:message "The valid range is written in another unit than the variable (see its dqv quality measurement)." ;
+        sh:select """PREFIX dqv: <http://www.w3.org/ns/dqv#>
+            SELECT $this WHERE { $this dqv:hasQualityMeasurement ?q . ?q dqv:value false }""" ] .
+
+eg:CatalogueShape a sh:NodeShape ;
+    sh:targetClass dcat:Catalog ;
+    sh:property [ sh:path dcterms:title ; sh:minCount 1 ] ;
+    sh:property [ sh:path dcterms:description ; sh:minCount 1 ] .
+
+eg:DatasetInCatalogueShape a sh:NodeShape ;
+    sh:targetClass dcat:Dataset ;
+    sh:sparql [
+        sh:message "Every dataset must be listed in the catalogue (ontology/catalogue/catalogue.ttl)." ;
+        sh:select """PREFIX dcat: <http://www.w3.org/ns/dcat#>
+            SELECT $this WHERE { FILTER NOT EXISTS { ?c a dcat:Catalog ; dcat:dataset $this } }""" ] .

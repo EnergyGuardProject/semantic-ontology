@@ -18,3 +18,6 @@ pilot_metadata/
 
 # local secrets (see .env.example)
 .env
+
+# repository backups (bundles hold the history from before the clean-up, including data that was removed): never commit
+repo_backups/

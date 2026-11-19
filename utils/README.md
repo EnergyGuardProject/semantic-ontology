@@ -5,25 +5,24 @@ For things to try, see [`scripts/`](../scripts/README.md).
 
 ```
 utils/
-├── ontology/   build the ontology file                 (Python, terminal)
+├── ontology/   assemble and validate the ontology file (Python, terminal)
 ├── neo4j/      back up and (re)load a Neo4j graph      (bash + Python, terminal)
-└── cypher/     00 reset · 01 import · 02 mapping · 03 validation (run by neo4j/reload_ontology.sh)
+└── cypher/     01 import · 02 mapping (run by neo4j/reload_ontology.sh)
 ```
 
-Python scripts run with the project venv (`neo4j-venv/bin/python …`). Credentials (`.env`) and `pilot_metadata/`
-are not in git: see [`scripts/README.md`](../scripts/README.md) and `.env.example`.
+`reload_ontology.sh` uses the project venv (`neo4j-venv/bin/python`) for the backup; the `ontology/` scripts need `rdflib` (`assemble.py`, `workbook_diff.py`, which also needs `openpyxl`) and `pyshacl` (`validate_shapes.py`). Credentials (`.env`) are not in git: see [`scripts/README.md`](../scripts/README.md) and `.env.example`.
 
 ---
 
 ## Rebuild and reload the ontology
 
 ```bash
-# only when the data lake changed (finds where each dataset/variable lives; read-only).
-# Hand corrections go in ontology/mappings/sensor_map_overrides.csv: they are applied last and win.
-python3 utils/ontology/discover_data_lake.py
+# edit the hand-written sources: ontology/core.ttl and ontology/catalogue/*.ttl, then
+python3 utils/ontology/assemble.py            # -> ontology/all_pilots.owl   (needs: pip install rdflib)
+python3 utils/ontology/validate_shapes.py     # SHACL checks against ontology/shapes.ttl (needs: pip install pyshacl)
 
-# build ontology/all_pilots.owl from ontology/all_pilots_base.owl + pilot_metadata/
-python3 utils/ontology/build_all_pilots_owl.py          # needs: pip install rdflib openpyxl
+# when a partner sends a new workbook: report what it would change (applies nothing)
+python3 utils/ontology/workbook_diff.py <pilot>
 
 # back up, empty, import, map and validate a Neo4j container
 utils/neo4j/reload_ontology.sh                 # the project's instance (container "neo4j-ontology")

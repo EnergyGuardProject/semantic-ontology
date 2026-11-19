@@ -1,0 +1,1449 @@
+@prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix eg: <https://www.energyguard.eu/ontology#> .
+@prefix mp: <https://www.energyguard.eu/ontology/merged-pilots#> .
+@prefix prop: <https://www.energyguard.eu/ontology/property#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema1: <http://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://www.energyguard.eu/ontology/cartif#Dataset_CARTIF_hydrogen_test_bench_operational_data_15_s> a dcat:Dataset ;
+    dcterms:accessRights <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+    dcterms:description "Original PLC/SCADA operational time-series export from the CARTIF hydrogen test bench, covering the hydrogen generation, storage and energy conversion equipment and associated monitoring and control signals. The dataset is provided for internal use within the EnergyGuard consortium. System covered: Hydrogen test bench, including electrolyser, fuel cell, metal-hydride hydrogen storage, electrical batteries and thermal auxiliaries. Source: Hydrogen test bench PLC/SCADA."@en ;
+    dcterms:format "CSV" ;
+    dcterms:license <https://www.energyguard.eu/ontology/cartif#Licence_CARTIF_hydrogen_test_bench_operational_data_15_s> ;
+    dcterms:publisher mp:CARTIF ;
+    dcterms:spatial <https://www.energyguard.eu/ontology/cartif#Place_CARTIF_hydrogen_test_bench_operational_data_15_s> ;
+    dcterms:temporal <https://www.energyguard.eu/ontology/cartif#Period_CARTIF_hydrogen_test_bench_operational_data_15_s> ;
+    dcterms:title "CARTIF hydrogen test bench operational data (15 s)"@en ;
+    schema1:variableMeasured <https://www.energyguard.eu/ontology/cartif#ALTA_PRESION_MH1_Alarm>,
+        <https://www.energyguard.eu/ontology/cartif#ALTA_PRESION_MH2_Alarm>,
+        <https://www.energyguard.eu/ontology/cartif#ALTA_TEMP_MH1_Alarm>,
+        <https://www.energyguard.eu/ontology/cartif#ALTA_TEMP_MH2_Alarm>,
+        <https://www.energyguard.eu/ontology/cartif#BAJA_TEMP_MH1_Alarm>,
+        <https://www.energyguard.eu/ontology/cartif#BAJA_TEMP_MH2_Alarm>,
+        <https://www.energyguard.eu/ontology/cartif#BATA_Current>,
+        <https://www.energyguard.eu/ontology/cartif#BATA_SOC>,
+        <https://www.energyguard.eu/ontology/cartif#BATA_Voltage>,
+        <https://www.energyguard.eu/ontology/cartif#BATB_Current>,
+        <https://www.energyguard.eu/ontology/cartif#BATB_SOC>,
+        <https://www.energyguard.eu/ontology/cartif#BATB_Voltage>,
+        <https://www.energyguard.eu/ontology/cartif#BATERIAS_Alarm>,
+        <https://www.energyguard.eu/ontology/cartif#BATERIAS_War>,
+        <https://www.energyguard.eu/ontology/cartif#BAT_CURR_BATSTATE>,
+        <https://www.energyguard.eu/ontology/cartif#BMHEMPTY_War>,
+        <https://www.energyguard.eu/ontology/cartif#BMHFULL_War>,
+        <https://www.energyguard.eu/ontology/cartif#Dryer_State>,
+        <https://www.energyguard.eu/ontology/cartif#ELECTROLIZADOR_Alarm>,
+        <https://www.energyguard.eu/ontology/cartif#ELECTROLIZADOR_War>,
+        <https://www.energyguard.eu/ontology/cartif#ELE_Current>,
+        <https://www.energyguard.eu/ontology/cartif#ELE_H2_Flow_Rate>,
+        <https://www.energyguard.eu/ontology/cartif#ELE_Inner_H2_Pressure>,
+        <https://www.energyguard.eu/ontology/cartif#ELE_Outer_H2_Pressure>,
+        <https://www.energyguard.eu/ontology/cartif#ELE_Stack_Voltage>,
+        <https://www.energyguard.eu/ontology/cartif#ELE_State>,
+        <https://www.energyguard.eu/ontology/cartif#ELE_water>,
+        <https://www.energyguard.eu/ontology/cartif#EL_preheat>,
+        <https://www.energyguard.eu/ontology/cartif#EL_temp>,
+        <https://www.energyguard.eu/ontology/cartif#FC_Alarm>,
+        <https://www.energyguard.eu/ontology/cartif#FC_Current>,
+        <https://www.energyguard.eu/ontology/cartif#FC_State>,
+        <https://www.energyguard.eu/ontology/cartif#FC_Voltage>,
+        <https://www.energyguard.eu/ontology/cartif#FC_War>,
+        <https://www.energyguard.eu/ontology/cartif#FC_flow_Rate>,
+        <https://www.energyguard.eu/ontology/cartif#FC_temp>,
+        <https://www.energyguard.eu/ontology/cartif#Fan_State>,
+        <https://www.energyguard.eu/ontology/cartif#GENERAL_Alarm>,
+        <https://www.energyguard.eu/ontology/cartif#GENERAL_War>,
+        <https://www.energyguard.eu/ontology/cartif#HP_ON>,
+        <https://www.energyguard.eu/ontology/cartif#HP_elect_pow>,
+        <https://www.energyguard.eu/ontology/cartif#HP_evap_flow>,
+        <https://www.energyguard.eu/ontology/cartif#HP_evap_pow>,
+        <https://www.energyguard.eu/ontology/cartif#HP_evap_t_in>,
+        <https://www.energyguard.eu/ontology/cartif#HP_evap_t_out>,
+        <https://www.energyguard.eu/ontology/cartif#Heater_State>,
+        <https://www.energyguard.eu/ontology/cartif#MH1_Active>,
+        <https://www.energyguard.eu/ontology/cartif#MH1_Empty>,
+        <https://www.energyguard.eu/ontology/cartif#MH1_Full>,
+        <https://www.energyguard.eu/ontology/cartif#MH1_H>,
+        <https://www.energyguard.eu/ontology/cartif#MH1_L>,
+        <https://www.energyguard.eu/ontology/cartif#MH1_accumulated_H2_NL>,
+        <https://www.energyguard.eu/ontology/cartif#MH2_Active>,
+        <https://www.energyguard.eu/ontology/cartif#MH2_Empty>,
+        <https://www.energyguard.eu/ontology/cartif#MH2_Full>,
+        <https://www.energyguard.eu/ontology/cartif#MH2_H>,
+        <https://www.energyguard.eu/ontology/cartif#MH2_L>,
+        <https://www.energyguard.eu/ontology/cartif#MH2_accumulated_H2_NL>,
+        <https://www.energyguard.eu/ontology/cartif#MH_SOC>,
+        <https://www.energyguard.eu/ontology/cartif#MV3C101_State>,
+        <https://www.energyguard.eu/ontology/cartif#MV3C103_State>,
+        <https://www.energyguard.eu/ontology/cartif#MV3C105_State>,
+        <https://www.energyguard.eu/ontology/cartif#MV3C108_State>,
+        <https://www.energyguard.eu/ontology/cartif#MV3C109_State>,
+        <https://www.energyguard.eu/ontology/cartif#PEM_ON_OFF>,
+        <https://www.energyguard.eu/ontology/cartif#POT_BAT>,
+        <https://www.energyguard.eu/ontology/cartif#POT_ELE>,
+        <https://www.energyguard.eu/ontology/cartif#POT_PILA>,
+        <https://www.energyguard.eu/ontology/cartif#PRED>,
+        <https://www.energyguard.eu/ontology/cartif#PTH401>,
+        <https://www.energyguard.eu/ontology/cartif#PTH403>,
+        <https://www.energyguard.eu/ontology/cartif#PTH404>,
+        <https://www.energyguard.eu/ontology/cartif#Pump_State>,
+        <https://www.energyguard.eu/ontology/cartif#Purging_MH1>,
+        <https://www.energyguard.eu/ontology/cartif#Purging_MH2>,
+        <https://www.energyguard.eu/ontology/cartif#Resistor_Pow>,
+        <https://www.energyguard.eu/ontology/cartif#Resistor_SP>,
+        <https://www.energyguard.eu/ontology/cartif#SV2H208_State>,
+        <https://www.energyguard.eu/ontology/cartif#SV2H303_State>,
+        <https://www.energyguard.eu/ontology/cartif#SV2H405_State>,
+        <https://www.energyguard.eu/ontology/cartif#SV2H406_State>,
+        <https://www.energyguard.eu/ontology/cartif#SYS>,
+        <https://www.energyguard.eu/ontology/cartif#TERMICO_Alarm>,
+        <https://www.energyguard.eu/ontology/cartif#TERMICO_War>,
+        <https://www.energyguard.eu/ontology/cartif#TT102>,
+        <https://www.energyguard.eu/ontology/cartif#TT107>,
+        <https://www.energyguard.eu/ontology/cartif#TT111>,
+        <https://www.energyguard.eu/ontology/cartif#TT113>,
+        <https://www.energyguard.eu/ontology/cartif#TT114>,
+        <https://www.energyguard.eu/ontology/cartif#timestamp_var> ;
+    skos:note "Update frequency: Periodically updated with new PLC/SCADA data; acquisition every 15 s."@en ;
+    csvw:null "No missing values after the first available observation of each documented signal; some signals have no records before their initial availability." ;
+    dcat:distribution <https://www.energyguard.eu/ontology/cartif#Distribution_CARTIF_hydrogen_test_bench_operational_data_15_s> ;
+    dcat:temporalResolution "PT15S"^^xsd:duration ;
+    eg:timeZone "UTC" .
+
+<https://www.energyguard.eu/ontology/cartif#ALTA_PRESION_MH1_Alarm> a eg:Variable ;
+    rdfs:label "ALTA_PRESION_MH1_Alarm"@en ;
+    dcterms:description "Alarm signal indicating high pressure in metal hydride tank 1"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "ALTA_PRESION_MH1_Alarm" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "alarm" .
+
+<https://www.energyguard.eu/ontology/cartif#ALTA_PRESION_MH2_Alarm> a eg:Variable ;
+    rdfs:label "ALTA_PRESION_MH2_Alarm"@en ;
+    dcterms:description "Alarm signal indicating high pressure in metal hydride tank 2"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "ALTA_PRESION_MH2_Alarm" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "alarm" .
+
+<https://www.energyguard.eu/ontology/cartif#ALTA_TEMP_MH1_Alarm> a eg:Variable ;
+    rdfs:label "ALTA_TEMP_MH1_Alarm"@en ;
+    dcterms:description "Alarm signal indicating high temperature in metal hydride tank 1"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "ALTA_TEMP_MH1_Alarm" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "alarm" .
+
+<https://www.energyguard.eu/ontology/cartif#ALTA_TEMP_MH2_Alarm> a eg:Variable ;
+    rdfs:label "ALTA_TEMP_MH2_Alarm"@en ;
+    dcterms:description "Alarm signal indicating high temperature in metal hydride tank 2"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "ALTA_TEMP_MH2_Alarm" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "alarm" .
+
+<https://www.energyguard.eu/ontology/cartif#BAJA_TEMP_MH1_Alarm> a eg:Variable ;
+    rdfs:label "BAJA_TEMP_MH1_Alarm"@en ;
+    dcterms:description "Alarm signal indicating low temperature in metal hydride tank 1"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "BAJA_TEMP_MH1_Alarm" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "alarm" .
+
+<https://www.energyguard.eu/ontology/cartif#BAJA_TEMP_MH2_Alarm> a eg:Variable ;
+    rdfs:label "BAJA_TEMP_MH2_Alarm"@en ;
+    dcterms:description "Alarm signal indicating low temperature in metal hydride tank 2"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "BAJA_TEMP_MH2_Alarm" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "alarm" .
+
+<https://www.energyguard.eu/ontology/cartif#BATA_Current> a eg:Variable ;
+    rdfs:label "BATA_Current"@en ;
+    dcterms:description "Current measurement in electrical battery A"@en ;
+    dcterms:type "Battery monitoring signal" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/A> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Battery> ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "BATA_Current" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:Current ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#BATA_SOC> a eg:Variable ;
+    rdfs:label "BATA_SOC"@en ;
+    dcterms:description "State of charge of electrical battery A"@en ;
+    dcterms:type "Battery monitoring signal" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
+    skos:note "Valid range: 0–100 %"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Battery> ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "BATA_SOC" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:StateOfCharge ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#BATA_Voltage> a eg:Variable ;
+    rdfs:label "BATA_Voltage"@en ;
+    dcterms:description "Voltage measurement in electrical battery A"@en ;
+    dcterms:type "Battery monitoring signal" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/V> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Battery> ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "BATA_Voltage" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:Voltage ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#BATB_Current> a eg:Variable ;
+    rdfs:label "BATB_Current"@en ;
+    dcterms:description "Current measurement in electrical battery B"@en ;
+    dcterms:type "Battery monitoring signal" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/A> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Battery> ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "BATB_Current" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:Current ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#BATB_SOC> a eg:Variable ;
+    rdfs:label "BATB_SOC"@en ;
+    dcterms:description "State of charge of electrical battery B"@en ;
+    dcterms:type "Battery monitoring signal" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
+    skos:note "Valid range: 0–100 %"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Battery> ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "BATB_SOC" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:StateOfCharge ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#BATB_Voltage> a eg:Variable ;
+    rdfs:label "BATB_Voltage"@en ;
+    dcterms:description "Voltage measurement in electrical battery B"@en ;
+    dcterms:type "Battery monitoring signal" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/V> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Battery> ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "BATB_Voltage" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:Voltage ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#BATERIAS_Alarm> a eg:Variable ;
+    rdfs:label "BATERIAS_Alarm"@en ;
+    dcterms:description "Alarm signals related to battery status"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Battery> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "BATERIAS_Alarm" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "alarm" .
+
+<https://www.energyguard.eu/ontology/cartif#BATERIAS_War> a eg:Variable ;
+    rdfs:label "BATERIAS_War"@en ;
+    dcterms:description "Warning signals related to battery status"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Battery> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "BATERIAS_War" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#BAT_CURR_BATSTATE> a eg:Variable ;
+    rdfs:label "BAT_CURR_BATSTATE"@en ;
+    dcterms:description "Current status of the batteries"@en ;
+    dcterms:type "PLC/Modbus input register 31 (source signal; physical sensor type not specified)" ;
+    skos:note "Valid range: 0, 1, 2"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Battery> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = Idle; 1 = Charging; 2 = Discharging" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "BAT_CURR_BATSTATE" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#BMHEMPTY_War> a eg:Variable ;
+    rdfs:label "BMHEMPTY_War"@en ;
+    dcterms:description "Warning indicating that both metal hydride tanks are empty"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "BMHEMPTY_War" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#BMHFULL_War> a eg:Variable ;
+    rdfs:label "BMHFULL_War"@en ;
+    dcterms:description "Warning indicating that both metal hydride tanks are full"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "BMHFULL_War" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#Distribution_CARTIF_hydrogen_test_bench_operational_data_15_s> a dcat:Distribution ;
+    dcterms:title "Data lake: TEF5_CARTIF public.f_tsdata"@en ;
+    dcat:accessService eg:DataLakeService ;
+    eg:storedInDatabase "TEF5_CARTIF" ;
+    eg:storedInDatabaseTable "public.f_tsdata" ;
+    eg:tableLayout "long" .
+
+<https://www.energyguard.eu/ontology/cartif#Dryer_State> a eg:Variable ;
+    rdfs:label "Dryer_State"@en ;
+    dcterms:description "Dryer status"@en ;
+    dcterms:type "PLC/Modbus input register 14 (source signal; physical sensor type not specified)" ;
+    skos:note "Valid range: 257, 259, 260, 262, 263, 265, 1281, 2305, 2561"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Electrolyser> ;
+    eg:aggregation "none" ;
+    eg:codeList "257 = Waiting for power; 259 = Stopped by user; 260 = Starting; 262 = Standby (excess pressure); 263 = Waiting for pressure; 265 = Idle; 1281 = Error; 2305 = Maintenance mode; 2561 = Expert mode" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "Dryer_State" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#ELECTROLIZADOR_Alarm> a eg:Variable ;
+    rdfs:label "ELECTROLIZADOR_Alarm"@en ;
+    dcterms:description "Alarm signal for the electrolyzer status"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Electrolyser> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "ELECTROLIZADOR_Alarm" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "alarm" .
+
+<https://www.energyguard.eu/ontology/cartif#ELECTROLIZADOR_War> a eg:Variable ;
+    rdfs:label "ELECTROLIZADOR_War"@en ;
+    dcterms:description "Warning signal for the electrolyzer status"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Electrolyser> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "ELECTROLIZADOR_War" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#ELE_Current> a eg:Variable ;
+    rdfs:label "ELE_Current"@en ;
+    dcterms:description "Electrolyzer current measurement"@en ;
+    dcterms:type "Electrolyser monitoring signal" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/A> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Electrolyser> ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "ELE_Current" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:Current ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#ELE_H2_Flow_Rate> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "ELE_H2_Flow_Rate"@en ;
+    dcterms:description "Flow rate measurement of H2 produced by the electrolyzer"@en ;
+    dcterms:type "Electrolyser monitoring signal" ;
+    schema1:unitText "NL/h" ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Electrolyser> ;
+    sosa:observes prop:Hydrogen ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "ELE_H2_Flow_Rate" ;
+    eg:dataType "float" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#ELE_Inner_H2_Pressure> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "ELE_Inner_H2_Pressure"@en ;
+    dcterms:description "Pressure measurement at the electrolyzer inlet"@en ;
+    dcterms:type "Electrolyser monitoring signal" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/BAR> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Electrolyser> ;
+    sosa:observes prop:Pressure ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "ELE_Inner_H2_Pressure" ;
+    eg:dataType "float" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#ELE_Outer_H2_Pressure> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "ELE_Outer_H2_Pressure"@en ;
+    dcterms:description "Pressure measurement at the electrolyzer outlet"@en ;
+    dcterms:type "Electrolyser monitoring signal" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/BAR> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Electrolyser> ;
+    sosa:observes prop:Pressure ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "ELE_Outer_H2_Pressure" ;
+    eg:dataType "float" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#ELE_Stack_Voltage> a eg:Variable ;
+    rdfs:label "ELE_Stack_Voltage"@en ;
+    dcterms:description "Voltage measurement in the electrolyzer"@en ;
+    dcterms:type "Electrolyser monitoring signal" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/V> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Electrolyser> ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "ELE_Stack_Voltage" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:Voltage ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#ELE_State> a eg:Variable ;
+    rdfs:label "ELE_State"@en ;
+    dcterms:description "Electrolyzer status"@en ;
+    dcterms:type "PLC/Modbus input register 13 (source signal; physical sensor type not specified)" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    skos:note "Valid range: 0, 1, 2, 3, 4, 5, 6"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Electrolyser> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = Halted; 1 = Maintenance mode; 2 = Idle; 3 = Steady; 4 = Stand-by (max pressure); 5 = Curve; 6 = Blowdown" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "ELE_State" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#ELE_water> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "ELE_water"@en ;
+    dcterms:description "Amount of water in the electrolyzer"@en ;
+    dcterms:type "Volume" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/L> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Electrolyser> ;
+    sosa:observes prop:Hydrogen ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "ELE_water" ;
+    eg:dataType "float" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#EL_preheat> a eg:Variable ;
+    rdfs:label "EL_preheat"@en ;
+    dcterms:description "Signal to preheat the electrolyzer during cold periods and prevent startup alarms"@en ;
+    dcterms:type "Status" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = Off; 1 = On" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "EL_preheat" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#EL_temp> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "EL_temp"@en ;
+    dcterms:description "Electrolyzer temperature"@en ;
+    dcterms:type "Temperature sensor" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/DEG_C> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    sosa:observes prop:Temperature ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "EL_temp" ;
+    eg:dataType "float" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#FC_Alarm> a eg:Variable ;
+    rdfs:label "FC_Alarm"@en ;
+    dcterms:description "Alarm signal for the fuel cell status"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Fuel_cell> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "FC_Alarm" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "alarm" .
+
+<https://www.energyguard.eu/ontology/cartif#FC_Current> a eg:Variable ;
+    rdfs:label "FC_Current"@en ;
+    dcterms:description "Current measurement in the fuel cell"@en ;
+    dcterms:type "Fuel-cell monitoring signal" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/A> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Fuel_cell> ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "FC_Current" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:Current ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#FC_State> a eg:Variable ;
+    rdfs:label "FC_State"@en ;
+    dcterms:description "Fuel cell status"@en ;
+    dcterms:type "PLC/Modbus input register 20 (source signal; physical sensor type not specified)" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Fuel_cell> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = Off; 1 = On" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "FC_State" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#FC_Voltage> a eg:Variable ;
+    rdfs:label "FC_Voltage"@en ;
+    dcterms:description "Current measurement in the fuel cell"@en ;
+    dcterms:type "Fuel-cell monitoring signal" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/V> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Fuel_cell> ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "FC_Voltage" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:Voltage ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#FC_War> a eg:Variable ;
+    rdfs:label "FC_War"@en ;
+    dcterms:description "Warning signal for the fuel cell status"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Fuel_cell> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "FC_War" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#FC_flow_Rate> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "FC_flow_Rate"@en ;
+    dcterms:description "Flow rate measurement of H2 consumed by the fuel cell"@en ;
+    dcterms:type "Fuel-cell monitoring signal" ;
+    schema1:unitText "NL/h" ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Fuel_cell> ;
+    sosa:observes prop:Hydrogen ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "FC_flow_Rate" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#FC_temp> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "FC_temp"@en ;
+    dcterms:description "Represents the fuel cell temperature"@en ;
+    dcterms:type "Temperature sensor" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/DEG_C> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Fuel_cell> ;
+    sosa:observes prop:Temperature ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "FC_temp" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#Fan_State> a eg:Variable ;
+    rdfs:label "Fan_State"@en ;
+    dcterms:description "Fan coil status signal"@en ;
+    dcterms:type "Status" ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = False; 1 = True" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "Fan_State" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#GENERAL_Alarm> a eg:Variable ;
+    rdfs:label "GENERAL_Alarm"@en ;
+    dcterms:description "Alarm signal active when any equipment has an alarm"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "GENERAL_Alarm" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "alarm" .
+
+<https://www.energyguard.eu/ontology/cartif#GENERAL_War> a eg:Variable ;
+    rdfs:label "GENERAL_War"@en ;
+    dcterms:description "Warning signal active when any equipment has an alarm"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "GENERAL_War" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#HP_ON> a eg:Variable ;
+    rdfs:label "HP_ON"@en ;
+    dcterms:description "Heat pump status"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Heat_pump> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "HP_ON" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#HP_elect_pow> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "HP_elect_pow"@en ;
+    dcterms:description "Measurement of the pump's electrical power consumption"@en ;
+    dcterms:type "Power" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Electrolyser> ;
+    sosa:observes prop:Power ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "HP_elect_pow" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#HP_evap_flow> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "HP_evap_flow"@en ;
+    dcterms:description "Represents the heat pump evaporator flow rate"@en ;
+    dcterms:type "Flow" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/M3-PER-HR> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Heat_pump> ;
+    sosa:observes prop:Flow ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "HP_evap_flow" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#HP_evap_pow> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "HP_evap_pow"@en ;
+    dcterms:description "Represents the heat pump evaporator power"@en ;
+    dcterms:type "Power" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Heat_pump> ;
+    sosa:observes prop:Power ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "HP_evap_pow" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#HP_evap_t_in> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "HP_evap_t_in"@en ;
+    dcterms:description "Represents the heat pump evaporator inlet temperature"@en ;
+    dcterms:type "Temperature sensor" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/DEG_C> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Heat_pump> ;
+    sosa:observes prop:Temperature ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "HP_evap_t_in" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#HP_evap_t_out> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "HP_evap_t_out"@en ;
+    dcterms:description "Represents the heat pump evaporator outlet temperature"@en ;
+    dcterms:type "Temperature sensor" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/DEG_C> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Heat_pump> ;
+    sosa:observes prop:Temperature ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "HP_evap_t_out" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#Heater_State> a eg:Variable ;
+    rdfs:label "Heater_State"@en ;
+    dcterms:description "Heater status"@en ;
+    dcterms:type "Status" ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = Off; 1 = On" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "Heater_State" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#Licence_CARTIF_hydrogen_test_bench_operational_data_15_s> a dcterms:LicenseDocument ;
+    rdfs:label "Restricted to internal use within the EnergyGuard consortium; no public reuse licence specified"@en .
+
+<https://www.energyguard.eu/ontology/cartif#MH1_Active> a eg:Variable ;
+    rdfs:label "MH1_Active"@en ;
+    dcterms:description "Signal indicating whether metal hydride tank 1 is in use"@en ;
+    dcterms:type "Status" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = False; 1 = True" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MH1_Active" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#MH1_Empty> a eg:Variable ;
+    rdfs:label "MH1_Empty"@en ;
+    dcterms:description "Signal indicating whether metal hydride tank 1 is empty"@en ;
+    dcterms:type "Status" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = False; 1 = True" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MH1_Empty" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#MH1_Full> a eg:Variable ;
+    rdfs:label "MH1_Full"@en ;
+    dcterms:description "Signal indicating whether metal hydride tank 1 is full"@en ;
+    dcterms:type "Status" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = False; 1 = True" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MH1_Full" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#MH1_H> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "MH1_H"@en ;
+    dcterms:description "Signal indicating whether metal hydride tank 1 has reached the upper level"@en ;
+    dcterms:type "Level switch" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    sosa:observes prop:Hydrogen ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MH1_H" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#MH1_L> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "MH1_L"@en ;
+    dcterms:description "Signal indicating whether metal hydride tank 1 has reached the lower level"@en ;
+    dcterms:type "Level switch" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    sosa:observes prop:Hydrogen ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MH1_L" ;
+    eg:dataType "float" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#MH1_accumulated_H2_NL> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "MH1_accumulated_H2_NL"@en ;
+    dcterms:description "Measurement of the amount of H2 stored in tank 1"@en ;
+    dcterms:type "Volume" ;
+    schema1:unitText "NL" ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    sosa:observes prop:Hydrogen ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MH1_accumulated_H2_NL" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#MH2_Active> a eg:Variable ;
+    rdfs:label "MH2_Active"@en ;
+    dcterms:description "Signal indicating whether metal hydride tank 2 is in use"@en ;
+    dcterms:type "Status" ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = False; 1 = True" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MH2_Active" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#MH2_Empty> a eg:Variable ;
+    rdfs:label "MH2_Empty"@en ;
+    dcterms:description "Signal indicating whether metal hydride tank 2 is empty"@en ;
+    dcterms:type "Status" ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = False; 1 = True" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MH2_Empty" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#MH2_Full> a eg:Variable ;
+    rdfs:label "MH2_Full"@en ;
+    dcterms:description "Signal indicating whether metal hydride tank 2 is full"@en ;
+    dcterms:type "Status" ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = False; 1 = True" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MH2_Full" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#MH2_H> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "MH2_H"@en ;
+    dcterms:description "Signal indicating whether metal hydride tank 2 has reached the upper level"@en ;
+    dcterms:type "Level switch" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    sosa:observes prop:Hydrogen ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MH2_H" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#MH2_L> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "MH2_L"@en ;
+    dcterms:description "Signal indicating whether metal hydride tank 2 has reached the lower level"@en ;
+    dcterms:type "Level switch" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    sosa:observes prop:Hydrogen ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MH2_L" ;
+    eg:dataType "float" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#MH2_accumulated_H2_NL> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "MH2_accumulated_H2_NL"@en ;
+    dcterms:description "Measurement of the amount of H2 stored in tank 2"@en ;
+    dcterms:type "Volume" ;
+    schema1:unitText "NL" ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    sosa:observes prop:Hydrogen ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MH2_accumulated_H2_NL" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#MH_SOC> a eg:Variable ;
+    rdfs:label "MH_SOC"@en ;
+    dcterms:description "Represents the approximate calculation of the batteries' SOC based on their pressures"@en ;
+    dcterms:type "SoC" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MH_SOC" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:StateOfCharge ;
+    eg:variableKind "calculated" .
+
+<https://www.energyguard.eu/ontology/cartif#MV3C101_State> a eg:Variable ;
+    rdfs:label "MV3C101_State"@en ;
+    dcterms:description "Status of solenoid valve MV3C101 (located downstream of the pump)"@en ;
+    dcterms:type "Status" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MV3C101_State" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#MV3C103_State> a eg:Variable ;
+    rdfs:label "MV3C103_State"@en ;
+    dcterms:description "Status of solenoid valve MV3C103 (located between the recirculation loop and the fan coil)"@en ;
+    dcterms:type "Status" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MV3C103_State" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#MV3C105_State> a eg:Variable ;
+    rdfs:label "MV3C105_State"@en ;
+    dcterms:description "Status of solenoid valve MV3C105 (located between the recirculation loop and the heater)"@en ;
+    dcterms:type "Status" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MV3C105_State" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#MV3C108_State> a eg:Variable ;
+    rdfs:label "MV3C108_State"@en ;
+    dcterms:description "Status of solenoid valve MV3C108 (located between the recirculation loop and metal hydride tank 1)"@en ;
+    dcterms:type "Status" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MV3C108_State" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#MV3C109_State> a eg:Variable ;
+    rdfs:label "MV3C109_State"@en ;
+    dcterms:description "Status of solenoid valve MV3C109 (located between the recirculation loop and metal hydride tank 2)"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "MV3C109_State" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#PEM_ON_OFF> a eg:Variable ;
+    rdfs:label "PEM_ON_OFF"@en ;
+    dcterms:description "Represents the metal hydride status: 0 = outside pressure limits; 1 = within pressure limits"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "Representa el estado de los hidruros 0: fuera de presiones limite 1:dentro de presiones limite" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "PEM_ON_OFF" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#POT_BAT> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "POT_BAT"@en ;
+    dcterms:description "Power measurement in the electrical batteries"@en ;
+    dcterms:type "Power" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Battery> ;
+    sosa:observes prop:Power ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "POT_BAT" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#POT_ELE> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "POT_ELE"@en ;
+    dcterms:description "Power measurement in the electrolyzer"@en ;
+    dcterms:type "Power" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Electrolyser> ;
+    sosa:observes prop:Power ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "POT_ELE" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#POT_PILA> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "POT_PILA"@en ;
+    dcterms:description "Power measurement in the fuel cell"@en ;
+    dcterms:type "Power" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Fuel_cell> ;
+    sosa:observes prop:Power ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "POT_PILA" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#PRED> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "PRED"@en ;
+    dcterms:description "Represents the demanded power that cannot be supplied by either the fuel cell or the electrical battery. It has a value when a load curve is applied with the control in automatic mode"@en ;
+    dcterms:type "Power" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    sosa:observes prop:Power ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "PRED" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#PTH401> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "PTH401"@en ;
+    dcterms:description "Pressure signal at the inlet of both metal hydride tanks"@en ;
+    dcterms:type "Pressure sensor" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/BAR> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    sosa:observes prop:Pressure ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "PTH401" ;
+    eg:dataType "float" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#PTH403> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "PTH403"@en ;
+    dcterms:description "Pressure signal at the inlet of metal hydride tank 1"@en ;
+    dcterms:type "Pressure sensor" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/BAR> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    sosa:observes prop:Pressure ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "PTH403" ;
+    eg:dataType "float" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#PTH404> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "PTH404"@en ;
+    dcterms:description "Pressure signal at the inlet of metal hydride tank 2"@en ;
+    dcterms:type "Pressure sensor" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/BAR> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    sosa:observes prop:Pressure ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "PTH404" ;
+    eg:dataType "float" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#Period_CARTIF_hydrogen_test_bench_operational_data_15_s> a dcterms:PeriodOfTime ;
+    rdfs:label "2024-01-01 to 2026-11-04 (ongoing; project reporting period)"@en ;
+    dcat:startDate "2024-01-01"^^xsd:date .
+
+<https://www.energyguard.eu/ontology/cartif#Place_CARTIF_hydrogen_test_bench_operational_data_15_s> a dcterms:Location ;
+    rdfs:label "CARTIF, Boecillo (Valladolid), Spain"@en .
+
+<https://www.energyguard.eu/ontology/cartif#Platform_Dataset> a sosa:Platform ;
+    rdfs:label "Dataset"@en .
+
+<https://www.energyguard.eu/ontology/cartif#Pump_State> a eg:Variable ;
+    rdfs:label "Pump_State"@en ;
+    dcterms:description "Pump status"@en ;
+    dcterms:type "Status" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "Pump_State" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#Purging_MH1> a eg:Variable ;
+    rdfs:label "Purging_MH1"@en ;
+    dcterms:description "Signal indicating whether metal hydride tank 1 is being purged"@en ;
+    dcterms:type "Status" ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = False; 1 = True" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "Purging_MH1" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#Purging_MH2> a eg:Variable ;
+    rdfs:label "Purging_MH2"@en ;
+    dcterms:description "Signal indicating whether metal hydride tank 2 is being purged"@en ;
+    dcterms:type "Status" ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = False; 1 = True" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "Purging_MH2" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#Resistor_Pow> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "Resistor_Pow"@en ;
+    dcterms:description "Power measurement of the tank heater"@en ;
+    dcterms:type "Power" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    sosa:observes prop:Power ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "Resistor_Pow" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#Resistor_SP> a eg:Variable ;
+    rdfs:label "Resistor_SP"@en ;
+    dcterms:description "Power setpoint provided to the tank heater"@en ;
+    dcterms:type "Power" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "Resistor_SP" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:Power ;
+    eg:variableKind "setpoint" .
+
+<https://www.energyguard.eu/ontology/cartif#SV2H208_State> a eg:Variable ;
+    rdfs:label "SV2H208_State"@en ;
+    dcterms:description "Status of solenoid valve SV2H208 (located between the fuel cell inlet and the outlet of the metal hydride tanks)"@en ;
+    dcterms:type "Status" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = Closed; 1 = Open" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "SV2H208_State" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#SV2H303_State> a eg:Variable ;
+    rdfs:label "SV2H303_State"@en ;
+    dcterms:description "Status of solenoid valve SV2H303 (located between the fuel cell outlet and the inlet of the metal hydride tanks)"@en ;
+    dcterms:type "Status" ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = Closed; 1 = Open" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "SV2H303_State" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#SV2H405_State> a eg:Variable ;
+    rdfs:label "SV2H405_State"@en ;
+    dcterms:description "Status of solenoid valve SV2H405 (located at the inlet of metal hydride tank 1)"@en ;
+    dcterms:type "Status" ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = Closed; 1 = Open" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "SV2H405_State" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#SV2H406_State> a eg:Variable ;
+    rdfs:label "SV2H406_State"@en ;
+    dcterms:description "Status of solenoid valve SV2H406 (located at the inlet of metal hydride tank 2)"@en ;
+    dcterms:type "Status" ;
+    skos:note "Valid range: 0, 1"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 = Closed; 1 = Open" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "SV2H406_State" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#SYS> a eg:Variable ;
+    rdfs:label "SYS"@en ;
+    dcterms:description "Overall system status"@en ;
+    dcterms:type "Status" ;
+    skos:note "Valid range: -1, 0, 1, 2, 3"@en ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "-1 = Manual control; 0 = Standby; 1 = Charging (EL to MH); 2 = Generating (MH to FC); 3 = Emergency purge" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "SYS" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#TERMICO_Alarm> a eg:Variable ;
+    rdfs:label "TERMICO_Alarm"@en ;
+    dcterms:description "Alarm signal from the thermal system responsible for routing the coolant"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "TERMICO_Alarm" ;
+    eg:dataType "float" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "alarm" .
+
+<https://www.energyguard.eu/ontology/cartif#TERMICO_War> a eg:Variable ;
+    rdfs:label "TERMICO_War"@en ;
+    dcterms:description "Warning signal from the thermal system responsible for routing the coolant"@en ;
+    dcterms:type "Status" ;
+    schema1:maxValue 1.0 ;
+    schema1:minValue 0.0 ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    eg:aggregation "none" ;
+    eg:codeList "0 / 1" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "TERMICO_War" ;
+    eg:dataType "integer" ;
+    eg:relatesToProperty prop:State ;
+    eg:variableKind "state" .
+
+<https://www.energyguard.eu/ontology/cartif#TT102> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "TT102"@en ;
+    dcterms:description "Temperature measurement at the fan coil outlet"@en ;
+    dcterms:type "Temperature sensor" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/DEG_C> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    sosa:observes prop:Temperature ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "TT102" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#TT107> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "TT107"@en ;
+    dcterms:description "Temperature measurement at the heater outlet"@en ;
+    dcterms:type "Temperature sensor" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/DEG_C> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    sosa:observes prop:Temperature ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "TT107" ;
+    eg:dataType "float" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#TT111> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "TT111"@en ;
+    dcterms:description "Temperature measurement at the outlet of metal hydride tank 1"@en ;
+    dcterms:type "Temperature sensor" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/DEG_C> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    sosa:observes prop:Temperature ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "TT111" ;
+    eg:dataType "float" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#TT113> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "TT113"@en ;
+    dcterms:description "Temperature measurement at the outlet of metal hydride tank 2"@en ;
+    dcterms:type "Temperature sensor" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/DEG_C> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    sosa:observes prop:Temperature ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "TT113" ;
+    eg:dataType "float" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#TT114> a sosa:Sensor,
+        eg:Variable ;
+    rdfs:label "TT114"@en ;
+    dcterms:description "Temperature measurement at the inlet of both metal hydride tanks"@en ;
+    dcterms:type "Temperature sensor" ;
+    qudt:hasUnit <http://qudt.org/vocab/unit/DEG_C> ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> ;
+    sosa:observes prop:Temperature ;
+    eg:aggregation "none" ;
+    eg:dataLakeMatch "exact" ;
+    eg:dataLakeSensorId "TT114" ;
+    eg:dataType "integer" ;
+    eg:variableKind "measured" .
+
+<https://www.energyguard.eu/ontology/cartif#timestamp_var> a eg:Variable ;
+    rdfs:label "timestamp"@en ;
+    dcterms:description "UTC timestamp of the recorded observation"@en ;
+    dcterms:identifier "timestamp" ;
+    dcterms:type "Status" ;
+    sosa:isHostedBy <https://www.energyguard.eu/ontology/cartif#Platform_Dataset> ;
+    eg:dataLakeMatch "timestamp" ;
+    eg:dataType "timestamp" ;
+    eg:storedInDatabaseColumn "public.d_calendar.datetime" ;
+    eg:variableKind "timestamp" .
+
+<https://www.energyguard.eu/ontology/cartif#Platform_Heat_pump> a sosa:Platform ;
+    rdfs:label "Heat pump"@en .
+
+<https://www.energyguard.eu/ontology/cartif#Platform_Fuel_cell> a sosa:Platform ;
+    rdfs:label "Fuel cell"@en .
+
+<https://www.energyguard.eu/ontology/cartif#Platform_Battery> a sosa:Platform ;
+    rdfs:label "Battery"@en .
+
+<https://www.energyguard.eu/ontology/cartif#Platform_Electrolyser> a sosa:Platform ;
+    rdfs:label "Electrolyser"@en .
+
+<https://www.energyguard.eu/ontology/cartif#Platform_Metal_hydride_storage> a sosa:Platform ;
+    rdfs:label "Metal-hydride storage"@en .
+
+<https://www.energyguard.eu/ontology/cartif#Platform_Hydrogen_test_bench> a sosa:Platform ;
+    rdfs:label "Hydrogen test bench"@en .
+
