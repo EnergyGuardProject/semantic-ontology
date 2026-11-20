@@ -9,10 +9,8 @@ Nothing in the project reads from this folder.
 | `runtime_old/data-test`, `runtime_old/logs-test` | Data/logs of the old `neo4j-test` instance (`docker-compose.all.yaml`). *(git-ignored)* |
 | `runtime_old/plugins-enterprise`, `runtime_old/certificates` | Enterprise APOC jar and HTTPS certificates, not mounted by any compose file. *(git-ignored)* |
 | `neosemantics-5.18.0.jar` | Old n10s jar; `runtime/plugins/` has 5.26. *(git-ignored)* |
-| `ontology_generator/` | The previous way of building the ontology: `build_all_pilots_owl.py` (Excel workbooks + base ontology → OWL), its base file and the old graph reset. Replaced by the hand-curated `ontology/catalogue/`. |
+| `ontology_generator/` | `build_all_pilots_owl.py`, the previous generator (Excel workbooks → OWL). Not run any more: `utils/ontology/workbook_diff.py` imports its workbook readers. The rest of the old generator, the pilots' original vocabularies and the old mapping files were deleted; they are in git history. |
 | `lake_discovery/` | `discover_data_lake.py`: read-only check of the data lake that proposed where each variable lives. Needs the lake connection in `.env`. Not part of the current workflow. |
-| `ontology_mappings/` | Data-lake mapping CSVs (`sensor_map`, `dataset_tables`, overrides) of the old generator; working copies live in `output/lake/`. |
-| `pilot_ontologies/` | The pilots' original vocabularies (`ber.owl`, `cea.owl`, …) and their overview. No longer part of the ontology. |
 | `lib/` | JavaScript for the first HTML visualisations. *(git-ignored)* |
 
 The Neo4j data folders are owned by the container user (uid 7474). To delete them later:

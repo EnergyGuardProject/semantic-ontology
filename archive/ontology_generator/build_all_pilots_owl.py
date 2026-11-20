@@ -58,7 +58,10 @@ from pathlib import Path
 from urllib.parse import unquote
 
 import openpyxl
-from standards_layer import add_standards_layer
+try:  # the standards layer was removed from the archive; only the workbook readers below are still used
+    from standards_layer import add_standards_layer
+except ImportError:
+    add_standards_layer = None
 import rdflib
 from rdflib import BNode, Literal, Namespace, URIRef
 from rdflib.namespace import DCAT, DCTERMS, OWL, RDF, RDFS, XSD
