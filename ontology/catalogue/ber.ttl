@@ -204,9 +204,7 @@
         <https://www.energyguard.eu/ontology/ber#XT_6007>,
         <https://www.energyguard.eu/ontology/ber#XT_6008>,
         <https://www.energyguard.eu/ontology/ber#XT_6009> ;
-    skos:note "Time resolution: Dynamic, up to 0.1s"@en,
-        "Update frequency: Nightly"@en ;
-    dcat:distribution <https://www.energyguard.eu/ontology/ber#Distribution_PEM_Electrolyzer_14kW> ;
+    eg:storedInDatabaseTable "public.f_tsdata" ;
     eg:timeZone "Europe/Rome" .
 
 <https://www.energyguard.eu/ontology/ber#Dataset_PEM_Electrolyzer_7kW> a dcat:Dataset ;
@@ -402,25 +400,9 @@
         <https://www.energyguard.eu/ontology/ber#XT_6007>,
         <https://www.energyguard.eu/ontology/ber#XT_6008>,
         <https://www.energyguard.eu/ontology/ber#XT_6009> ;
-    skos:note "Temporal coverage: TBD - TBD"@en,
-        "Time resolution: Dynamic, up to 0.1s"@en,
-        "Update frequency: Nightly"@en ;
-    dcat:distribution <https://www.energyguard.eu/ontology/ber#Distribution_PEM_Electrolyzer_7kW> ;
+    skos:note "Temporal coverage: TBD - TBD"@en ;
+    eg:storedInDatabaseTable "public.f_tsdata" ;
     eg:timeZone "Europe/Madrid" .
-
-<https://www.energyguard.eu/ontology/ber#Distribution_PEM_Electrolyzer_14kW> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF3_BER public.f_tsdata"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF3_BER" ;
-    eg:storedInDatabaseTable "public.f_tsdata" ;
-    eg:tableLayout "long" .
-
-<https://www.energyguard.eu/ontology/ber#Distribution_PEM_Electrolyzer_7kW> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF3_BER public.f_tsdata"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF3_BER" ;
-    eg:storedInDatabaseTable "public.f_tsdata" ;
-    eg:tableLayout "long" .
 
 <https://www.energyguard.eu/ontology/ber#Licence_PEM_Electrolyzer_14kW> a dcterms:LicenseDocument ;
     rdfs:label "Private Data Licence"@en .
@@ -442,449 +424,312 @@
     rdfs:label "AS-B103"@en ;
     dcterms:description "H2 sensor self diagnosis"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_B103" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z102> a eg:Variable ;
     rdfs:label "AS-Z102"@en ;
     dcterms:description "18QF1 MEP Fans"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z102" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z103> a eg:Variable ;
     rdfs:label "AS-Z103"@en ;
     dcterms:description "18QF2 MEP Heater"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z103" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z104> a eg:Variable ;
     rdfs:label "AS-Z104"@en ;
     dcterms:description "19QF1 Dryer Left Heater"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z104" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z105> a eg:Variable ;
     rdfs:label "AS-Z105"@en ;
     dcterms:description "19QF2 Dryer Left Heater"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z105" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z106> a eg:Variable ;
     rdfs:label "AS-Z106"@en ;
     dcterms:description "20QF1 Process Box Heater"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z106" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z107> a eg:Variable ;
     rdfs:label "AS-Z107"@en ;
     dcterms:description "20QF2 Deoxo Heater"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z107" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z108> a eg:Variable ;
     rdfs:label "AS-Z108"@en ;
     dcterms:description "26QF1 Chiller Unit"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z108" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z109> a eg:Variable ;
     rdfs:label "AS-Z109"@en ;
     dcterms:description "23QF1 Stack Feed VFD"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
+    sosa:observes prop:State ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z120> a eg:Variable ;
     rdfs:label "AS-Z120"@en ;
     dcterms:description "8FU2 Safety System"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z120" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z121> a eg:Variable ;
     rdfs:label "AS-Z121"@en ;
     dcterms:description "8FU3 Atex Sensors"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z121" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z122> a eg:Variable ;
     rdfs:label "AS-Z122"@en ;
     dcterms:description "8FU4 Stack Circulation Pump"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z122" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z123> a eg:Variable ;
     rdfs:label "AS-Z123"@en ;
     dcterms:description "8FU5 Non Atex Sensors"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z123" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z124> a eg:Variable ;
     rdfs:label "AS-Z124"@en ;
     dcterms:description "8FU6 Ftk Cleaning and Cooling Pumps"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z124" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z125> a eg:Variable ;
     rdfs:label "AS-Z125"@en ;
     dcterms:description "8FU7 Ftk Fill Pump"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z125" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z126> a eg:Variable ;
     rdfs:label "AS-Z126"@en ;
     dcterms:description "8FU8 Cooling Circulation Pump"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z126" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z127> a eg:Variable ;
     rdfs:label "AS-Z127"@en ;
     dcterms:description "8FU9 Solenoid Valves A"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z127" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z128> a eg:Variable ;
     rdfs:label "AS-Z128"@en ;
     dcterms:description "8FU10 Solenoid Valves B"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z128" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z200> a eg:Variable ;
     rdfs:label "AS-Z200"@en ;
     dcterms:description "Emergency Stop Active"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_safety> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z200" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z201> a eg:Variable ;
     rdfs:label "AS-Z201"@en ;
     dcterms:description "Panel Estop"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_safety> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "pattern" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorPattern "AS\\_Z201\\_%" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z202> a eg:Variable ;
     rdfs:label "AS-Z202"@en ;
     dcterms:description "Ext Estop"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_safety> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "pattern" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorPattern "AS\\_Z202\\_%" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z203> a eg:Variable ;
     rdfs:label "AS-Z203"@en ;
     dcterms:description "Door Switch"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_safety> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z203" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z204> a eg:Variable ;
     rdfs:label "AS-Z204"@en ;
     dcterms:description "Control Fail"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_safety> ;
-    eg:aggregation "instantaneous" ;
+    sosa:observes prop:State ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z205> a eg:Variable ;
     rdfs:label "AS-Z205"@en ;
     dcterms:description "Fan MCB"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_safety> ;
-    eg:aggregation "instantaneous" ;
+    sosa:observes prop:State ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z301> a eg:Variable ;
     rdfs:label "AS-Z301"@en ;
     dcterms:description "Safety Controller General Fault"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_safety> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z301" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z302> a eg:Variable ;
     rdfs:label "AS-Z302"@en ;
     dcterms:description "Safety Controller Input Fault"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_safety> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z302" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z303> a eg:Variable ;
     rdfs:label "AS-Z303"@en ;
     dcterms:description "Safety Controller Output Fault"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_safety> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z303" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z304> a eg:Variable ;
     rdfs:label "AS-Z304"@en ;
     dcterms:description "Safety Controller Checksum Error"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_safety> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z304" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z401> a eg:Variable ;
     rdfs:label "AS-Z401"@en ;
     dcterms:description "PSU 1 Communication Status"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z401" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z402> a eg:Variable ;
     rdfs:label "AS-Z402"@en ;
     dcterms:description "PSU 2 Communication Status"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z402" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z403> a eg:Variable ;
     rdfs:label "AS-Z403"@en ;
     dcterms:description "PSU 3 Communication Status"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z403" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z404> a eg:Variable ;
     rdfs:label "AS-Z404"@en ;
     dcterms:description "Safety Controller Comm Status"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z404" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z405> a eg:Variable ;
     rdfs:label "AS-Z405"@en ;
     dcterms:description "Emeter Commnication Status"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z405" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#AS_Z406> a eg:Variable ;
     rdfs:label "AS-Z406"@en ;
     dcterms:description "PEMS Communication Status"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "AS_Z406" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#CHL_C900> a eg:Variable ;
     rdfs:label "CHL-C900"@en ;
     dcterms:description "Chiller Unit"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_cooling> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "CHL_C900" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#CPS_Z000> a eg:Variable ;
@@ -894,67 +739,47 @@
     schema1:minValue 0.0 ;
     schema1:unitText "step" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_control> ;
-    eg:aggregation "instantaneous" ;
+    sosa:observes prop:State ;
     eg:codeList "see Step Legend; 0 = PEMS; 1 = Basic HMI; 2 = Extended HMI" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "CPS_Z000" ;
     eg:dataType "integer" ;
     eg:decimals 0 ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "state" .
 
 <https://www.energyguard.eu/ontology/ber#CR_D301> a eg:Variable ;
     rdfs:label "CR-D301"@en ;
     dcterms:description "Demi Water Request"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_demi> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "CR_D301" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#CR_K100> a eg:Variable ;
     rdfs:label "CR-K100"@en ;
     dcterms:description "Psu 400vac Feed"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "CR_K100" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#CR_K101> a eg:Variable ;
     rdfs:label "CR-K101"@en ;
     dcterms:description "Stack psu enable cmd"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "CR_K101" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#CR_Z001> a eg:Variable ;
     rdfs:label "CR-Z001"@en ;
     dcterms:description "Main Sequence Alarm indication"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_control> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "CR_Z001" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#CT-X101> a sosa:Sensor,
@@ -966,14 +791,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
     sosa:observes prop:Composition ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "CT_X101" ;
     eg:dataType "float" ;
-    eg:decimals 3 ;
-    eg:recordThreshold "0.0005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 3 .
 
 <https://www.energyguard.eu/ontology/ber#DPT_X101> a sosa:Sensor,
         eg:Variable ;
@@ -985,14 +805,9 @@
     schema1:unitText "mBar" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "DPT_X101" ;
     eg:dataType "float" ;
-    eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 0 .
 
 <https://www.energyguard.eu/ontology/ber#DT-X201> a eg:Variable ;
     rdfs:label "DT-X201"@en ;
@@ -1001,14 +816,10 @@
     schema1:maxValue 5.0 ;
     schema1:minValue -5.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Temperature ;
     eg:dataLakeSensorId "DT_X201" ;
     eg:dataType "float" ;
     eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:relatesToProperty prop:Temperature ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#ET-1001> a sosa:Sensor,
@@ -1020,14 +831,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_power> ;
     sosa:observes prop:Voltage ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "ET_1001" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#ET_4004> a sosa:Sensor,
         eg:Variable ;
@@ -1038,14 +844,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
     sosa:observes prop:Voltage ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "ET_4004" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#ET_5004> a sosa:Sensor,
         eg:Variable ;
@@ -1056,14 +857,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
     sosa:observes prop:Voltage ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "ET_5004" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#ET_6004> a sosa:Sensor,
         eg:Variable ;
@@ -1074,26 +870,17 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
     sosa:observes prop:Voltage ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "ET_6004" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#EXT_B101> a eg:Variable ;
     rdfs:label "EXT-B101"@en ;
     dcterms:description "External ventilation run oder"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "EXT_B101" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#FAN-B101> a eg:Variable ;
@@ -1101,13 +888,9 @@
     dcterms:description "Air extraction fan run oder"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "FAN_B101" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#FAN-T103> a eg:Variable ;
@@ -1115,39 +898,27 @@
     dcterms:description "Electrical box fan"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_aux> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "FAN_T103" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#FS_Z302> a eg:Variable ;
     rdfs:label "FS-Z302"@en ;
     dcterms:description "External flow feedback"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "FS_Z302" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#FS_Z303> a eg:Variable ;
     rdfs:label "FS-Z303"@en ;
     dcterms:description "Internal and external flow feedback"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "FS_Z303" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#FT-H200> a eg:Variable ;
@@ -1157,14 +928,10 @@
     schema1:maxValue 300.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Flow ;
     eg:dataLakeSensorId "FT_H200" ;
     eg:dataType "float" ;
     eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:relatesToProperty prop:Flow ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#FT-M200-1> a eg:Variable ;
@@ -1174,14 +941,10 @@
     schema1:maxValue 300.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Flow ;
     eg:dataLakeSensorId "FT_M200_1" ;
     eg:dataType "float" ;
     eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:relatesToProperty prop:Flow ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#FT-M200-2> a eg:Variable ;
@@ -1191,14 +954,10 @@
     schema1:maxValue 100.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Flow ;
     eg:dataLakeSensorId "FT_M200_2" ;
     eg:dataType "float" ;
     eg:decimals 3 ;
-    eg:recordThreshold "0.0005" ;
-    eg:relatesToProperty prop:Flow ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#FT-M300-1> a eg:Variable ;
@@ -1208,14 +967,10 @@
     schema1:maxValue 300.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Flow ;
     eg:dataLakeSensorId "FT_M300_1" ;
     eg:dataType "float" ;
     eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:relatesToProperty prop:Flow ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#FT-M300-2> a eg:Variable ;
@@ -1225,14 +980,10 @@
     schema1:maxValue 100.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Flow ;
     eg:dataLakeSensorId "FT_M300_2" ;
     eg:dataType "float" ;
     eg:decimals 3 ;
-    eg:recordThreshold "0.0005" ;
-    eg:relatesToProperty prop:Flow ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#FT_U303> a sosa:Sensor,
@@ -1244,14 +995,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
     sosa:observes prop:Flow ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "FT_U303" ;
     eg:dataType "float" ;
-    eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 0 .
 
 <https://www.energyguard.eu/ontology/ber#H2T-B103> a sosa:Sensor,
         eg:Variable ;
@@ -1262,14 +1008,9 @@
     schema1:unitText "LEL" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
     sosa:observes prop:Hydrogen ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "H2T_B103" ;
     eg:dataType "float" ;
-    eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 0 .
 
 <https://www.energyguard.eu/ontology/ber#HC_CHL_C900> a eg:Variable ;
     rdfs:label "HC-CHL-C900"@en ;
@@ -1278,13 +1019,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "CHL_C900_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_CR_K101> a eg:Variable ;
@@ -1294,13 +1031,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "CR_K101_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_FAN_B101> a eg:Variable ;
@@ -1310,13 +1043,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "FAN_B101_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_FAN_T103> a eg:Variable ;
@@ -1326,13 +1055,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "FAN_T103_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_HC_M200_1> a eg:Variable ;
@@ -1342,13 +1067,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "HC_M200_1_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_HC_M200_2> a eg:Variable ;
@@ -1358,13 +1079,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "HC_M200_2_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_HC_M300_1> a eg:Variable ;
@@ -1374,13 +1091,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "HC_M300_1_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_HC_M300_2> a eg:Variable ;
@@ -1390,13 +1103,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "HC_M300_2_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_HTR_B101> a eg:Variable ;
@@ -1406,13 +1115,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "HTR_B101_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_HTR_H406> a eg:Variable ;
@@ -1422,13 +1127,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "HTR_H406_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_HTR_M201> a eg:Variable ;
@@ -1438,13 +1139,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "HTR_M201_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_HTR_M301> a eg:Variable ;
@@ -1454,13 +1151,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "HTR_M301_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_IEF_D203> a eg:Variable ;
@@ -1470,13 +1163,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "IEF_D203_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_IEF_D302> a eg:Variable ;
@@ -1486,13 +1175,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "IEF_D302_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_IEF_D303> a eg:Variable ;
@@ -1502,13 +1187,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "IEF_D303_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_IEF_U403> a eg:Variable ;
@@ -1518,65 +1199,45 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "IEF_U403_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_M200_1> a eg:Variable ;
     rdfs:label "HC-M200-1"@en ;
     dcterms:description "Dryer Left Column adsorb"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "HC_M200_1" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_M200_2> a eg:Variable ;
     rdfs:label "HC-M200-2"@en ;
     dcterms:description "Dryer Left Column Regen"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "HC_M200_2" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_M300_1> a eg:Variable ;
     rdfs:label "HC-M300-1"@en ;
     dcterms:description "Dryer Right Column adsorb"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "HC_M300_1" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_M300_2> a eg:Variable ;
     rdfs:label "HC-M300-2"@en ;
     dcterms:description "Dryer Right Column Regen"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "HC_M300_2" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_PMP_C501> a eg:Variable ;
@@ -1586,13 +1247,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "PMP_C501_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_PMP_C902> a eg:Variable ;
@@ -1602,13 +1259,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "PMP_C902_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_PMP_D101> a eg:Variable ;
@@ -1618,13 +1271,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "PMP_D101_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_PMP_U201> a eg:Variable ;
@@ -1634,13 +1283,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "PMP_U201_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_PMP_U301> a eg:Variable ;
@@ -1650,13 +1295,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "PMP_U301_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_PMP_U401> a eg:Variable ;
@@ -1666,13 +1307,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "PMP_U401_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_XS_4001> a eg:Variable ;
@@ -1682,13 +1319,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "XS_4001_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_XS_5001> a eg:Variable ;
@@ -1698,13 +1331,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "XS_5001_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HC_XS_6001> a eg:Variable ;
@@ -1714,13 +1343,9 @@
     schema1:maxValue 4294967296.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_HourCounter> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Timer ;
     eg:dataLakeSensorId "XS_6001_HC" ;
     eg:dataType "integer" ;
-    eg:recordThreshold "600" ;
-    eg:relatesToProperty prop:Timer ;
-    eg:sampling "Over threshold" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#HTR-B101> a eg:Variable ;
@@ -1728,13 +1353,9 @@
     dcterms:description "Process box heater"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_aux> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "HTR_B101" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#HTR-M201> a eg:Variable ;
@@ -1742,13 +1363,9 @@
     dcterms:description "Dryer left column heater"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "HTR_M201" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#HTR-M301> a eg:Variable ;
@@ -1756,26 +1373,18 @@
     dcterms:description "Dryer right column heater"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "HTR_M301" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#HTR_H406> a eg:Variable ;
     rdfs:label "HTR-H406"@en ;
     dcterms:description "Deoxo heater cmd"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "HTR_H406" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#HT_A301> a sosa:Sensor,
@@ -1787,65 +1396,44 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
     sosa:observes prop:Composition ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "HT_A301" ;
     eg:dataType "float" ;
-    eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 0 .
 
 <https://www.energyguard.eu/ontology/ber#IEF_D203> a eg:Variable ;
     rdfs:label "IEF-D203"@en ;
     dcterms:description "Feed Tank Mixed Resin filter"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Efficiency ;
     eg:dataLakeSensorId "IEF_D203" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:Efficiency ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#IEF_D302> a eg:Variable ;
     rdfs:label "IEF-D302"@en ;
     dcterms:description "Stack Feed Filter A"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Efficiency ;
     eg:dataLakeSensorId "IEF_D302" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:Efficiency ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#IEF_D303> a eg:Variable ;
     rdfs:label "IEF-D303"@en ;
     dcterms:description "Stack Feed Filter B"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Efficiency ;
     eg:dataLakeSensorId "IEF_D303" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:Efficiency ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#IEF_U403> a eg:Variable ;
     rdfs:label "IEF-U403"@en ;
     dcterms:description "Feed Tank Cooling Loop Filter"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Efficiency ;
     eg:dataLakeSensorId "IEF_U403" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:Efficiency ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#IL_1104> a eg:Variable ;
@@ -1855,14 +1443,10 @@
     schema1:maxValue 170.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_power> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Current ;
     eg:dataLakeSensorId "IL_1104" ;
     eg:dataType "float" ;
     eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:relatesToProperty prop:Current ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#IS_1003> a eg:Variable ;
@@ -1872,14 +1456,10 @@
     schema1:maxValue 170.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_power> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Current ;
     eg:dataLakeSensorId "IS_1003" ;
     eg:dataType "float" ;
     eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:relatesToProperty prop:Current ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#IS_1102> a eg:Variable ;
@@ -1889,14 +1469,10 @@
     schema1:maxValue 170.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_power> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Current ;
     eg:dataLakeSensorId "IS_1102" ;
     eg:dataType "float" ;
     eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:relatesToProperty prop:Current ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "setpoint" .
 
 <https://www.energyguard.eu/ontology/ber#IT-1101> a sosa:Sensor,
@@ -1908,14 +1484,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_power> ;
     sosa:observes prop:Current ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "IT_1101" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#IT_3101> a sosa:Sensor,
         eg:Variable ;
@@ -1926,14 +1497,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_power> ;
     sosa:observes prop:Current ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "IT_3101" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#IT_3201> a sosa:Sensor,
         eg:Variable ;
@@ -1944,14 +1510,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_power> ;
     sosa:observes prop:Current ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "IT_3201" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#IT_3301> a sosa:Sensor,
         eg:Variable ;
@@ -1962,14 +1523,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_power> ;
     sosa:observes prop:Current ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "IT_3301" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#IT_4005> a sosa:Sensor,
         eg:Variable ;
@@ -1980,14 +1536,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
     sosa:observes prop:Current ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "IT_4005" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#IT_5005> a sosa:Sensor,
         eg:Variable ;
@@ -1998,14 +1549,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
     sosa:observes prop:Current ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "IT_5005" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#IT_6005> a sosa:Sensor,
         eg:Variable ;
@@ -2016,14 +1562,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
     sosa:observes prop:Current ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "IT_6005" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#JT_3001> a sosa:Sensor,
         eg:Variable ;
@@ -2034,14 +1575,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_power> ;
     sosa:observes prop:Power ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "JT_3001" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#JT_3002> a sosa:Sensor,
         eg:Variable ;
@@ -2052,14 +1588,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_power> ;
     sosa:observes prop:Power ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "JT_3002" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#JT_3003> a sosa:Sensor,
         eg:Variable ;
@@ -2070,65 +1601,44 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_power> ;
     sosa:observes prop:Power ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "JT_3003" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#LSH_B103> a eg:Variable ;
     rdfs:label "LSH-B103"@en ;
     dcterms:description "Process box hydrogen content high"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_safety> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "LSH_B103" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#LSH_X103> a eg:Variable ;
     rdfs:label "LSH-X103"@en ;
     dcterms:description "Ftk Overflow Switch"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "LSH_X103" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#LSL_C401> a eg:Variable ;
     rdfs:label "LSL-C401"@en ;
     dcterms:description "Cooling expansion tank level"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_cooling> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "LSL_C401" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#LSL_C901> a eg:Variable ;
     rdfs:label "LSL-C901"@en ;
     dcterms:description "Chiller Exp Tk Low Level"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_cooling> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "LSL_C901" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#LT-X101> a eg:Variable ;
@@ -2138,14 +1648,10 @@
     schema1:maxValue 15.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Volume ;
     eg:dataLakeSensorId "LT_X101" ;
     eg:dataType "float" ;
     eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:relatesToProperty prop:Volume ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#LT_D101> a eg:Variable ;
@@ -2155,14 +1661,10 @@
     schema1:maxValue 20.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:Volume ;
     eg:dataLakeSensorId "LT_D101" ;
     eg:dataType "float" ;
     eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:relatesToProperty prop:Volume ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#O2T_A201> a sosa:Sensor,
@@ -2174,14 +1676,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
     sosa:observes prop:Composition ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "O2T_A201" ;
     eg:dataType "float" ;
-    eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 0 .
 
 <https://www.energyguard.eu/ontology/ber#OP_Z001> a eg:Variable ;
     rdfs:label "OP-Z001"@en ;
@@ -2190,15 +1687,11 @@
     schema1:minValue 0.0 ;
     schema1:unitText "step" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_control> ;
-    eg:aggregation "instantaneous" ;
+    sosa:observes prop:State ;
     eg:codeList "see Step Legend; 0 = Automatic; 1 = Service Mode" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "OP_Z001" ;
     eg:dataType "integer" ;
     eg:decimals 0 ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "state" .
 
 <https://www.energyguard.eu/ontology/ber#PMP-C501> a eg:Variable ;
@@ -2206,13 +1699,9 @@
     dcterms:description "Cooling circ pump"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_cooling> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "PMP_C501" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#PMP-D101> a eg:Variable ;
@@ -2220,13 +1709,9 @@
     dcterms:description "Feed tk fill pump"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "PMP_D101" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#PMP-U201> a eg:Variable ;
@@ -2234,13 +1719,9 @@
     dcterms:description "Feed tank filter recirculation"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "PMP_U201" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#PMP-U301> a eg:Variable ;
@@ -2248,13 +1729,9 @@
     dcterms:description "Stack feed pump"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "PMP_U301" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#PMP-U401> a eg:Variable ;
@@ -2262,39 +1739,27 @@
     dcterms:description "Feed tk cooling pump"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "PMP_U401" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#PMP_C902> a eg:Variable ;
     rdfs:label "PMP-C902"@en ;
     dcterms:description "Chiller Loop Circulating Pump"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_cooling> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "PMP_C902" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#PSH_H403> a eg:Variable ;
     rdfs:label "PSH-H403"@en ;
     dcterms:description "H2 Line Overpress"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_safety> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "PSH_H403" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#PT-D101> a sosa:Sensor,
@@ -2307,14 +1772,9 @@
     schema1:unitText "mBar" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "PT_D101" ;
     eg:dataType "float" ;
-    eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 0 .
 
 <https://www.energyguard.eu/ontology/ber#PT-M201> a sosa:Sensor,
         eg:Variable ;
@@ -2325,14 +1785,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "PT_M201" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#PT-M301> a sosa:Sensor,
         eg:Variable ;
@@ -2343,14 +1798,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "PT_M301" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#PT-U301> a sosa:Sensor,
         eg:Variable ;
@@ -2362,14 +1812,9 @@
     schema1:unitText "mBar" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "PT_U301" ;
     eg:dataType "float" ;
-    eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 0 .
 
 <https://www.energyguard.eu/ontology/ber#PT-U302> a sosa:Sensor,
         eg:Variable ;
@@ -2381,14 +1826,9 @@
     schema1:unitText "mBar" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "PT_U302" ;
     eg:dataType "float" ;
-    eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 0 .
 
 <https://www.energyguard.eu/ontology/ber#PT_H101> a sosa:Sensor,
         eg:Variable ;
@@ -2399,14 +1839,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "PT_H101" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#PT_H301> a sosa:Sensor,
         eg:Variable ;
@@ -2417,14 +1852,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "PT_H301" ;
     eg:dataType "float" ;
-    eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 2 .
 
 <https://www.energyguard.eu/ontology/ber#Platform_demi> a sosa:Platform ;
     rdfs:label "demi"@en .
@@ -2436,15 +1866,11 @@
     schema1:minValue 0.0 ;
     schema1:unitText "step" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
+    sosa:observes prop:ControlSignal ;
     eg:codeList "see Step Legend; 0 = Boot; 2 = Standby; 3 = Duty; 4 = Adsorb; 5 = Adsorb Full; 6 = Saturated; 7 = Pressurizing; 8 = Back Flush Check; 9 = Heating; 10 = Hot Flush; 11 = Cold Flush; 100 = I/O Error; 101 = Heating Fail; 102 = Back Flush Fail; 103 = Check Valve Leakage; 104 = Pressurizing Fail; 999 = Service Mode" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "SEQ_M200" ;
     eg:dataType "integer" ;
     eg:decimals 0 ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "state" .
 
 <https://www.energyguard.eu/ontology/ber#SEQ-M300> a eg:Variable ;
@@ -2454,15 +1880,11 @@
     schema1:minValue 0.0 ;
     schema1:unitText "step" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
+    sosa:observes prop:ControlSignal ;
     eg:codeList "see Step Legend; 0 = Boot; 2 = Standby; 3 = Duty; 4 = Adsorb; 5 = Adsorb Full; 6 = Saturated; 7 = Pressurizing; 8 = Back Flush Check; 9 = Heating; 10 = Hot Flush; 11 = Cold Flush; 100 = I/O Error; 101 = Heating Fail; 102 = Back Flush Fail; 103 = Check Valve Leakage; 104 = Pressurizing Fail; 999 = Service Mode" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "SEQ_M300" ;
     eg:dataType "integer" ;
     eg:decimals 0 ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "state" .
 
 <https://www.energyguard.eu/ontology/ber#SEQ-M400> a eg:Variable ;
@@ -2472,15 +1894,11 @@
     schema1:minValue 0.0 ;
     schema1:unitText "step" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
+    sosa:observes prop:ControlSignal ;
     eg:codeList "see Step Legend; 0 = Manual; 1 = Instant; 2 = Next Start; 3 = Ext Regen" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "SEQ_M400" ;
     eg:dataType "integer" ;
     eg:decimals 0 ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "state" .
 
 <https://www.energyguard.eu/ontology/ber#SEQ_M500> a eg:Variable ;
@@ -2490,15 +1908,11 @@
     schema1:minValue 0.0 ;
     schema1:unitText "step" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
-    eg:aggregation "instantaneous" ;
+    sosa:observes prop:State ;
     eg:codeList "see Step Legend; 0 = Automatic; 1 = Disabled" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "SEQ_M500" ;
     eg:dataType "integer" ;
     eg:decimals 0 ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "state" .
 
 <https://www.energyguard.eu/ontology/ber#SEQ_X101> a eg:Variable ;
@@ -2508,15 +1922,11 @@
     schema1:minValue 0.0 ;
     schema1:unitText "step" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_control> ;
-    eg:aggregation "instantaneous" ;
+    sosa:observes prop:State ;
     eg:codeList "see Step Legend; 0 = Boot; 1 = Dump; 2 = Empty; 3 = Filling; 4 = Cleaning; 5 = Circulating; 6 = Wait For Chiller; 7 = Ext Fan Starting; 8 = Int Fan Starting; 9 = Psu Comm Check; 10 = Ready To Start; 11 = Psu Starting; 12 = Warming Up; 13 = Running; 14 = Unloading; 15 = Cooling Down; 16 = Maintain; 100 = Emergency Stop; 101 = Dump Fail; 102 = Filling Fail; 103 = Cleaning Fail; 104 = Circulation Fail; 105 = Chiller Fail; 106 = Ext Fan Start Fail; 107 = Int Fan Start Fail; 108 = Psu Comm Fail; 109 = Psu Start Fail; 110 = Warm Up Press Low; 111 = Conductivity Too High; 112 = Feed Temp Too High; 113 = Delta Temp Too High; 114 = H2 Line Overpressure; 115 = Feed Press Too Low; 116 = Feed Press Too High; 117 = Feed Tank Starvation; 118 = Ventilation Trip; 119 = PSU Trip; 120 = Dryer Not Available; 121 = Dryer Oversaturated; 122 = Feed Tank Overflow; 130 = I/O Error; 131 = ACB Trip; 132 = Fuse Trip; 133 = Storage Tank Starvation; 134 = Storage Tank Overtemp; 135 = Safety Checksum Error; 136 = Deoxo Heater Fail; 137 = Dryer Chkv Leakage; 138 = Pems Comm Fail; 150 = Hybernation; 999 = Service Mode" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "SEQ_X101" ;
     eg:dataType "integer" ;
     eg:decimals 0 ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "state" .
 
 <https://www.energyguard.eu/ontology/ber#SOC-M200> a eg:Variable ;
@@ -2526,14 +1936,10 @@
     schema1:maxValue 100.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "SOC_M200" ;
     eg:dataType "float" ;
     eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#SOC-M300> a eg:Variable ;
@@ -2543,14 +1949,10 @@
     schema1:maxValue 100.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "SOC_M300" ;
     eg:dataType "float" ;
     eg:decimals 2 ;
-    eg:recordThreshold "0.005" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#ST-D101> a eg:Variable ;
@@ -2560,14 +1962,10 @@
     schema1:maxValue 100.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "ST_D101" ;
     eg:dataType "float" ;
     eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#ST-U401> a eg:Variable ;
@@ -2577,14 +1975,10 @@
     schema1:maxValue 100.0 ;
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "ST_U401" ;
     eg:dataType "float" ;
     eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#ST_4006> a sosa:Sensor,
@@ -2596,14 +1990,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
     sosa:observes prop:Speed ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "ST_4006" ;
     eg:dataType "float" ;
-    eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 0 .
 
 <https://www.energyguard.eu/ontology/ber#ST_5006> a sosa:Sensor,
         eg:Variable ;
@@ -2614,14 +2003,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
     sosa:observes prop:Speed ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "ST_5006" ;
     eg:dataType "float" ;
-    eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 0 .
 
 <https://www.energyguard.eu/ontology/ber#ST_6006> a sosa:Sensor,
         eg:Variable ;
@@ -2632,27 +2016,18 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
     sosa:observes prop:Speed ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "ST_6006" ;
     eg:dataType "float" ;
-    eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 0 .
 
 <https://www.energyguard.eu/ontology/ber#SV2-D201> a eg:Variable ;
     rdfs:label "SV2-D201"@en ;
     dcterms:description "Feed tank dump valve"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "SV2_D201" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#SV2-M201> a eg:Variable ;
@@ -2660,13 +2035,9 @@
     dcterms:description "Dryer left column inlet valve"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "SV2_M201" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#SV2-M202> a eg:Variable ;
@@ -2674,13 +2045,9 @@
     dcterms:description "Drier left column puge valve"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "SV2_M202" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#SV2-M301> a eg:Variable ;
@@ -2688,13 +2055,9 @@
     dcterms:description "Drier right column inlet valve"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "SV2_M301" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#SV2-M302> a eg:Variable ;
@@ -2702,13 +2065,9 @@
     dcterms:description "Drier right column puge valve"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "SV2_M302" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#SV2-R401> a eg:Variable ;
@@ -2716,39 +2075,27 @@
     dcterms:description "Dryer pressure equalization valve"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "SV2_R401" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#SV2_D105> a eg:Variable ;
     rdfs:label "SV2-D105"@en ;
     dcterms:description "Demi Water Fill Valve"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_demi> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "SV2_D105" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#SV2_V101> a eg:Variable ;
     rdfs:label "SV2-V101"@en ;
     dcterms:description "H2 line to vent"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "SV2_V101" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:ControlSignal ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "output" .
 
 <https://www.energyguard.eu/ontology/ber#TT-B103> a sosa:Sensor,
@@ -2760,14 +2107,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_aux> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_B103" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT-D101> a sosa:Sensor,
         eg:Variable ;
@@ -2778,14 +2120,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_D101" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT-M202> a sosa:Sensor,
         eg:Variable ;
@@ -2796,14 +2133,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_M202" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT-M205> a sosa:Sensor,
         eg:Variable ;
@@ -2814,14 +2146,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_M205" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT-M302> a sosa:Sensor,
         eg:Variable ;
@@ -2832,14 +2159,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_M302" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT-M305> a sosa:Sensor,
         eg:Variable ;
@@ -2850,14 +2172,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_dryer> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_M305" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT-T101> a sosa:Sensor,
         eg:Variable ;
@@ -2868,14 +2185,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_aux> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_T101" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT-U301> a sosa:Sensor,
         eg:Variable ;
@@ -2886,14 +2198,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_U301" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT-X101> a sosa:Sensor,
         eg:Variable ;
@@ -2904,14 +2211,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_X101" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT-X201> a sosa:Sensor,
         eg:Variable ;
@@ -2922,14 +2224,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_feedwater> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_X201" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT_4014> a sosa:Sensor,
         eg:Variable ;
@@ -2940,14 +2237,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_4014" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT_5014> a sosa:Sensor,
         eg:Variable ;
@@ -2958,14 +2250,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_5014" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT_6014> a sosa:Sensor,
         eg:Variable ;
@@ -2976,14 +2263,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_6014" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT_C401> a sosa:Sensor,
         eg:Variable ;
@@ -2994,14 +2276,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_cooling> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_C401" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT_C901> a sosa:Sensor,
         eg:Variable ;
@@ -3012,14 +2289,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_cooling> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_C901" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT_H201> a sosa:Sensor,
         eg:Variable ;
@@ -3030,14 +2302,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_H201" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT_H405> a sosa:Sensor,
         eg:Variable ;
@@ -3048,14 +2315,9 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_H405" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#TT_H502> a sosa:Sensor,
         eg:Variable ;
@@ -3066,91 +2328,62 @@
     schema1:minValue 0.0 ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_h2> ;
     sosa:observes prop:Temperature ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
     eg:dataLakeSensorId "TT_H502" ;
     eg:dataType "float" ;
-    eg:decimals 1 ;
-    eg:recordThreshold "0.05" ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
-    eg:variableKind "measured" .
+    eg:decimals 1 .
 
 <https://www.energyguard.eu/ontology/ber#XS_4001> a eg:Variable ;
     rdfs:label "XS-4001"@en ;
     dcterms:description "Psu 1 Running"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XS_4001" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#XS_5001> a eg:Variable ;
     rdfs:label "XS-5001"@en ;
     dcterms:description "Psu 2 Running"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XS_5001" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#XS_6001> a eg:Variable ;
     rdfs:label "XS-6001"@en ;
     dcterms:description "Psu 3 Running"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XS_6001" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "calculated" .
 
 <https://www.energyguard.eu/ontology/ber#XS_Z129> a eg:Variable ;
     rdfs:label "XS-Z129"@en ;
     dcterms:description "8FU11 Sampling Station"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_system> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XS_Z129" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#XS_Z201> a eg:Variable ;
     rdfs:label "XS-Z201"@en ;
     dcterms:description "Control Place Selection Pems"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_control> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XS_Z201" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#XS_Z202> a eg:Variable ;
     rdfs:label "XS-Z202"@en ;
     dcterms:description "Control Place Selection Extended"@en ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_control> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XS_Z202" ;
     eg:dataType "boolean" ;
-    eg:recordThreshold "change" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#XT_4007> a eg:Variable ;
@@ -3160,14 +2393,10 @@
     schema1:minValue 0.0 ;
     schema1:unitText "word" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XT_4007" ;
     eg:dataType "float" ;
     eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#XT_4008> a eg:Variable ;
@@ -3177,14 +2406,10 @@
     schema1:minValue 0.0 ;
     schema1:unitText "word" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XT_4008" ;
     eg:dataType "float" ;
     eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#XT_4009> a eg:Variable ;
@@ -3194,14 +2419,10 @@
     schema1:minValue 0.0 ;
     schema1:unitText "word" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XT_4009" ;
     eg:dataType "float" ;
     eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#XT_5007> a eg:Variable ;
@@ -3211,14 +2432,10 @@
     schema1:minValue 0.0 ;
     schema1:unitText "word" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XT_5007" ;
     eg:dataType "float" ;
     eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#XT_5008> a eg:Variable ;
@@ -3228,14 +2445,10 @@
     schema1:minValue 0.0 ;
     schema1:unitText "word" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XT_5008" ;
     eg:dataType "float" ;
     eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#XT_5009> a eg:Variable ;
@@ -3245,14 +2458,10 @@
     schema1:minValue 0.0 ;
     schema1:unitText "word" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XT_5009" ;
     eg:dataType "float" ;
     eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#XT_6007> a eg:Variable ;
@@ -3262,14 +2471,10 @@
     schema1:minValue 0.0 ;
     schema1:unitText "word" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XT_6007" ;
     eg:dataType "float" ;
     eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#XT_6008> a eg:Variable ;
@@ -3279,14 +2484,10 @@
     schema1:minValue 0.0 ;
     schema1:unitText "word" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XT_6008" ;
     eg:dataType "float" ;
     eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#XT_6009> a eg:Variable ;
@@ -3296,14 +2497,10 @@
     schema1:minValue 0.0 ;
     schema1:unitText "word" ;
     sosa:isHostedBy <https://www.energyguard.eu/ontology/ber#Platform_psu> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "normalised" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "XT_6009" ;
     eg:dataType "float" ;
     eg:decimals 0 ;
-    eg:recordThreshold "0.5" ;
-    eg:relatesToProperty prop:State ;
-    eg:sampling "Over threshold (0.1s) or 30s" ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/ber#Platform_aux> a sosa:Platform ;

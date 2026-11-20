@@ -6,7 +6,6 @@
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema1: <http://schema.org/> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix sosa: <http://www.w3.org/ns/sosa/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -63,679 +62,497 @@
         <https://www.energyguard.eu/ontology/cea#PT407>,
         <https://www.energyguard.eu/ontology/cea#PT418>,
         <https://www.energyguard.eu/ontology/cea#time> ;
-    skos:note "Update frequency: one shot export"@en ;
-    dcat:distribution <https://www.energyguard.eu/ontology/cea#Distribution_CEA_MURPHY_test_bed_dataset> ;
     dcat:temporalResolution "PT1M"^^xsd:duration ;
+    eg:storedInDatabaseTable "public.f_tsdata" ;
     eg:timeZone "CET" .
 
 <https://www.energyguard.eu/ontology/cea#AT231> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "AT231"@en ;
     dcterms:description "Humidity of the gaz at the input of the heat exchanger M-E-HH-01"@en ;
-    dcterms:type "Composition" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     schema1:maxValue 100.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Composition ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "AT231" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#AT312> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "AT312"@en ;
     dcterms:description "Oxygen concentration inside of the hotbox"@en ;
-    dcterms:type "Composition" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     schema1:maxValue 25.0 ;
     schema1:minValue 5.0 ;
     sosa:observes prop:Composition ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "AT312" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#AT361> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "AT361"@en ;
     dcterms:description "H2 concentration in the BoP flushed gaz"@en ;
-    dcterms:type "Composition" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     schema1:maxValue 100.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Composition ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "AT361" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#AT416> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "AT416"@en ;
     dcterms:description "O2 rate inside the air vent"@en ;
-    dcterms:type "Composition" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     schema1:maxValue 25.0 ;
     schema1:minValue 5.0 ;
     sosa:observes prop:Composition ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "AT416" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#DPT202> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "DPT202"@en ;
     dcterms:description "Differencial pressure between the outlet and the inlet of the heat exchanger M-E-HH-01 hot side"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 6.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "DPT202" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#DPT207> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "DPT207"@en ;
     dcterms:description "Differencial pressure between the outlet and the inlet of the heat exchanger M-E-HH-01 cold side"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 6.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "DPT207" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#DPT213> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "DPT213"@en ;
     dcterms:description "Differencial pressure between the outlet and the inlet of the heat exchanger M-E-HAC-03 hot side"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 6.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "DPT213" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#DPT311> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "DPT311"@en ;
     dcterms:description "Differencial pressure between the fuel and the air side at the stacks inlets"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 150.0 ;
     schema1:minValue -150.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "DPT311" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#DPT401> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "DPT401"@en ;
     dcterms:description "Differencial pressure between the outlet and the inlet of the heat exchanger M-E-OC-05 hot side"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 10.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "DPT401" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#DPT411> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "DPT411"@en ;
     dcterms:description "Differencial pressure between the outlet and the inlet of the heat exchanger M-E-OC-07 hot side"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 6.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "DPT411" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
-
-<https://www.energyguard.eu/ontology/cea#Distribution_CEA_MURPHY_test_bed_dataset> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF4_CEA public.f_tsdata"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF4_CEA" ;
-    eg:storedInDatabaseTable "public.f_tsdata" ;
-    eg:tableLayout "long" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#FT101> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "FT101"@en ;
     dcterms:description "Input steam flowrate"@en ;
-    dcterms:type "Flowrate" ;
     schema1:maxValue 100.0 ;
     schema1:minValue 0.0 ;
     schema1:unitText "Nm3/h" ;
     sosa:observes prop:Flow ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "FT101" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#FT102> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "FT102"@en ;
     dcterms:description "Input H2 flowrate"@en ;
-    dcterms:type "Flowrate" ;
     schema1:maxValue 50.0 ;
     schema1:minValue 0.0 ;
     schema1:unitText "NL/min" ;
     sosa:observes prop:Flow ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "FT102" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#FT104> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "FT104"@en ;
     dcterms:description "Input safety gas flowrate"@en ;
-    dcterms:type "Flowrate" ;
     schema1:maxValue 200.0 ;
     schema1:minValue 0.0 ;
     schema1:unitText "NL/min" ;
     sosa:observes prop:Flow ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "FT104" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#FT221> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "FT221"@en ;
     dcterms:description "Cooling water flowrate in the heat exchanger M-E-HAC-03"@en ;
-    dcterms:type "Flowrate" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/L-PER-MIN> ;
     schema1:maxValue 16.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Flow ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "FT221" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#FT232> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "FT232"@en ;
     dcterms:description "Cooling water flowrate in the heat exchanger M-E-HC-04"@en ;
-    dcterms:type "Flowrate" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/L-PER-MIN> ;
     schema1:maxValue 16.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Flow ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "FT232" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#FT237> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "FT237"@en ;
     dcterms:description "Flowrate at the fuel side vent"@en ;
-    dcterms:type "Flowrate" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 10.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Flow ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "FT237" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#FT405> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "FT405"@en ;
     dcterms:description "Air flowrate at the inlet of the compressor M-K-O-04"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/M3-PER-HR> ;
     schema1:maxValue 225.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Flow ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "FT405" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#FT412> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "FT412"@en ;
     dcterms:description "Air flowrate at the inlet of the system"@en ;
-    dcterms:type "Flowrate" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/M3-PER-HR> ;
     schema1:maxValue 225.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Flow ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "FT412" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#FT413> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "FT413"@en ;
     dcterms:description "Flowrate at the air side vent"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 15.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Flow ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "FT413" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#FT417> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "FT417"@en ;
     dcterms:description "Cooling water flowrate in the heat exchanger M-E-OC-07"@en ;
-    dcterms:type "Flowrate" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/L-PER-MIN> ;
     schema1:maxValue 16.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Flow ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "FT417" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#FT421> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "FT421"@en ;
     dcterms:description "Cooling water flowrate in the heat exchanger M-E-OC-05"@en ;
-    dcterms:type "Flowrate" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/L-PER-MIN> ;
     schema1:maxValue 6.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Flow ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "FT421" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#I_stack01_mes> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "I_stack01_mes"@en ;
     dcterms:description "Measured current applied on the stack 1"@en ;
     dcterms:identifier "I_stack01_mes" ;
-    dcterms:type "Current" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/A> ;
     schema1:maxValue 200.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Current ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeEvidence "Values -74..0 A match 'Measured current applied on the stack 1'. cns_I_stack01 is the command (setpoint)."@en ;
-    eg:dataLakeMatch "inferred" ;
     eg:dataLakeSensorId "Istack01" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#I_stack02_mes> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "I_stack02_mes"@en ;
     dcterms:description "Measured current applied on the stack 2"@en ;
     dcterms:identifier "I_stack02_mes" ;
-    dcterms:type "Current" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/A> ;
     schema1:maxValue 200.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Current ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeEvidence "Values -74..0 A match 'Measured current applied on the stack 2'. cns_I_stack02 is the command (setpoint)."@en ;
-    eg:dataLakeMatch "inferred" ;
     eg:dataLakeSensorId "Istack02" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#I_stack03_mes> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "I_stack03_mes"@en ;
     dcterms:description "Measured current applied on the stack 3"@en ;
     dcterms:identifier "I_stack03_mes" ;
-    dcterms:type "Current" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/A> ;
     schema1:maxValue 200.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Current ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeEvidence "Values -74..0 A match 'Measured current applied on the stack 3'. cns_I_stack03 is the command (setpoint)."@en ;
-    eg:dataLakeMatch "inferred" ;
     eg:dataLakeSensorId "Istack03" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#I_stack04_mes> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "I_stack04_mes"@en ;
     dcterms:description "Measured current applied on the stack 4"@en ;
     dcterms:identifier "I_stack04_mes" ;
-    dcterms:type "Current" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/A> ;
     schema1:maxValue 200.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Current ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeEvidence "Values -74..0 A match 'Measured current applied on the stack 4'. cns_I_stack04 is the command (setpoint)."@en ;
-    eg:dataLakeMatch "inferred" ;
     eg:dataLakeSensorId "Istack04" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#M_K_O_04> a eg:Variable ;
     rdfs:label "M_K_O_04"@en ;
     dcterms:description "Air compressor speed"@en ;
-    dcterms:type "Speed" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/REV-PER-MIN> ;
     schema1:maxValue 250000.0 ;
     schema1:minValue 0.0 ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "M_K_O_04" ;
     eg:dataType "float" ;
-    eg:relatesToProperty prop:ControlSignal ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/cea#M_R_B_01> a eg:Variable ;
     rdfs:label "M_R_B_01"@en ;
     dcterms:description "Power of the hotbox heater #1"@en ;
-    dcterms:type "Power" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
     schema1:maxValue 3000.0 ;
     schema1:minValue 0.0 ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
+    sosa:observes prop:State ;
     eg:dataLakeSensorId "M_R_B_01" ;
     eg:dataType "float" ;
-    eg:relatesToProperty prop:State ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/cea#M_R_B_02> a eg:Variable ;
     rdfs:label "M_R_B_02"@en ;
     dcterms:description "Power of the hotbox heater #2"@en ;
-    dcterms:type "Power" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
     schema1:maxValue 3000.0 ;
     schema1:minValue 0.0 ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "M_R_B_02" ;
     eg:dataType "float" ;
-    eg:relatesToProperty prop:ControlSignal ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/cea#M_R_B_03> a eg:Variable ;
     rdfs:label "M_R_B_03"@en ;
     dcterms:description "Power of the hotbox heater #3"@en ;
-    dcterms:type "Power" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
     schema1:maxValue 3000.0 ;
     schema1:minValue 0.0 ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "M_R_B_03" ;
     eg:dataType "float" ;
-    eg:relatesToProperty prop:ControlSignal ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/cea#M_R_H_01> a eg:Variable ;
     rdfs:label "M_R_H_01"@en ;
     dcterms:description "Power of the fuel line heater"@en ;
-    dcterms:type "Power" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
     schema1:maxValue 3500.0 ;
     schema1:minValue 0.0 ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "M_R_H_01" ;
     eg:dataType "float" ;
-    eg:relatesToProperty prop:ControlSignal ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/cea#M_R_O_01> a eg:Variable ;
     rdfs:label "M_R_O_01"@en ;
     dcterms:description "Power of the air line heater"@en ;
-    dcterms:type "Power" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
     schema1:maxValue 3500.0 ;
     schema1:minValue 0.0 ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
+    sosa:observes prop:ControlSignal ;
     eg:dataLakeSensorId "M_R_O_01" ;
     eg:dataType "float" ;
-    eg:relatesToProperty prop:ControlSignal ;
     eg:variableKind "measured" .
 
 <https://www.energyguard.eu/ontology/cea#PT110> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PT110"@en ;
     dcterms:description "Pressure of the steam at the inlet of the system"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 6000.0 ;
     schema1:minValue 2000.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "PT110" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#PT112> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PT112"@en ;
     dcterms:description "Steam generator pressure"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/BAR> ;
     schema1:maxValue 15.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "PT112" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#PT204> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PT204"@en ;
     dcterms:description "Fuel heat exchanger M-E-HH-01 cold side inlet pressure"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 500.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "PT204" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#PT211> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PT211"@en ;
     dcterms:description "Fuel heat exchanger M-E-HH-01 hot side outlet pressure"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 500.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "PT211" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#PT217> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PT217"@en ;
     dcterms:description "Fuel heat exchanger M-E-HC-04 hot side outlet pressure"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 500.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "PT217" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#PT220> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PT220"@en ;
     dcterms:description "Fuel vent pressure"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 500.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "PT220" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#PT241> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PT241"@en ;
     dcterms:description "Fuel heat exchanger M-E-HC-04 hot side inlet pressure"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 500.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "PT241" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#PT305> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PT305"@en ;
     dcterms:description "Stacks fuel inlet pressure"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 500.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "PT305" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#PT306> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PT306"@en ;
     dcterms:description "Stacks air inlet pressure"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 600.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "PT306" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#PT353> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PT353"@en ;
     dcterms:description "Stacks air outlet pressure"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 500.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "PT353" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#PT354> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PT354"@en ;
     dcterms:description "Stacks fuel outlet pressure"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 600.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "PT354" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#PT407> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PT407"@en ;
     dcterms:description "Air compressor M-K-O-04 outlet pressure"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 750.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "PT407" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#PT418> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PT418"@en ;
     dcterms:description "Air vent pressure"@en ;
-    dcterms:type "Pressure" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliBAR> ;
     schema1:maxValue 2000.0 ;
     schema1:minValue 0.0 ;
     sosa:observes prop:Pressure ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "exact" ;
     eg:dataLakeSensorId "PT418" ;
-    eg:dataType "float" ;
-    eg:variableKind "measured" .
+    eg:dataType "float" .
 
 <https://www.energyguard.eu/ontology/cea#Period_CEA_MURPHY_test_bed_dataset> a dcterms:PeriodOfTime ;
     rdfs:label "08/09/2023-20/12/2023"@en ;
@@ -750,8 +567,6 @@
     dcterms:description "Time of the simulation"@en ;
     dcterms:identifier "time" ;
     qudt:hasUnit <http://qudt.org/vocab/unit/SEC> ;
-    eg:aggregation "instantaneous" ;
-    eg:dataLakeMatch "timestamp" ;
     eg:dataType "float" ;
     eg:storedInDatabaseColumn "public.d_calendar.datetime" ;
     eg:variableKind "measured" .

@@ -32,8 +32,8 @@
         <https://www.energyguard.eu/ontology/rea#Air_quality__PM2_5_g_m3>,
         <https://www.energyguard.eu/ontology/rea#Air_quality__SO2_g_m3> ;
     skos:note "TO BE UPDATED based on air quality from open portal:https://data.gov.lv/dati/dataset/ikmenesa-gaisa-kvalitate | 1 data row per day and hour, e.g. 2024.01.01 00:00, 2024.01.01 01:00, ..., 2024.01.01 23:00" ;
-    dcat:distribution <https://www.energyguard.eu/ontology/rea#Distribution_Air_quality> ;
-    dcat:landingPage <https://gmsd.riga.lv/main.php?i_lang=2> .
+    dcat:landingPage <https://gmsd.riga.lv/main.php?i_lang=2> ;
+    eg:storedInDatabaseTable "public.f_tsdata" .
 
 <https://www.energyguard.eu/ontology/rea#Dataset_Air_temperature> a dcat:Dataset ;
     dcterms:description "Air temperature: dataset of the REA pilot with 4 variables (00:00:00, 01:00:00, 23:00:00, Date). The pilot gave no description; this text is derived from its variable list."@en ;
@@ -63,7 +63,7 @@
         <https://www.energyguard.eu/ontology/rea#Borders_of_Riga_and_Riga_suburbs_B_Riga_suburb_borders__gid>,
         <https://www.energyguard.eu/ontology/rea#Borders_of_Riga_and_Riga_suburbs_B_Riga_suburb_borders__izpilddire>,
         <https://www.energyguard.eu/ontology/rea#Borders_of_Riga_and_Riga_suburbs_B_Riga_suburb_borders__nosaukums> ;
-    dcat:distribution <https://www.energyguard.eu/ontology/rea#Distribution_Borders_of_Riga_and_Riga_suburbs_B_Riga_suburb_borders> .
+    eg:storedInDatabaseTable "gis.rigas_priekspilsetas" .
 
 <https://www.energyguard.eu/ontology/rea#Dataset_Building_and_heating_consumption_data_Heating_2017_2024_xlsx> a dcat:Dataset ;
     dcterms:description "Monthly heat consumption (heating + hot water, MWh) for 7,033 buildings from 01.2017 to 12.2024, split into annual heating and hot water totals and 5-year averages, plus building characteristics (type, operating year, areas, apartments, floors, volume) and energy certificate info."@en ;
@@ -307,7 +307,7 @@
         <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings__reg_info>,
         <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings__stavu_skai>,
         <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings__tips> ;
-    dcat:distribution <https://www.energyguard.eu/ontology/rea#Distribution_Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings> .
+    eg:storedInDatabaseTable "gis.esosas_buves" .
 
 <https://www.energyguard.eu/ontology/rea#Dataset_Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings> a geosparql:FeatureCollection,
         dcat:Dataset ;
@@ -325,7 +325,7 @@
         <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings__reg_info>,
         <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings__stavu_skai>,
         <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings__tips> ;
-    dcat:distribution <https://www.energyguard.eu/ontology/rea#Distribution_Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings> .
+    eg:storedInDatabaseTable "gis.nojauktas_buves" .
 
 <https://www.energyguard.eu/ontology/rea#Dataset_Buildings_monthly_heat_series_ARCGIS_Server> a dcat:Dataset ;
     dcterms:description "Monthly heat consumption updates from 01.2021 to the current month for the 4,845 multi-apartment buildings that don't share a heat generator, pulled from the georiga ArcGIS REST service to extend the historical heating dataset."@en ;
@@ -335,7 +335,7 @@
         <https://www.energyguard.eu/ontology/rea#Buildings_monthly_heat_series_ARCGIS_Server__Adrese>,
         <https://www.energyguard.eu/ontology/rea#Buildings_monthly_heat_series_ARCGIS_Server__Kadastra_Nr> ;
     skos:note "These are the monthly updates for the heating consumption time series data. | They come from https://georiga.lv/server/rest/services/REA/MapServer/0/query?where=1%3D1&outFields=*&returnGeometry=true&f=json. | It is based on the previous dataset, but the updates are not for every building - they are from the residential multi-apartment that not share heat generator, i.e. the cadastral numbers/building (4845) of https://epuntuagr.sharepoint.com/:x:/r/sites/EnergyGuardConsortium/Document%20Library/5-Work%20Packages%20Working%20Folders/WP4%20-%20EnergyGuard%20TEF%20AI%20Development%20Sandbox%20and%20Integration/T4.5/Buildings%20list%20for%20DT.xlsx?d=w4abad13559c341549c714c7c9ab36303&csf=1&web=1&e=SExlJV. | The updates from georiga sevrer will enrich the dataset, by adding the new monthly value to the historical ones." ;
-    dcat:distribution <https://www.energyguard.eu/ontology/rea#Distribution_Buildings_monthly_heat_series_ARCGIS_Server> .
+    eg:storedInDatabaseTable "public.f_tsdata" .
 
 <https://www.energyguard.eu/ontology/rea#Dataset_EPC_data_from_energy_audits_pdfs_bis_files_BIS_Format_for_year_2018> a geosparql:FeatureCollection,
         dcat:Dataset ;
@@ -553,8 +553,8 @@
         <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__lietd_plat>,
         <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__renovacija>,
         <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__vid_ip_apk> ;
-    dcat:distribution <https://www.energyguard.eu/ontology/rea#Distribution_Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga> ;
-    dcat:landingPage <https://georiga.eu/en/atvertie-dati/energy-efficiency-indicators-for-heating-of-multi-apartment-buildings-in-riga/> .
+    dcat:landingPage <https://georiga.eu/en/atvertie-dati/energy-efficiency-indicators-for-heating-of-multi-apartment-buildings-in-riga/> ;
+    eg:storedInDatabaseTable "gis.majas_energoefektivitates_raditaji" .
 
 <https://www.energyguard.eu/ontology/rea#Dataset_Energy_performance_of_renovated_buildings> a geosparql:FeatureCollection,
         dcat:Dataset ;
@@ -594,8 +594,8 @@
         <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__sasniegtai>,
         <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__ventilac_1>,
         <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__ventilacij> ;
-    dcat:distribution <https://www.energyguard.eu/ontology/rea#Distribution_Energy_performance_of_renovated_buildings> ;
-    dcat:landingPage <https://georiga.eu/en/atvertie-dati/energy-performance-of-renovated-buildings/> .
+    dcat:landingPage <https://georiga.eu/en/atvertie-dati/energy-performance-of-renovated-buildings/> ;
+    eg:storedInDatabaseTable "gis.renoveto_eku_energoefektiviate" .
 
 <https://www.energyguard.eu/ontology/rea#Dataset_Environmentally_degrading_buildings> a geosparql:FeatureCollection,
         dcat:Dataset ;
@@ -614,8 +614,8 @@
         <https://www.energyguard.eu/ontology/rea#Environmentally_degrading_buildings__rd_lemums>,
         <https://www.energyguard.eu/ontology/rea#Environmentally_degrading_buildings__regions>,
         <https://www.energyguard.eu/ontology/rea#Environmentally_degrading_buildings__statuss> ;
-    dcat:distribution <https://www.energyguard.eu/ontology/rea#Distribution_Environmentally_degrading_buildings> ;
-    dcat:landingPage <https://georiga.eu/en/atvertie-dati/environmentally-degrading-buildings-and-territories/> .
+    dcat:landingPage <https://georiga.eu/en/atvertie-dati/environmentally-degrading-buildings-and-territories/> ;
+    eg:storedInDatabaseTable "gis.vidi_degradejosas_buves" .
 
 <https://www.energyguard.eu/ontology/rea#Dataset_Humidity> a dcat:Dataset ;
     dcterms:description "Humidity: dataset of the REA pilot with 4 variables (00:00:00, 01:00:00, 23:00:00, Date). The pilot gave no description; this text is derived from its variable list."@en ;
@@ -662,8 +662,11 @@
     schema1:variableMeasured <https://www.energyguard.eu/ontology/rea#Noise_levels__db>,
         <https://www.energyguard.eu/ontology/rea#Noise_levels__geometry>,
         <https://www.energyguard.eu/ontology/rea#Noise_levels__gid> ;
-    dcat:distribution <https://www.energyguard.eu/ontology/rea#Distribution_Noise_levels> ;
-    dcat:landingPage <https://georiga.eu/en/atvertie-dati/noise-mapping-data/> .
+    dcat:landingPage <https://georiga.eu/en/atvertie-dati/noise-mapping-data/> ;
+    eg:storedInDatabaseTable "gis.noise_2021_diena",
+        "gis.noise_2021_nakts",
+        "gis.noise_2021_vakars",
+        "gis.noise_2021_videjais" .
 
 <https://www.energyguard.eu/ontology/rea#Dataset_Riga_neighborhoods> a dcat:Dataset ;
     dcterms:description "Riga neighborhoods: dataset of the REA pilot with 3 variables (geometry, neighborhood, website). The pilot gave no description; this text is derived from its variable list."@en ;
@@ -695,7 +698,7 @@
         <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_A_streets__lemuma_nr>,
         <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_A_streets__nosaukums>,
         <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_A_streets__piezimes> ;
-    dcat:distribution <https://www.energyguard.eu/ontology/rea#Distribution_Riga_streets_and_addresses_A_streets> .
+    eg:storedInDatabaseTable "gis.ielas" .
 
 <https://www.energyguard.eu/ontology/rea#Dataset_Riga_streets_and_addresses_B_addresses> a geosparql:FeatureCollection,
         dcat:Dataset ;
@@ -707,7 +710,7 @@
         <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_B_addresses__iela>,
         <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_B_addresses__numurs>,
         <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_B_addresses__rotation> ;
-    dcat:distribution <https://www.energyguard.eu/ontology/rea#Distribution_Riga_streets_and_addresses_B_addresses> .
+    eg:storedInDatabaseTable "gis.adreses" .
 
 <https://www.energyguard.eu/ontology/rea#Dataset_Territorial_zones_for_the_selection_of_the_type_of_heat_supply> a geosparql:FeatureCollection,
         dcat:Dataset ;
@@ -718,8 +721,8 @@
     schema1:variableMeasured <https://www.energyguard.eu/ontology/rea#Territorial_zones_for_the_selection_of_the_type_of_heat_supply__geometry>,
         <https://www.energyguard.eu/ontology/rea#Territorial_zones_for_the_selection_of_the_type_of_heat_supply__gid>,
         <https://www.energyguard.eu/ontology/rea#Territorial_zones_for_the_selection_of_the_type_of_heat_supply__zona> ;
-    dcat:distribution <https://www.energyguard.eu/ontology/rea#Distribution_Territorial_zones_for_the_selection_of_the_type_of_heat_supply> ;
-    dcat:landingPage <https://georiga.eu/en/atvertie-dati/territorial-zones-for-the-selection-of-the-type-of-heat-supply/> .
+    dcat:landingPage <https://georiga.eu/en/atvertie-dati/territorial-zones-for-the-selection-of-the-type-of-heat-supply/> ;
+    eg:storedInDatabaseTable "gis.teritorialas_zonas_siltumapgades_izvelei" .
 
 <https://www.energyguard.eu/ontology/rea#3D_GEOMETRY_LOD1_LOD2__coorindate_system> a eg:Variable ;
     rdfs:label "coorindate_system"@en ;
@@ -749,38 +752,33 @@
 <https://www.energyguard.eu/ontology/rea#Air_quality__NO2_g_m3> a eg:Variable ;
     rdfs:label "NO₂ µg/m³"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MicroGM-PER-M3> ;
-    eg:dataLakeMatch "pattern" ;
-    eg:dataLakeSensorPattern "%\\_NO2" ;
-    eg:relatesToProperty prop:State .
+    sosa:observes prop:State ;
+    eg:dataLakeSensorPattern "%\\_NO2" .
 
 <https://www.energyguard.eu/ontology/rea#Air_quality__O3_g_m3> a eg:Variable ;
     rdfs:label "O₃ µg/m³"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MicroGM-PER-M3> ;
-    eg:dataLakeMatch "pattern" ;
-    eg:dataLakeSensorPattern "%\\_O3" ;
-    eg:relatesToProperty prop:State .
+    sosa:observes prop:State ;
+    eg:dataLakeSensorPattern "%\\_O3" .
 
 <https://www.energyguard.eu/ontology/rea#Air_quality__PM10_g_m3> a eg:Variable ;
     rdfs:label "PM₁₀ µg/m³"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MicroGM-PER-M3> ;
-    eg:dataLakeMatch "pattern" ;
-    eg:dataLakeSensorPattern "%\\_PM10\\_60min" ;
-    eg:relatesToProperty prop:State .
+    sosa:observes prop:State ;
+    eg:dataLakeSensorPattern "%\\_PM10\\_60min" .
 
 <https://www.energyguard.eu/ontology/rea#Air_quality__PM2_5_g_m3> a eg:Variable ;
     rdfs:label "PM₂.₅ µg/m³"@en ;
     dcterms:description "Air pollutants, measured in 3 monitoring stations: \"Milgravis\" (Mīlgrāvja Str.10), \"Brīvības iela\" (Brīvības Str.73), \"Pārdaugava\" (Kantora and Slampes Str.intersection)"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MicroGM-PER-M3> ;
-    eg:dataLakeMatch "pattern" ;
-    eg:dataLakeSensorPattern "%\\_PM2.5\\_60min" ;
-    eg:relatesToProperty prop:State .
+    sosa:observes prop:State ;
+    eg:dataLakeSensorPattern "%\\_PM2.5\\_60min" .
 
 <https://www.energyguard.eu/ontology/rea#Air_quality__SO2_g_m3> a eg:Variable ;
     rdfs:label "SO₂ µg/m³"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MicroGM-PER-M3> ;
-    eg:dataLakeMatch "pattern" ;
-    eg:dataLakeSensorPattern "%\\_SO2" ;
-    eg:relatesToProperty prop:State .
+    sosa:observes prop:State ;
+    eg:dataLakeSensorPattern "%\\_SO2" .
 
 <https://www.energyguard.eu/ontology/rea#Air_temperature__00_00_00> a eg:Variable ;
     rdfs:label "00:00:00"@en ;
@@ -807,40 +805,34 @@
 <https://www.energyguard.eu/ontology/rea#Borders_of_Riga_and_Riga_suburbs_B_Riga_suburb_borders__area> a eg:Variable ;
     rdfs:label "area"@en ;
     dcterms:description "???"@en ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "area" .
 
 <https://www.energyguard.eu/ontology/rea#Borders_of_Riga_and_Riga_suburbs_B_Riga_suburb_borders__atk> a eg:Variable ;
     rdfs:label "administrative_code"@en ;
     dcterms:description "Does not apply to the project"@en ;
     csvw:name "atk" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "atk" .
 
 <https://www.energyguard.eu/ontology/rea#Borders_of_Riga_and_Riga_suburbs_B_Riga_suburb_borders__geometry> a eg:Variable ;
     rdfs:label "geometry"@en ;
     csvw:format "Polygon" ;
-    eg:dataLakeMatch "column" ;
     eg:dataType "geometry" ;
     eg:storedInDatabaseColumn "geom" .
 
 <https://www.energyguard.eu/ontology/rea#Borders_of_Riga_and_Riga_suburbs_B_Riga_suburb_borders__gid> a eg:Variable ;
     rdfs:label "gid"@en ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "__gid" .
 
 <https://www.energyguard.eu/ontology/rea#Borders_of_Riga_and_Riga_suburbs_B_Riga_suburb_borders__izpilddire> a eg:Variable ;
     rdfs:label "executive_district"@en ;
     dcterms:description "Does not apply to the project"@en ;
     csvw:name "izpilddire" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "izpilddire" .
 
 <https://www.energyguard.eu/ontology/rea#Borders_of_Riga_and_Riga_suburbs_B_Riga_suburb_borders__nosaukums> a eg:Variable ;
     rdfs:label "name"@en ;
     dcterms:description "Name of the suburb"@en ;
     csvw:name "nosaukums" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "nosaukums" .
 
 <https://www.energyguard.eu/ontology/rea#Building_and_heating_consumption_data_Heating_2017_2024_xlsx__01_2017> a eg:Variable ;
@@ -1947,237 +1939,128 @@
     rdfs:label "building_description"@en ;
     dcterms:description "Code for the building type. Does not apply to the project"@en ;
     csvw:name "buves_teks" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "buves_teks" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings__geometry> a eg:Variable ;
     rdfs:label "geometry"@en ;
     dcterms:description "Polygon geometry of the building"@en ;
     csvw:format "Polygon" ;
-    eg:dataLakeMatch "column" ;
     eg:dataType "geometry" ;
     eg:storedInDatabaseColumn "geom" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings__gid> a eg:Variable ;
     rdfs:label "gid"@en ;
     dcterms:description "Unique identifier of the building"@en ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "__gid" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings__name> a eg:Variable ;
     rdfs:label "name"@en ;
     dcterms:description "Name of the building"@en ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "name" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings__piezimes> a eg:Variable ;
     rdfs:label "notes"@en ;
     dcterms:description "Any remarks or annotations"@en ;
     csvw:name "piezimes" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "piezimes" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings__reg_datums> a eg:Variable ;
     rdfs:label "registration_date"@en ;
     dcterms:description "Date when the building was registered"@en ;
     csvw:name "reg_datums" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "reg_datums" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings__reg_info> a eg:Variable ;
     rdfs:label "registration_info"@en ;
     dcterms:description "High-detail topographic information/ Ortophoto/ Measurement/ Other. Does not apply to the project"@en ;
     csvw:name "reg_info" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "reg_info" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings__stavu_skai> a eg:Variable ;
     rdfs:label "number_of_floors"@en ;
     dcterms:description "Number of floors in the building"@en ;
     csvw:name "stavu_skai" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "stavu_skai" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings__tips> a eg:Variable ;
     rdfs:label "building_type"@en ;
     dcterms:description "Capital constructions; Construction; Underground structure; Light constructions"@en ;
     csvw:name "tips" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "tips" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings__buves_teks> a eg:Variable ;
     rdfs:label "building_description"@en ;
     dcterms:description "Code for building type. Does not apply to the project"@en ;
     csvw:name "buves_teks" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "buves_teks" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings__dzests_dat> a eg:Variable ;
     rdfs:label "demolition_date"@en ;
     dcterms:description "Date when the building was marked as deleted or deactivated (i.e., building removed, demolished, or replaced)."@en ;
     csvw:name "dzests_dat" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "dzests_dat" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings__dzests_inf> a eg:Variable ;
     rdfs:label "demolition_info"@en ;
     csvw:name "dzests_inf" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "dzests_inf" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings__geometry> a eg:Variable ;
     rdfs:label "geometry"@en ;
     dcterms:description "Polygon geometry of the building"@en ;
     csvw:format "Polygon" ;
-    eg:dataLakeMatch "column" ;
     eg:dataType "geometry" ;
     eg:storedInDatabaseColumn "geom" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings__gid> a eg:Variable ;
     rdfs:label "gid"@en ;
     dcterms:description "Unique identifier of the building"@en ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "__gid" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings__piezimes> a eg:Variable ;
     rdfs:label "notes"@en ;
     dcterms:description "Any remarks or annotations"@en ;
     csvw:name "piezimes" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "piezimes" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings__reg_datums> a eg:Variable ;
     rdfs:label "registration_date"@en ;
     dcterms:description "Date when the building was registered"@en ;
     csvw:name "reg_datums" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "reg_datums" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings__reg_info> a eg:Variable ;
     rdfs:label "registration_info"@en ;
     csvw:name "reg_info" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "reg_info" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings__stavu_skai> a eg:Variable ;
     rdfs:label "number_of_floors"@en ;
     dcterms:description "Number of floors in the building"@en ;
     csvw:name "stavu_skai" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "stavu_skai" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings__tips> a eg:Variable ;
     rdfs:label "building_type"@en ;
     dcterms:description "Ruins; New building; Capital construction building; Construction; Foundations; Underground structure; Light construction building"@en ;
     csvw:name "tips" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "tips" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_monthly_heat_series_ARCGIS_Server__01_2021_current_month_current_year> a sosa:Sensor,
         eg:Variable ;
     rdfs:label "01.2021 - current_month._current_year"@en ;
     sosa:observes prop:Energy ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "public.f_tsdata.f_value" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_monthly_heat_series_ARCGIS_Server__Adrese> a eg:Variable ;
     rdfs:label "Adrese"@en ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "public.d_sensor.name" ;
     eg:variableKind "identifier" .
 
 <https://www.energyguard.eu/ontology/rea#Buildings_monthly_heat_series_ARCGIS_Server__Kadastra_Nr> a eg:Variable ;
     rdfs:label "Kadastra Nr."@en ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "public.d_sensor.sensor_id" ;
     eg:variableKind "identifier" .
-
-<https://www.energyguard.eu/ontology/rea#Distribution_Air_quality> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF6_REA public.f_tsdata"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF6_REA" ;
-    eg:storedInDatabaseTable "public.f_tsdata" ;
-    eg:tableLayout "long" .
-
-<https://www.energyguard.eu/ontology/rea#Distribution_Borders_of_Riga_and_Riga_suburbs_B_Riga_suburb_borders> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF6_REA gis.rigas_priekspilsetas"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF6_REA" ;
-    eg:storedInDatabaseTable "gis.rigas_priekspilsetas" ;
-    eg:tableLayout "wide" .
-
-<https://www.energyguard.eu/ontology/rea#Distribution_Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF6_REA gis.esosas_buves"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF6_REA" ;
-    eg:storedInDatabaseTable "gis.esosas_buves" ;
-    eg:tableLayout "wide" .
-
-<https://www.energyguard.eu/ontology/rea#Distribution_Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF6_REA gis.nojauktas_buves"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF6_REA" ;
-    eg:storedInDatabaseTable "gis.nojauktas_buves" ;
-    eg:tableLayout "wide" .
-
-<https://www.energyguard.eu/ontology/rea#Distribution_Buildings_monthly_heat_series_ARCGIS_Server> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF6_REA public.f_tsdata"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF6_REA" ;
-    eg:storedInDatabaseTable "public.f_tsdata" ;
-    eg:tableLayout "long" .
-
-<https://www.energyguard.eu/ontology/rea#Distribution_Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF6_REA gis.majas_energoefektivitates_raditaji"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF6_REA" ;
-    eg:storedInDatabaseTable "gis.majas_energoefektivitates_raditaji" ;
-    eg:tableLayout "wide" .
-
-<https://www.energyguard.eu/ontology/rea#Distribution_Energy_performance_of_renovated_buildings> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF6_REA gis.renoveto_eku_energoefektiviate"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF6_REA" ;
-    eg:storedInDatabaseTable "gis.renoveto_eku_energoefektiviate" ;
-    eg:tableLayout "wide" .
-
-<https://www.energyguard.eu/ontology/rea#Distribution_Environmentally_degrading_buildings> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF6_REA gis.vidi_degradejosas_buves"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF6_REA" ;
-    eg:storedInDatabaseTable "gis.vidi_degradejosas_buves" ;
-    eg:tableLayout "wide" .
-
-<https://www.energyguard.eu/ontology/rea#Distribution_Noise_levels> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF6_REA gis.noise_2021_diena, gis.noise_2021_nakts, gis.noise_2021_vakars, gis.noise_2021_videjais"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF6_REA" ;
-    eg:storedInDatabaseTable "gis.noise_2021_diena",
-        "gis.noise_2021_nakts",
-        "gis.noise_2021_vakars",
-        "gis.noise_2021_videjais" ;
-    eg:tableLayout "wide" .
-
-<https://www.energyguard.eu/ontology/rea#Distribution_Riga_streets_and_addresses_A_streets> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF6_REA gis.ielas"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF6_REA" ;
-    eg:storedInDatabaseTable "gis.ielas" ;
-    eg:tableLayout "wide" .
-
-<https://www.energyguard.eu/ontology/rea#Distribution_Riga_streets_and_addresses_B_addresses> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF6_REA gis.adreses"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF6_REA" ;
-    eg:storedInDatabaseTable "gis.adreses" ;
-    eg:tableLayout "wide" .
-
-<https://www.energyguard.eu/ontology/rea#Distribution_Territorial_zones_for_the_selection_of_the_type_of_heat_supply> a dcat:Distribution ;
-    dcterms:title "Data lake: TEF6_REA gis.teritorialas_zonas_siltumapgades_izvelei"@en ;
-    dcat:accessService eg:DataLakeService ;
-    eg:storedInDatabase "TEF6_REA" ;
-    eg:storedInDatabaseTable "gis.teritorialas_zonas_siltumapgades_izvelei" ;
-    eg:tableLayout "wide" .
 
 <https://www.energyguard.eu/ontology/rea#EPC_data_from_energy_audits_pdfs_bis_files_BIS_Format_for_year_2018__AREA_SCALE> a eg:Variable ;
     rdfs:label "Polygon area or weighted area metric"@en ;
@@ -3063,21 +2946,18 @@
     rdfs:label "address"@en ;
     dcterms:description "Address of the building"@en ;
     csvw:name "adrese" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "adrese" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__apkaime> a eg:Variable ;
     rdfs:label "neighborhood"@en ;
     dcterms:description "Name of neighborhood or district, e.g. Centrs"@en ;
     csvw:name "apkaime" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "apkaime" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__cadastrena> a eg:Variable ;
     rdfs:label "cadastre_designation"@en ;
     dcterms:description "Cadastral designation of the building"@en ;
     csvw:name "cadastrena" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "cadastrena" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__ekspl_gads> a eg:Variable ;
@@ -3085,35 +2965,30 @@
     dcterms:description "Year when the building was put into operation."@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/YR> ;
     csvw:name "ekspl_gads" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "ekspl_gads" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__enef_klase> a eg:Variable ;
     rdfs:label "energy_perf_class"@en ;
     dcterms:description "Energy efficiency class (A+,A,B,C,D,E,F). The energy efficiency class for heating is determined by the average heating energy consumption over 3-5 years. The class assigned in the data set may differ from the class specified in the building energy certificate due to the fact that energy certification is carried out in detail for a specific building."@en ;
     csvw:name "enef_klase" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "enef_klase" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__filtrs> a eg:Variable ;
     rdfs:label "data_quality_flag"@en ;
     dcterms:description "Data quality indicator, e.g. \"Correct value\". Indicates whether the data is valid or verified."@en ;
     csvw:name "filtrs" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "filtrs" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__geometry> a eg:Variable ;
     rdfs:label "geometry"@en ;
     dcterms:description "Polygon geometry of the building"@en ;
     csvw:format "Polygon" ;
-    eg:dataLakeMatch "column" ;
     eg:dataType "geometry" ;
     eg:storedInDatabaseColumn "geom" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__id> a eg:Variable ;
     rdfs:label "id"@en ;
     dcterms:description "Unique identifier of the building according to Register of State adresses"@en ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "id" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__ip_paterin> a eg:Variable ;
@@ -3121,7 +2996,6 @@
     dcterms:description "Actual specific heating consumption for the last 12 months, based on district heating data."@en ;
     schema1:unitText "kWh/m²/year" ;
     csvw:name "ip_paterin" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "ip_paterin" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__ipatn_silt> a eg:Variable ;
@@ -3129,7 +3003,6 @@
     dcterms:description "This indicator reflects percentage difference between specific heating consumption for the past 12 months (heating_consumption) and average heating consumption indicator for equivalent buildings. Equivalent buildings are buildings, which were built in approximately the same period of time and are similar in area. If the field “Comparison with equivalent buildings” contains a positive number, for example “+15%”, then this means that the selected building consumes 15% more heat energy for heating than similar buildings by area and year of construction. If the comparison is negative, for example “-20%”, then the selected building consumes 20% less heat energy for heating than similar buildings. If data is not available for all 12 months, the result is displayed as “No data”."@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     csvw:name "ipatn_silt" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "ipatn_silt" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__lietd_plat> a eg:Variable ;
@@ -3137,14 +3010,12 @@
     dcterms:description "Useful floor area of the building"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/M2> ;
     csvw:name "lietd_plat" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "lietd_plat" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__renovacija> a eg:Variable ;
     rdfs:label "renovation_info"@en ;
     dcterms:description "Renovation details, including year of the completion of renovation and funding source (i.e. LIAA (Latvian Investment and Development Agency ) or ALTUM (JSC “Development Finance Institution ALTUM) or Private funding (Privātlīdzekļi))"@en ;
     csvw:name "renovacija" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "renovacija" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga__vid_ip_apk> a eg:Variable ;
@@ -3152,28 +3023,24 @@
     dcterms:description "Average specific heating energy consumption over the last 3-5 years, based on district heating data."@en ;
     schema1:unitText "kWh/m²/year" ;
     csvw:name "vid_ip_apk" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "vid_ip_apk" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__apkaime> a eg:Variable ;
     rdfs:label "neighborhood"@en ;
     dcterms:description "Name of neighborhood or district, e.g. Centrs"@en ;
     csvw:name "apkaime" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "apkaime" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__apkures_in> a eg:Variable ;
     rdfs:label "heating_individ_regulation"@en ;
     dcterms:description "Individual regulation of the heating system. If it is done during the renovation, it is marked with \"+\"."@en ;
     csvw:name "apkures_in" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "apkures_in" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__apkures_si> a eg:Variable ;
     rdfs:label "heating_system_insulation"@en ;
     dcterms:description "Heating system renovation. If it is done during the renovation, it is marked with \"+\"."@en ;
     csvw:name "apkures_si" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "apkures_si" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__apstiprin> a eg:Variable ;
@@ -3181,14 +3048,12 @@
     dcterms:description "Portion of renovation cost that was officially funded"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/CCY_EUR> ;
     csvw:name "apstiprin_" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "apstiprin_" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__ardurvju_n> a eg:Variable ;
     rdfs:label "main_doors_replaced"@en ;
     dcterms:description "Outdoor replacement. If it is done during the renovation, it is marked with \"+\"."@en ;
     csvw:name "ardurvju_n" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "ardurvju_n" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__arsienu_si> a eg:Variable ;
@@ -3196,21 +3061,18 @@
     dcterms:description "Insulation thickness (mm) of external walls"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliM> ;
     csvw:name "arsienu_si" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "arsienu_si" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__btrim> a eg:Variable ;
     rdfs:label "address"@en ;
     dcterms:description "Address of the building"@en ;
     csvw:name "btrim" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "btrim" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__cadastrena> a eg:Variable ;
     rdfs:label "cadastre_designation"@en ;
     dcterms:description "Cadastral designation of the building"@en ;
     csvw:name "cadastrena" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "cadastrena" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__cokola_sil> a eg:Variable ;
@@ -3218,14 +3080,12 @@
     dcterms:description "Building basement walls insulation thickness (mm)."@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliM> ;
     csvw:name "cokola_sil" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "cokola_sil" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__divcaurulu> a eg:Variable ;
     rdfs:label "two_pipe_system"@en ;
     dcterms:description "Transition to a two-pipe heating system. If it is done during the renovation, it is marked with \"+\"."@en ;
     csvw:name "divcaurulu" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "divcaurulu" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__ekspl_gads> a eg:Variable ;
@@ -3233,28 +3093,24 @@
     dcterms:description "Year when the building was put into operation."@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/YR> ;
     csvw:name "ekspl_gads" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "ekspl_gads" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__enef_klase> a eg:Variable ;
     rdfs:label "energy_class_after_renovation"@en ;
     dcterms:description "Energy efficiency class after renovation (A+, A, B, C, D, E, F)."@en ;
     csvw:name "enef_klase" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "enef_klase" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__finansejum> a eg:Variable ;
     rdfs:label "funding_type"@en ;
     dcterms:description "The fund that was used to invest in renovation (ALTUM / LIAA / Private)"@en ;
     csvw:name "finansejum" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "finansejum" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__geometry> a eg:Variable ;
     rdfs:label "geometry"@en ;
     dcterms:description "Polygon geometry of the building"@en ;
     csvw:format "Polygon" ;
-    eg:dataLakeMatch "column" ;
     eg:dataType "geometry" ;
     eg:storedInDatabaseColumn "geom" .
 
@@ -3262,7 +3118,6 @@
     rdfs:label "id"@en ;
     dcterms:description "Unique identifier of the building according to Register of State adresses"@en ;
     csvw:name "gid" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "__gid" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__jumta_silt> a eg:Variable ;
@@ -3270,14 +3125,12 @@
     dcterms:description "Roof insulation thickness (mm)."@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliM> ;
     csvw:name "jumta_silt" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "jumta_silt" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__karstauden> a eg:Variable ;
     rdfs:label "hot_water_renovation"@en ;
     dcterms:description "Hot water system renovation. If it is done during the renovation, it is marked with \"+\"."@en ;
     csvw:name "karstauden" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "karstauden" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__kopeja_pla> a eg:Variable ;
@@ -3285,7 +3138,6 @@
     dcterms:description "Total floor area of the building"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/M2> ;
     csvw:name "kopeja_pla" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "kopeja_pla" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__kopejas_re> a eg:Variable ;
@@ -3293,21 +3145,18 @@
     dcterms:description "Total cost of the renovation"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/CCY_EUR> ;
     csvw:name "kopejas_re" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "kopejas_re" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__lodziju_ie> a eg:Variable ;
     rdfs:label "loggia_glazing_renovation"@en ;
     dcterms:description "Loggia/balcony glazing during renovation. If it is done during the renovation, it is marked with \"+\"."@en ;
     csvw:name "lodziju_ie" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "lodziju_ie" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__logu_nomai> a eg:Variable ;
     rdfs:label "windows_replaced"@en ;
     dcterms:description "Windows replacement. If it is done during the renovation, it is marked with \"+\"."@en ;
     csvw:name "logu_nomai" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "logu_nomai" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__pagraba_si> a eg:Variable ;
@@ -3315,7 +3164,6 @@
     dcterms:description "Basement ceiling insulation thickness (mm)."@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/MilliM> ;
     csvw:name "pagraba_si" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "pagraba_si" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__paterins_1> a eg:Variable ;
@@ -3323,7 +3171,6 @@
     dcterms:description "Heating energy consumption before renovation"@en ;
     schema1:unitText "kWh/m²/year" ;
     csvw:name "paterins_1" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "paterins_1" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__paterins_2> a eg:Variable ;
@@ -3331,7 +3178,6 @@
     dcterms:description "Expected total heat energy consumption (heating + hot water) after renovation"@en ;
     schema1:unitText "kWh/m²/year" ;
     csvw:name "paterins_2" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "paterins_2" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__paterins_3> a eg:Variable ;
@@ -3339,7 +3185,6 @@
     dcterms:description "Expected heating energy consumption after renovation"@en ;
     schema1:unitText "kWh/m²/year" ;
     csvw:name "paterins_3" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "paterins_3" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__paterins_p> a eg:Variable ;
@@ -3347,7 +3192,6 @@
     dcterms:description "Total heat energy consumption (heating + hot water) before renovation"@en ;
     schema1:unitText "kWh/m²/year" ;
     csvw:name "paterins_p" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "paterins_p" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__planotais> a eg:Variable ;
@@ -3355,7 +3199,6 @@
     dcterms:description "Expected energy savings from renovation (percentage)"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     csvw:name "planotais_" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "planotais_" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__renov_izma> a eg:Variable ;
@@ -3363,7 +3206,6 @@
     dcterms:description "Cost of renovation, that payed owner of the flat (accordingly to flat area)"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/CCY_EUR-PER-M2> ;
     csvw:name "renov_izma" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "renov_izma" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__renovacija> a eg:Variable ;
@@ -3371,7 +3213,6 @@
     dcterms:description "Year of renovation completion"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/YR> ;
     csvw:name "renovacija" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "renovacija" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__sasniegtai> a eg:Variable ;
@@ -3379,48 +3220,41 @@
     dcterms:description "Actual energy savings achieved (percentage)"@en ;
     qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
     csvw:name "sasniegtai" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "sasniegtai" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__ventilac_1> a eg:Variable ;
     rdfs:label "ventilation_recuper"@en ;
     dcterms:description "Mechanical recuperation of ventilated air. If it is done during the renovation, it is marked with \"+\"."@en ;
     csvw:name "ventilac_1" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "ventilac_1" .
 
 <https://www.energyguard.eu/ontology/rea#Energy_performance_of_renovated_buildings__ventilacij> a eg:Variable ;
     rdfs:label "ventilation_upgraded"@en ;
     dcterms:description "Measurement that improves natural ventilation. If it is done during the renovation, it is marked with \"+\"."@en ;
     csvw:name "ventilacij" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "ventilacij" .
 
 <https://www.energyguard.eu/ontology/rea#Environmentally_degrading_buildings__adrese> a eg:Variable ;
     rdfs:label "address"@en ;
     dcterms:description "Address of the building"@en ;
     csvw:name "adrese" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "adrese" .
 
 <https://www.energyguard.eu/ontology/rea#Environmentally_degrading_buildings__cadastrena> a eg:Variable ;
     rdfs:label "cadastral_designation"@en ;
     dcterms:description "Cadastral designation of the building"@en ;
     csvw:name "cadastrena" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "cadastrena" .
 
 <https://www.energyguard.eu/ontology/rea#Environmentally_degrading_buildings__geometry> a eg:Variable ;
     rdfs:label "geometry"@en ;
     dcterms:description "Polygon geometry of the building"@en ;
     csvw:format "Polygon" ;
-    eg:dataLakeMatch "column" ;
     eg:dataType "geometry" ;
     eg:storedInDatabaseColumn "geom" .
 
 <https://www.energyguard.eu/ontology/rea#Environmentally_degrading_buildings__id> a eg:Variable ;
     rdfs:label "id"@en ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "id" .
 
 <https://www.energyguard.eu/ontology/rea#Environmentally_degrading_buildings__klasifikac> a eg:Variable ;
@@ -3428,7 +3262,6 @@
     dcterms:description "A category – completely or partially collapsed building posing a danger to people; B category – potentially dangerous building that threatens safety; C category – environmentally degrading building that does not endanger people."@en ;
     csvw:format "one of A / B / C" ;
     csvw:name "klasifikac" ;
-    eg:dataLakeMatch "column" ;
     eg:dataType "text" ;
     eg:storedInDatabaseColumn "klasifikac" .
 
@@ -3436,42 +3269,36 @@
     rdfs:label "coordinates"@en ;
     dcterms:description "in dataset these cells are empty"@en ;
     csvw:name "koordinate" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "koordinate" .
 
 <https://www.energyguard.eu/ontology/rea#Environmentally_degrading_buildings__piederiba> a eg:Variable ;
     rdfs:label "ownership"@en ;
     dcterms:description "Private property, including joint ownership/ state property/ municipal property"@en ;
     csvw:name "piederiba" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "piederiba" .
 
 <https://www.energyguard.eu/ontology/rea#Environmentally_degrading_buildings__piezimes> a eg:Variable ;
     rdfs:label "notes"@en ;
     dcterms:description "Does not apply to the project"@en ;
     csvw:name "piezimes" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "piezimes" .
 
 <https://www.energyguard.eu/ontology/rea#Environmentally_degrading_buildings__rd_lemums> a eg:Variable ;
     rdfs:label "municipal_decision"@en ;
     dcterms:description "Does not apply to the project"@en ;
     csvw:name "rd_lemums" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "rd_lemums" .
 
 <https://www.energyguard.eu/ontology/rea#Environmentally_degrading_buildings__regions> a eg:Variable ;
     rdfs:label "region"@en ;
     dcterms:description "(I don't see such column in georiga)"@en ;
     csvw:name "regions" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "regions" .
 
 <https://www.energyguard.eu/ontology/rea#Environmentally_degrading_buildings__statuss> a eg:Variable ;
     rdfs:label "status"@en ;
     dcterms:description "Status only one: Environmentally degrading object"@en ;
     csvw:name "statuss" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "statuss" .
 
 <https://www.energyguard.eu/ontology/rea#Humidity__00_00_00> a eg:Variable ;
@@ -3560,14 +3387,12 @@
     dcterms:description "Noise levels in dB ranges: 40-45,45-50,50-55,...,80-85"@en ;
     csvw:format "ranges" ;
     csvw:name "db" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "db" .
 
 <https://www.energyguard.eu/ontology/rea#Noise_levels__geometry> a eg:Variable ;
     rdfs:label "geometry"@en ;
     dcterms:description "Polygon geometry of the building"@en ;
     csvw:format "Polygon" ;
-    eg:dataLakeMatch "column" ;
     eg:dataType "geometry" ;
     eg:storedInDatabaseColumn "geom" .
 
@@ -3575,7 +3400,6 @@
     rdfs:label "id"@en ;
     dcterms:description "Unique identifier"@en ;
     csvw:name "gid" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "__gid" .
 
 <https://www.energyguard.eu/ontology/rea#Riga_neighborhoods__apkaime> a eg:Variable ;
@@ -3610,56 +3434,47 @@
 <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_A_streets__darbiba> a eg:Variable ;
     rdfs:label "activity"@en ;
     csvw:name "darbiba" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "darbiba" .
 
 <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_A_streets__geometry> a eg:Variable ;
     rdfs:label "geometry"@en ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "geom" .
 
 <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_A_streets__lemuma_dat> a eg:Variable ;
     rdfs:label "decision_date"@en ;
     csvw:name "lemuma_dat" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "lemuma_dat" .
 
 <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_A_streets__lemuma_nos> a eg:Variable ;
     rdfs:label "decision_title"@en ;
     csvw:name "lemuma_nos" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "lemuma_nos" .
 
 <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_A_streets__lemuma_nr> a eg:Variable ;
     rdfs:label "decision_number"@en ;
     csvw:name "lemuma_nr" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "lemuma_nr" .
 
 <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_A_streets__nosaukums> a eg:Variable ;
     rdfs:label "name"@en ;
     csvw:name "nosaukums" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "nosaukums" .
 
 <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_A_streets__piezimes> a eg:Variable ;
     rdfs:label "notes"@en ;
     csvw:name "piezimes" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "piezimes" .
 
 <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_B_addresses__adrese> a eg:Variable ;
     rdfs:label "address"@en ;
     dcterms:description "Address (name of the street and number of the object)"@en ;
     csvw:name "adrese" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "adrese" .
 
 <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_B_addresses__geometry> a eg:Variable ;
     rdfs:label "geometry"@en ;
     dcterms:description "Polygon geometry of the object"@en ;
     csvw:format "Polygon" ;
-    eg:dataLakeMatch "column" ;
     eg:dataType "geometry" ;
     eg:storedInDatabaseColumn "geom" .
 
@@ -3667,33 +3482,28 @@
     rdfs:label "street"@en ;
     dcterms:description "Street name"@en ;
     csvw:name "iela" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "iela" .
 
 <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_B_addresses__numurs> a eg:Variable ;
     rdfs:label "number"@en ;
     dcterms:description "Number of the object"@en ;
     csvw:name "numurs" ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "numurs" .
 
 <https://www.energyguard.eu/ontology/rea#Riga_streets_and_addresses_B_addresses__rotation> a eg:Variable ;
     rdfs:label "rotation"@en ;
     dcterms:description "Does not apply to the project"@en ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "rotation" .
 
 <https://www.energyguard.eu/ontology/rea#Territorial_zones_for_the_selection_of_the_type_of_heat_supply__geometry> a eg:Variable ;
     rdfs:label "geometry"@en ;
     dcterms:description "Polygon geometry of the building"@en ;
     csvw:format "Polygon" ;
-    eg:dataLakeMatch "column" ;
     eg:dataType "geometry" ;
     eg:storedInDatabaseColumn "geom" .
 
 <https://www.energyguard.eu/ontology/rea#Territorial_zones_for_the_selection_of_the_type_of_heat_supply__gid> a eg:Variable ;
     rdfs:label "gid"@en ;
-    eg:dataLakeMatch "column" ;
     eg:storedInDatabaseColumn "__gid" .
 
 <https://www.energyguard.eu/ontology/rea#Territorial_zones_for_the_selection_of_the_type_of_heat_supply__zona> a eg:Variable ;
@@ -3701,7 +3511,6 @@
     dcterms:description "I zona – atļauta tikai centralizētā vai bezemisiju siltumapgāde; aizliegts cietais un gāzveida kurināmais. II zona – aizliegts cietais kurināmais; prioritāte bezemisiju risinājumiem, tad gāze. III zona – atļauti visi risinājumi; priekšroka bezemisiju un centralizētai siltumapgādei."@en ;
     csvw:format "one of I / II / III" ;
     csvw:name "zona" ;
-    eg:dataLakeMatch "column" ;
     eg:dataType "text" ;
     eg:storedInDatabaseColumn "zona" .
 

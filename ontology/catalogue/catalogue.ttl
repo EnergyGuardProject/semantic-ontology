@@ -7,8 +7,7 @@
 # Generated from the dataset list; when a dataset is added to a pilot file, add its IRI here too.
 mp:EnergyGuardCatalogue a dcat:Catalog ;
     dcterms:title "EnergyGuard data catalogue"@en ;
-    dcterms:description "Catalogue of the datasets delivered by the EnergyGuard pilots and where each is stored in the EnergyGuard data lake."@en ;
-    dcat:service eg:DataLakeService ;
+    dcterms:description "Catalogue of the datasets delivered by the EnergyGuard pilots. The numbers themselves are stored in the EnergyGuard data lake (PostgreSQL, operated by CARTIF, one database per pilot); each dataset names its database and table. The host address is not published."@en ;
     dcat:dataset
 <https://www.energyguard.eu/ontology/ber#Dataset_PEM_Electrolyzer_14kW>,
         <https://www.energyguard.eu/ontology/ber#Dataset_PEM_Electrolyzer_7kW>,

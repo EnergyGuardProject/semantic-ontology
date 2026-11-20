@@ -8,7 +8,7 @@
 //   Relationships  (Pilot)-[:HAS_DATASET]->(Dataset)        (Dataset)-[:HAS_VARIABLE]->(Variable)
 //                  (Variable)-[:OF_TYPE]->(MeasurementType) (Variable)-[:HOSTED_BY]->(Platform)
 //                  (Variable)-[:HAS_UNIT]->(Unit)
-//   Shortcuts      displayName; on variables lakeSensorId, lakeSensorPattern, lakeColumn, lakeMatch, measurementType;
+//   Shortcuts      displayName; on variables lakeSensorId, lakeSensorPattern, lakeColumn, inLake, measurementType;
 //                  on datasets database, dbTable, dbTables, tableLayout
 
 // A) Constraints and indexes
@@ -46,29 +46,30 @@ SET n.displayName = coalesce(CASE WHEN first IS :: LIST<ANY> THEN first[0] ELSE 
 MATCH (d:Dataset)-[:dcterms__publisher]->(p:Pilot) MERGE (p)-[:HAS_DATASET]->(d);
 MATCH (d:Dataset)-[:sch__variableMeasured]->(v:Variable) MERGE (d)-[:HAS_VARIABLE]->(v);
 MATCH (v:Variable)-[:qudt__hasUnit]->(u:Unit) MERGE (v)-[:HAS_UNIT]->(u);
-MATCH (v:Variable)-[r]->(t:MeasurementType) WHERE type(r) IN ['sosa__observes', 'eg__relatesToProperty'] MERGE (v)-[:OF_TYPE]->(t);
+MATCH (v:Variable)-[:sosa__observes]->(t:MeasurementType) MERGE (v)-[:OF_TYPE]->(t);
 MATCH (v:Variable)-[:sosa__isHostedBy]->(p:Platform) MERGE (v)-[:HOSTED_BY]->(p);
 
-// F) Where the data lives: the lake table is on the dataset's distribution
-MATCH (d:Dataset)-[:dcat__distribution]->(x)
-WITH d, x,
-     CASE WHEN x.eg__storedInDatabase IS :: LIST<ANY> THEN x.eg__storedInDatabase[0] ELSE x.eg__storedInDatabase END AS db,
-     CASE WHEN x.eg__storedInDatabaseTable IS :: LIST<ANY> THEN x.eg__storedInDatabaseTable ELSE [x.eg__storedInDatabaseTable] END AS tables,
-     CASE WHEN x.eg__tableLayout IS :: LIST<ANY> THEN x.eg__tableLayout[0] ELSE x.eg__tableLayout END AS layout
-WHERE db IS NOT NULL
-SET d.database = db, d.dbTable = tables[0], d.dbTables = tables, d.tableLayout = layout;
+// F) Where the data lives: the pilot names its lake database, the dataset names its table
+MATCH (d:Dataset)-[:dcterms__publisher]->(p:Pilot) WHERE d.eg__storedInDatabaseTable IS NOT NULL
+WITH d, p,
+     CASE WHEN p.eg__storedInDatabase IS :: LIST<ANY> THEN p.eg__storedInDatabase[0] ELSE p.eg__storedInDatabase END AS db,
+     CASE WHEN d.eg__storedInDatabaseTable IS :: LIST<ANY> THEN d.eg__storedInDatabaseTable ELSE [d.eg__storedInDatabaseTable] END AS tables
+SET p.database = db, d.database = db, d.dbTable = tables[0], d.dbTables = tables;
 
 // G) Shortcut properties on variables
 MATCH (v:Variable)
 WITH v,
      CASE WHEN v.eg__dataLakeSensorId IS :: LIST<ANY> THEN v.eg__dataLakeSensorId[0] ELSE v.eg__dataLakeSensorId END AS sid,
      CASE WHEN v.eg__dataLakeSensorPattern IS :: LIST<ANY> THEN v.eg__dataLakeSensorPattern[0] ELSE v.eg__dataLakeSensorPattern END AS pattern,
-     CASE WHEN v.eg__storedInDatabaseColumn IS :: LIST<ANY> THEN v.eg__storedInDatabaseColumn[0] ELSE v.eg__storedInDatabaseColumn END AS col,
-     CASE WHEN v.eg__dataLakeMatch IS :: LIST<ANY> THEN v.eg__dataLakeMatch[0] ELSE v.eg__dataLakeMatch END AS how
+     CASE WHEN v.eg__storedInDatabaseColumn IS :: LIST<ANY> THEN v.eg__storedInDatabaseColumn[0] ELSE v.eg__storedInDatabaseColumn END AS col
 SET v.lakeSensorId = sid, v.lakeSensorPattern = pattern, v.lakeColumn = col,
-    v.lakeMatch = coalesce(how, 'none');     // no match recorded means the variable is not in the lake
+    v.inLake = (sid IS NOT NULL OR pattern IS NOT NULL OR col IS NOT NULL);   // false = not found in the lake
 
 MATCH (v:Variable)-[:OF_TYPE]->(t:MeasurementType) SET v.measurementType = t.displayName;
+
+// Long table (one row per reading) when the dataset is stored in the lake's time-series table, otherwise a wide table
+MATCH (d:Dataset) WHERE d.database IS NOT NULL
+SET d.tableLayout = CASE WHEN d.dbTable = 'public.f_tsdata' THEN 'long' ELSE 'wide' END;
 
 // H) Final quality snapshot (each count runs on its own, so an empty one shows 0)
 CALL () { MATCH (p:Pilot) RETURN count(p) AS pilots }

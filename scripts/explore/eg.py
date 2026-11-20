@@ -101,8 +101,6 @@ RETURN p.displayName AS pilot, e.displayName AS equipment, count(DISTINCT v) AS 
 ORDER BY pilot, variables DESC""")
 
 
-subsystems = equipment   # old name, kept so existing notebooks keep working
-
 
 def variables(measurement_type=None, pilot=None):
     """Variables (each a sensor or a column of a dataset), optionally of one measurement type (Temperature, Pressure, ...) and/or one pilot.
@@ -124,8 +122,6 @@ MATCH (p:Pilot)-[:HAS_DATASET]->(d:Dataset)-[:HAS_VARIABLE]->(v {displayName: $n
 RETURN p.displayName AS pilot, d.displayName AS dataset, v.dcterms__description[0] AS meaning,
        coalesce(head([(v)-[:HAS_UNIT]->(u) | u.displayName]), v.sch__unitText[0]) AS unit, v.lakeSensorId AS data_lake_sensor_id""", name=name)
 
-
-sensor = variable   # old name, kept so existing notebooks keep working
 
 
 def readings_sql(name, n=10):
@@ -155,8 +151,8 @@ ORDER BY pilot, dataset, variable LIMIT $limit""", t=text, pilot=pilot, limit=li
 
 
 _CARD = [("meaning", "Meaning"), ("measurement_type", "Measurement type"), ("unit", "Unit"), ("range", "Valid range"),
-         ("kind", "Kind"), ("dtype", "Data type"), ("sampling", "Sampling"), ("aggregation", "Aggregation"),
-         ("equipment", "Equipment"), ("data_lake_sensor_id", "Data lake sensor id"), ("data_lake_match", "Data lake match"),
+         ("kind", "Kind"), ("dtype", "Data type"), ("aggregation", "Aggregation"),
+         ("equipment", "Equipment"), ("data_lake_sensor_id", "Data lake sensor id"), ("data_lake_status", "Data lake status"),
          ("database", "Database"), ("table", "Table")]
 
 
@@ -171,9 +167,9 @@ RETURN p.displayName AS pilot, d.displayName AS dataset,
        v.dcterms__description[0] AS meaning,
        coalesce(v.measurementType, '') AS measurement_type, coalesce(head([(v)-[:HAS_UNIT]->(u) | u.displayName]), v.sch__unitText[0]) AS unit,
        coalesce(v.sch__minValue[0] + ' to ' + v.sch__maxValue[0], replace(v.skos__note[0], 'Valid range: ', ''), '-') AS range,
-       v.eg__variableKind[0] AS kind, v.eg__dataType[0] AS dtype, v.eg__sampling[0] AS sampling,
-       v.eg__aggregation[0] AS aggregation, head([(v)-[:HOSTED_BY]->(e) | e.displayName]) AS equipment,
-       v.lakeSensorId AS data_lake_sensor_id, v.eg__dataLakeMatch[0] AS data_lake_match,
+       coalesce(v.eg__variableKind[0], CASE WHEN v:sosa__Sensor THEN 'measured' END) AS kind, v.eg__dataType[0] AS dtype,
+       coalesce(v.eg__aggregation[0], 'instantaneous') AS aggregation, head([(v)-[:HOSTED_BY]->(e) | e.displayName]) AS equipment,
+       v.lakeSensorId AS data_lake_sensor_id, CASE WHEN v.inLake THEN 'matched' ELSE 'not in the lake' END AS data_lake_status,
        d.database AS database, d.dbTable AS table""", name=name)
     if not rows:
         print(f"No variable called '{name}'. Try eg.find('{name}') or eg.variables().")

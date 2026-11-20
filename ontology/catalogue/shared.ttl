@@ -1,16 +1,12 @@
-@prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix dqv: <http://www.w3.org/ns/dqv#> .
 @prefix eg: <https://www.energyguard.eu/ontology#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix mp: <https://www.energyguard.eu/ontology/merged-pilots#> .
 @prefix prop: <https://www.energyguard.eu/ontology/property#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix sosa: <http://www.w3.org/ns/sosa/> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://qudt.org/vocab/unit/A> qudt:symbol "A" .
 
@@ -90,61 +86,33 @@
 
 <http://qudt.org/vocab/unit/YR> qudt:symbol "year" .
 
-eg:DataLakeService a dcat:DataService ;
-    dcterms:description "PostgreSQL data lake operated by CARTIF, one database per pilot. The host address is not published."@en ;
-    dcterms:title "EnergyGuard data lake"@en ;
-    dcat:servesDataset <https://www.energyguard.eu/ontology/ber#Dataset_PEM_Electrolyzer_14kW>,
-        <https://www.energyguard.eu/ontology/ber#Dataset_PEM_Electrolyzer_7kW>,
-        <https://www.energyguard.eu/ontology/cartif#Dataset_CARTIF_hydrogen_test_bench_operational_data_15_s>,
-        <https://www.energyguard.eu/ontology/cea#Dataset_CEA_MURPHY_test_bed_dataset>,
-        <https://www.energyguard.eu/ontology/ciemat#Dataset_CEDER_CIEMAT_Microgrid_Daily_Operational_Data_1_s>,
-        <https://www.energyguard.eu/ontology/engreen#Dataset_Operational_monitoring_dataset>,
-        <https://www.energyguard.eu/ontology/engreen#Dataset_Shelly_consumer_monitoring_dataset>,
-        <https://www.energyguard.eu/ontology/engreen#Dataset_The_Weather_Dataset>,
-        <https://www.energyguard.eu/ontology/rea#Dataset_Air_quality>,
-        <https://www.energyguard.eu/ontology/rea#Dataset_Borders_of_Riga_and_Riga_suburbs_B_Riga_suburb_borders>,
-        <https://www.energyguard.eu/ontology/rea#Dataset_Buildings_in_the_administrative_territory_of_Riga_A_Existing_buildings>,
-        <https://www.energyguard.eu/ontology/rea#Dataset_Buildings_in_the_administrative_territory_of_Riga_B_Demolished_buildings>,
-        <https://www.energyguard.eu/ontology/rea#Dataset_Buildings_monthly_heat_series_ARCGIS_Server>,
-        <https://www.energyguard.eu/ontology/rea#Dataset_Energy_efficiency_indicators_for_heating_of_multi_apartment_buildings_in_Riga>,
-        <https://www.energyguard.eu/ontology/rea#Dataset_Energy_performance_of_renovated_buildings>,
-        <https://www.energyguard.eu/ontology/rea#Dataset_Environmentally_degrading_buildings>,
-        <https://www.energyguard.eu/ontology/rea#Dataset_Noise_levels>,
-        <https://www.energyguard.eu/ontology/rea#Dataset_Riga_streets_and_addresses_A_streets>,
-        <https://www.energyguard.eu/ontology/rea#Dataset_Riga_streets_and_addresses_B_addresses>,
-        <https://www.energyguard.eu/ontology/rea#Dataset_Territorial_zones_for_the_selection_of_the_type_of_heat_supply> .
-
-eg:OntologyMaintainers a prov:Agent ;
-    rdfs:label "EnergyGuard ontology maintainers"@en .
-
-eg:RangeUnitConsistency a dqv:Metric ;
-    skos:definition "True when the valid range is written in the same unit as the variable."@en ;
-    dqv:expectedDataType xsd:boolean ;
-    dqv:inDimension eg:ConsistencyDimension .
-
 mp:BER a foaf:Organization ;
-    rdfs:label "BER" .
+    rdfs:label "BER" ;
+    eg:storedInDatabase "TEF3_BER" .
 
 mp:CARTIF a foaf:Organization ;
-    rdfs:label "CARTIF" .
+    rdfs:label "CARTIF" ;
+    eg:storedInDatabase "TEF5_CARTIF" .
 
 mp:CEA a foaf:Organization ;
-    rdfs:label "CEA" .
+    rdfs:label "CEA" ;
+    eg:storedInDatabase "TEF4_CEA" .
 
 mp:CIEMAT a foaf:Organization ;
-    rdfs:label "CIEMAT" .
+    rdfs:label "CIEMAT" ;
+    eg:storedInDatabase "TEF2_CEDER" .
 
 mp:ENGREEN a foaf:Organization ;
-    rdfs:label "ENGREEN" .
+    rdfs:label "ENGREEN" ;
+    eg:storedInDatabase "TEF7_ENGREEN" .
 
 mp:RDN a foaf:Organization ;
-    rdfs:label "RDN" .
+    rdfs:label "RDN" ;
+    eg:storedInDatabase "TEF1_RDN" .
 
 mp:REA a foaf:Organization ;
-    rdfs:label "REA" .
-
-eg:ConsistencyDimension a dqv:Dimension ;
-    rdfs:label "Consistency"@en .
+    rdfs:label "REA" ;
+    eg:storedInDatabase "TEF6_REA" .
 
 prop:CloudCover a skos:Concept,
         sosa:ObservableProperty ;
@@ -271,23 +239,5 @@ prop:Volume a skos:Concept,
 
 eg:MeasurementTypeScheme a skos:ConceptScheme ;
     dcterms:description "The kinds of quantity or signal an EnergyGuard variable observes. Each one is a sosa:ObservableProperty and, where QUDT has an equivalent, is linked to its QUDT quantity kind."@en ;
-    dcterms:title "EnergyGuard measurement types"@en ;
-    skos:hasTopConcept prop:CloudCover,
-        prop:Composition,
-        prop:ControlSignal,
-        prop:Current,
-        prop:Efficiency,
-        prop:Energy,
-        prop:Flow,
-        prop:Hydrogen,
-        prop:Power,
-        prop:Pressure,
-        prop:SolarRadiation,
-        prop:Speed,
-        prop:State,
-        prop:StateOfCharge,
-        prop:Temperature,
-        prop:Timer,
-        prop:Voltage,
-        prop:Volume .
+    dcterms:title "EnergyGuard measurement types"@en .
 

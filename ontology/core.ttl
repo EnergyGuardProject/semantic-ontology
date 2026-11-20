@@ -5,13 +5,13 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcat:    <http://www.w3.org/ns/dcat#> .
 @prefix sosa:    <http://www.w3.org/ns/sosa/> .
-@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
 @prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
 @prefix csvw:    <http://www.w3.org/ns/csvw#> .
 
-# The EnergyGuard core: only what no standard covers. Everything else uses DCAT (datasets, catalogues, distributions),
+# The EnergyGuard core: only what no standard covers. Everything else uses DCAT (datasets, catalogues),
 # SOSA (sensors, observable properties, platforms), QUDT (units, quantity kinds), SKOS (measurement types),
-# PROV and DQV (provenance, quality), GeoSPARQL (geometries), FOAF and vCard (organisations, contacts).
+# GeoSPARQL (geometries), FOAF (organisations).
 # Written by hand. The catalogue (pilots, datasets, variables) lives in ontology/catalogue/*.ttl.
 
 <https://www.energyguard.eu/ontology/merged-pilots> a owl:Ontology ;
@@ -26,39 +26,28 @@ eg:Variable a owl:Class ;
     rdfs:label "Variable"@en ;
     rdfs:comment "One column or signal of a dataset: a sensor series, a meter reading, a building attribute. A measured variable is also a sosa:Sensor."@en ;
     skos:closeMatch csvw:Column .
-# ---- links ---------------------------------------------------------------------------------------------------
-eg:relatesToProperty a owl:ObjectProperty ; rdfs:domain eg:Variable ; rdfs:range sosa:ObservableProperty ;
-    rdfs:label "relates to property"@en ;
-    rdfs:comment "For a variable that is not a physical sensor (a state, a calculated value, a setpoint, a command): the property it concerns. Sensors use sosa:observes."@en .
-
 # ---- the data lake -------------------------------------------------------------------------------------------
-eg:dataLakeMatch a owl:DatatypeProperty ; rdfs:domain eg:Variable ; rdfs:label "data lake match"@en ;
-    rdfs:comment "How the variable was found in the lake: exact, normalised, pattern, column, timestamp, inferred (from the readings, see eg:dataLakeEvidence; to be confirmed), manual (confirmed), none."@en .
 eg:dataLakeSensorId a owl:DatatypeProperty ; rdfs:label "data lake sensor id"@en ;
     rdfs:comment "The sensor_id of the series in the lake table."@en .
 eg:dataLakeSensorPattern a owl:DatatypeProperty ; rdfs:domain eg:Variable ; rdfs:label "data lake sensor pattern"@en ;
     rdfs:comment "An SQL LIKE pattern selecting one sensor per device."@en .
 eg:storedInDatabaseColumn a owl:DatatypeProperty ; rdfs:domain eg:Variable ; rdfs:label "stored in database column"@en ;
     rdfs:comment "The column of a wide lake table that holds the variable."@en .
-eg:storedInDatabase a owl:DatatypeProperty ; rdfs:domain dcat:Distribution ; rdfs:label "stored in database"@en .
-eg:storedInDatabaseTable a owl:DatatypeProperty ; rdfs:domain dcat:Distribution ; rdfs:label "stored in database table"@en .
-eg:tableLayout a owl:DatatypeProperty ; rdfs:domain dcat:Distribution ; rdfs:label "table layout"@en ;
-    rdfs:comment "long (one row per reading) or wide (one column per variable)."@en .
-eg:dataLakeEvidence a owl:DatatypeProperty ; rdfs:domain eg:Variable ; rdfs:label "data lake evidence"@en ;
-    rdfs:comment "Why an inferred lake match was made (readings compared with the description). To be confirmed by the pilot."@en .
+eg:storedInDatabase a owl:DatatypeProperty ; rdfs:domain foaf:Organization ; rdfs:label "stored in database"@en ;
+    rdfs:comment "The data lake database that holds the pilot's datasets (one database per pilot)."@en .
+eg:storedInDatabaseTable a owl:DatatypeProperty ; rdfs:domain dcat:Dataset ; rdfs:label "stored in database table"@en ;
+    rdfs:comment "The table of the pilot's lake database that holds the dataset. A dataset without one is not in the lake."@en .
 
 # ---- what a variable is ----------------------------------------------------------------------------------------
 eg:variableKind a owl:DatatypeProperty ; rdfs:domain eg:Variable ; rdfs:label "variable kind"@en ;
-    rdfs:comment "measured, calculated, setpoint, state, alarm, output, static, modelled, timestamp (the time column) or identifier (address, cadastre number, id)."@en .
+    rdfs:comment "measured, calculated, setpoint, state, alarm, output, static, modelled, timestamp (the time column) or identifier (address, cadastre number, id). A physical sensor (sosa:Sensor) is measured by definition and does not repeat it."@en .
 eg:aggregation a owl:DatatypeProperty ; rdfs:domain eg:Variable ; rdfs:label "aggregation"@en ;
-    rdfs:comment "instantaneous, mean, sum, cumulative or none."@en .
+    rdfs:comment "Only given when the value is not instantaneous: mean, sum or cumulative."@en .
 eg:dataType a owl:DatatypeProperty ; rdfs:domain eg:Variable ; rdfs:label "data type"@en ;
     rdfs:comment "float, integer, boolean, text, date, timestamp or geometry (the data lake's PostgreSQL types)."@en .
 eg:signConvention a owl:DatatypeProperty ; rdfs:domain eg:Variable ; rdfs:label "sign convention"@en .
 eg:codeList a owl:DatatypeProperty ; rdfs:domain eg:Variable ; rdfs:label "code list"@en ;
     rdfs:comment "The meaning of coded values, e.g. 0 = Automatic; 1 = Service Mode."@en .
-eg:sampling a owl:DatatypeProperty ; rdfs:domain eg:Variable ; rdfs:label "sampling"@en .
-eg:recordThreshold a owl:DatatypeProperty ; rdfs:domain eg:Variable ; rdfs:label "record threshold"@en .
 eg:decimals a owl:DatatypeProperty ; rdfs:domain eg:Variable ; rdfs:label "decimals"@en .
 
 # ---- what a dataset is -------------------------------------------------------------------------------------------

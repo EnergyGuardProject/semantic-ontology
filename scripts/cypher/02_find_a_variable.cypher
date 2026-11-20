@@ -7,7 +7,7 @@ WHERE toLower(v.displayName) CONTAINS q
 WITH p, d, v, d.database AS db, d.tableLayout AS layout
 RETURN p.displayName AS pilot, d.displayName AS dataset, v.displayName AS variable,
        v.measurementType AS measurement_type, coalesce(v.sch__unitText[0], head([(v)-[:HAS_UNIT]->(u) | u.displayName])) AS unit, v.dcterms__description[0] AS description,
-       db AS database, v.lakeMatch AS found_by,
+       db AS database, CASE WHEN v.inLake THEN 'matched' ELSE 'not in the lake' END AS lake_status,
        CASE
          WHEN v.lakeSensorId IS NOT NULL THEN
            "SELECT c.datetime, f.f_value FROM public.f_tsdata f JOIN public.d_calendar c USING (calendar_id) WHERE f.sensor_id = '" + v.lakeSensorId + "' ORDER BY f.calendar_id DESC LIMIT 100;"
