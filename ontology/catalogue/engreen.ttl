@@ -2,821 +2,823 @@
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix eg: <https://www.energyguard.eu/ontology#> .
+@prefix engreen: <https://www.energyguard.eu/ontology/engreen#> .
 @prefix mp: <https://www.energyguard.eu/ontology/merged-pilots#> .
 @prefix ns1: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix prop: <https://www.energyguard.eu/ontology/property#> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema1: <http://schema.org/> .
+@prefix schema: <http://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://www.energyguard.eu/ontology/engreen#Dataset_GME_CSUD_Hourly_Electricity_Price_Dataset> a dcat:Dataset ;
+engreen:Dataset_GME_CSUD_Hourly_Electricity_Price_Dataset a dcat:Dataset ;
     dcterms:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/NEVER> ;
     dcterms:description "Hourly zonal electricity price of the Centro-Sud (CSUD) bidding zone of the Italian day-ahead market (MGP), published by GME (Gestore dei Mercati Energetici). It is the reference price used to value the electricity injected into the grid by REC members and to compute the economic indicators of the Digital Twin. System covered: Italian wholesale electricity market, day-ahead zonal prices. Source: GME market results (MGP zonal prices), open data."@en ;
     dcterms:format "XLSX, one sheet 'MGP-PrezziZonali-CSUD'; dates stored as text dd/mm/yyyy; decimal point. Uploaded to the EnergyGuard Data Lake as CSV." ;
-    dcterms:license <https://www.energyguard.eu/ontology/engreen#Licence_GME_CSUD_Hourly_Electricity_Price_Dataset> ;
+    dcterms:license engreen:Licence_GME_CSUD_Hourly_Electricity_Price_Dataset ;
     dcterms:publisher mp:ENGREEN ;
-    dcterms:spatial <https://www.energyguard.eu/ontology/engreen#Place_GME_CSUD_Hourly_Electricity_Price_Dataset> ;
-    dcterms:temporal <https://www.energyguard.eu/ontology/engreen#Period_GME_CSUD_Hourly_Electricity_Price_Dataset> ;
+    dcterms:spatial engreen:Place_GME_CSUD_Hourly_Electricity_Price_Dataset ;
+    dcterms:temporal engreen:Period_GME_CSUD_Hourly_Electricity_Price_Dataset ;
     dcterms:title "GME CSUD Hourly Electricity Price Dataset"@en ;
-    schema1:variableMeasured <https://www.energyguard.eu/ontology/engreen#GME_CSUD_Hourly_Electricity_Price_Dataset__Data>,
-        <https://www.energyguard.eu/ontology/engreen#GME_CSUD_Hourly_Electricity_Price_Dataset__Ora>,
-        <https://www.energyguard.eu/ontology/engreen#GME_CSUD_Hourly_Electricity_Price_Dataset__PZ_t> ;
+    schema:variableMeasured engreen:GME_CSUD_Hourly_Electricity_Price_Dataset__Data,
+        engreen:GME_CSUD_Hourly_Electricity_Price_Dataset__Ora,
+        engreen:GME_CSUD_Hourly_Electricity_Price_Dataset__PZ_t ;
     dcat:temporalResolution "PT1H"^^xsd:duration ;
     eg:timeZone "Italian local time with daylight saving time (GME convention: 23 hours on the spring change day, 25 on the autumn change day)" .
 
-<https://www.energyguard.eu/ontology/engreen#Dataset_Operational_monitoring_dataset> a dcat:Dataset ;
+engreen:Dataset_Operational_monitoring_dataset a dcat:Dataset ;
     dcterms:accessRights <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
     dcterms:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/DAILY> ;
     dcterms:description "Time series of the operating data of the PV plants, inverters, grid meters and batteries of the REC producers and prosumers, collected from the Huawei FusionSolar (10 plants) and Deye Solarman (1 municipal plant with battery) monitoring platforms. It is the real-time operational layer of the Digital Twin and supports PV performance analysis, battery operation analysis and anomaly detection. Only a selected subset of the variables available on the platforms is retained. System covered: PV plants, inverters, grid connection meters (power sensors) and battery storage systems. Source: Huawei FusionSolar and Deye Solarman cloud monitoring platforms (API and data export)."@en ;
     dcterms:format "XLSX source exports. FusionSolar: one file per device (inverter, power sensor or battery), four header rows (time range, export time, legend, column names); column names and decimal separator follow the portal language. Solarman: one file per plant, one header row, numeric values stored as text. Uploaded to the EnergyGuard Data Lake as CSV." ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
     dcterms:publisher mp:ENGREEN ;
-    dcterms:spatial <https://www.energyguard.eu/ontology/engreen#Place_Operational_monitoring_dataset> ;
-    dcterms:temporal <https://www.energyguard.eu/ontology/engreen#Period_Operational_monitoring_dataset> ;
+    dcterms:spatial engreen:Place_Operational_monitoring_dataset ;
+    dcterms:temporal engreen:Period_Operational_monitoring_dataset ;
     dcterms:title "Operational monitoring dataset"@en ;
-    schema1:variableMeasured <https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Active_power_W>,
-        <https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Active_power_kW>,
-        <https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Batteria_SOC>,
-        <https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Battery_Power_W>,
-        <https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Daily_energy_kWh>,
-        <https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Grid_Power_W>,
-        <https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Negative_active_energy_kWh>,
-        <https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Positive_active_energy_kWh>,
-        <https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Potenza_di_carica_e_scarica_kW>,
-        <https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Production_Power_W>,
-        <https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__SoC>,
-        <https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Total_yield_kWh>,
-        <https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__collectTime> ;
+    schema:variableMeasured engreen:Operational_monitoring_dataset__Active_power_W,
+        engreen:Operational_monitoring_dataset__Active_power_kW,
+        engreen:Operational_monitoring_dataset__Batteria_SOC,
+        engreen:Operational_monitoring_dataset__Battery_Power_W,
+        engreen:Operational_monitoring_dataset__Daily_energy_kWh,
+        engreen:Operational_monitoring_dataset__Grid_Power_W,
+        engreen:Operational_monitoring_dataset__Negative_active_energy_kWh,
+        engreen:Operational_monitoring_dataset__Positive_active_energy_kWh,
+        engreen:Operational_monitoring_dataset__Potenza_di_carica_e_scarica_kW,
+        engreen:Operational_monitoring_dataset__Production_Power_W,
+        engreen:Operational_monitoring_dataset__SoC,
+        engreen:Operational_monitoring_dataset__Total_yield_kWh,
+        engreen:Operational_monitoring_dataset__collectTime ;
     csvw:null "FusionSolar: 'N/A' = not available or not recorded while the device was disconnected; '-' = counter not supported by the device. Solarman: empty cell = not applicable for the current flow direction or not available. Missing intervals = absent rows." ;
     dcat:temporalResolution "PT5M"^^xsd:duration ;
     eg:storedInDatabaseTable "public.f_tsdata" ;
     eg:timeZone "FusionSolar: Italian local time with daylight saving time (timestamps marked 'DST' in summer). Solarman: time zone given in the 'Time Zone' column (UTC+01:00, no daylight saving shift)." .
 
-<https://www.energyguard.eu/ontology/engreen#Dataset_Shelly_consumer_monitoring_dataset> a dcat:Dataset ;
+engreen:Dataset_Shelly_consumer_monitoring_dataset a dcat:Dataset ;
     dcterms:accessRights <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
     dcterms:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/DAILY> ;
     dcterms:description "Electricity consumption and voltage data from Shelly energy meters installed by ENGREEN at five residential consumers of the REC, as a representative sample of demand-side behaviour. It complements the hourly GSE data with higher-resolution measurements and supports load-profile analysis, Digital Twin validation and demand-side modelling. System covered: Residential electricity consumption at the grid connection point (5 households). Source: Shelly energy meters, Shelly Cloud (API)."@en ;
     dcterms:format "CSV exported from Shelly Cloud, one file per meter and variable group: one block per variable (title row, header row 'Ore, <unit>'), comma separator, decimal point, timestamps dd/mm/yyyy hh:mm. Uploaded to the EnergyGuard Data Lake as CSV." ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
     dcterms:publisher mp:ENGREEN ;
-    dcterms:spatial <https://www.energyguard.eu/ontology/engreen#Place_Shelly_consumer_monitoring_dataset> ;
-    dcterms:temporal <https://www.energyguard.eu/ontology/engreen#Period_Shelly_consumer_monitoring_dataset> ;
+    dcterms:spatial engreen:Place_Shelly_consumer_monitoring_dataset ;
+    dcterms:temporal engreen:Period_Shelly_consumer_monitoring_dataset ;
     dcterms:title "Shelly consumer monitoring dataset"@en ;
-    schema1:variableMeasured <https://www.energyguard.eu/ontology/engreen#Shelly_consumer_monitoring_dataset__Consumo>,
-        <https://www.energyguard.eu/ontology/engreen#Shelly_consumer_monitoring_dataset__Voltaggio_minimo>,
-        <https://www.energyguard.eu/ontology/engreen#Shelly_consumer_monitoring_dataset__collectTime> ;
+    schema:variableMeasured engreen:Shelly_consumer_monitoring_dataset__Consumo,
+        engreen:Shelly_consumer_monitoring_dataset__Voltaggio_minimo,
+        engreen:Shelly_consumer_monitoring_dataset__collectTime ;
     csvw:null "No explicit marker; missing intervals = absent rows" ;
     dcat:temporalResolution "PT15M"^^xsd:duration ;
     eg:storedInDatabaseTable "public.f_tsdata" ;
     eg:timeZone "Italian local time (Europe/Rome)" .
 
-<https://www.energyguard.eu/ontology/engreen#Dataset_The_Antrodoco_REC_Mapping_Dataset> a dcat:Dataset ;
+engreen:Dataset_The_Antrodoco_REC_Mapping_Dataset a dcat:Dataset ;
     dcterms:accessRights <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
     dcterms:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/IRREG> ;
     dcterms:description "Static description of the members of the Antrodoco REC and of their energy assets: user role and type, GSE status, monitoring system, PV plant and battery characteristics and contracted power. It is the reference dataset that links each pseudonymised metering point to its technical characteristics and is used to build the REC Digital Twin. Names, addresses and geographical coordinates are not included; POD and CENSIMP codes are pseudonymised. System covered: REC members (consumers, producers, prosumers), PV plants and battery storage systems. Source: REC mapping compiled by ENGREEN as REC operator (membership data, GSE portal, plant documentation)."@en ;
     dcterms:format "XLSX source file (sheet 'Map' with data, sheet 'Legenda' with field rules), decimal point. Uploaded to the EnergyGuard Data Lake as CSV." ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
     dcterms:publisher mp:ENGREEN ;
-    dcterms:spatial <https://www.energyguard.eu/ontology/engreen#Place_The_Antrodoco_REC_Mapping_Dataset> ;
-    dcterms:temporal <https://www.energyguard.eu/ontology/engreen#Period_The_Antrodoco_REC_Mapping_Dataset> ;
+    dcterms:spatial engreen:Place_The_Antrodoco_REC_Mapping_Dataset ;
+    dcterms:temporal engreen:Period_The_Antrodoco_REC_Mapping_Dataset ;
     dcterms:title "The Antrodoco REC Mapping Dataset"@en ;
-    schema1:variableMeasured <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__CENSIMP>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Contributo_PNRR>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Esente>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__GSE>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Note>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__POD>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__PV_azimuth>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__PV_installation_year>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__PV_model>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__PV_number>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__PV_power>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__PV_tilt>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Piattaforma>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Pinv>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Potenza_di_contratto_impegnata_kW>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Pplant>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Ruolo_utente>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Sistemi_rilevazioni_dati>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Storage>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Storage_cap>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Storage_installation_year>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Storage_model>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Tipologia_utente>,
-        <https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__not_in_source_file> ;
+    schema:variableMeasured engreen:The_Antrodoco_REC_Mapping_Dataset__CENSIMP,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Contributo_PNRR,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Esente,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__GSE,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Note,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__POD,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__PV_azimuth,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__PV_installation_year,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__PV_model,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__PV_number,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__PV_power,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__PV_tilt,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Piattaforma,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Pinv,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Potenza_di_contratto_impegnata_kW,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Pplant,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Ruolo_utente,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Sistemi_rilevazioni_dati,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Storage,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Storage_cap,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Storage_installation_year,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Storage_model,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__Tipologia_utente,
+        engreen:The_Antrodoco_REC_Mapping_Dataset__not_in_source_file ;
     csvw:null "Empty cell = not applicable or not available (e.g. no PV plant or no battery)" .
 
-<https://www.energyguard.eu/ontology/engreen#Dataset_The_GSE_Historical_Metering_Dataset> a dcat:Dataset ;
+engreen:Dataset_The_GSE_Historical_Metering_Dataset a dcat:Dataset ;
     dcterms:accessRights <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
     dcterms:description "Hourly metering data of the REC metering points retrieved from the GSE (Gestore dei Servizi Energetici) platform, which ENGREEN accesses as REC operator. It consists of three files with the same structure: grid withdrawal (consumption points), grid injection and energy production (production units). It is used for historical analysis, baseline definition, load-profile reconstruction and Digital Twin calibration. System covered: Grid withdrawal, grid injection and PV production of the REC metering points. Source: GSE platform (official metering data), manual export."@en ;
     dcterms:format "XLSX source files, one sheet each: Withdrawn_Energy, Fed-In_Energy, Produced_Energy; decimal point. Uploaded to the EnergyGuard Data Lake as CSV." ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
     dcterms:publisher mp:ENGREEN ;
-    dcterms:spatial <https://www.energyguard.eu/ontology/engreen#Place_The_GSE_Historical_Metering_Dataset> ;
-    dcterms:temporal <https://www.energyguard.eu/ontology/engreen#Period_The_GSE_Historical_Metering_Dataset> ;
+    dcterms:spatial engreen:Place_The_GSE_Historical_Metering_Dataset ;
+    dcterms:temporal engreen:Period_The_GSE_Historical_Metering_Dataset ;
     dcterms:title "The GSE Historical Metering Dataset"@en ;
-    schema1:variableMeasured <https://www.energyguard.eu/ontology/engreen#The_GSE_Historical_Metering_Dataset__Codice_Misura>,
-        <https://www.energyguard.eu/ontology/engreen#The_GSE_Historical_Metering_Dataset__Data>,
-        <https://www.energyguard.eu/ontology/engreen#The_GSE_Historical_Metering_Dataset__Ora>,
-        <https://www.energyguard.eu/ontology/engreen#The_GSE_Historical_Metering_Dataset__kWh> ;
+    schema:variableMeasured engreen:The_GSE_Historical_Metering_Dataset__Codice_Misura,
+        engreen:The_GSE_Historical_Metering_Dataset__Data,
+        engreen:The_GSE_Historical_Metering_Dataset__Ora,
+        engreen:The_GSE_Historical_Metering_Dataset__kWh ;
     csvw:null "No explicit marker; missing periods = absent rows (availability varies by metering point)" ;
     dcat:temporalResolution "PT1H"^^xsd:duration ;
     eg:timeZone "Italian local time with daylight saving time. Hour 0–23 = start of the hour." .
 
-<https://www.energyguard.eu/ontology/engreen#Dataset_The_Weather_Dataset> a dcat:Dataset ;
+engreen:Dataset_The_Weather_Dataset a dcat:Dataset ;
     dcterms:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/NEVER> ;
     dcterms:description "Hourly meteorological and solar radiation data for the Antrodoco area from the Open-Meteo historical weather API, extracted for a single reference point covering the REC (no coordinates of individual installations are processed). It is used to model PV production, interpret consumption patterns and analyse abnormal asset behaviour. System covered: Local weather and solar radiation conditions. Source: Open-Meteo Historical Weather API (weather model data)."@en ;
     dcterms:format "CSV, comma, decimal point. Two header lines with location metadata (latitude, longitude, elevation, UTC offset, time zone), an empty line, then column names. Uploaded to the EnergyGuard Data Lake as CSV." ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
     dcterms:publisher mp:ENGREEN ;
-    dcterms:spatial <https://www.energyguard.eu/ontology/engreen#Place_The_Weather_Dataset> ;
-    dcterms:temporal <https://www.energyguard.eu/ontology/engreen#Period_The_Weather_Dataset> ;
+    dcterms:spatial engreen:Place_The_Weather_Dataset ;
+    dcterms:temporal engreen:Period_The_Weather_Dataset ;
     dcterms:title "The Weather Dataset"@en ;
-    schema1:variableMeasured <https://www.energyguard.eu/ontology/engreen#The_Weather_Dataset__cloud_cover>,
-        <https://www.energyguard.eu/ontology/engreen#The_Weather_Dataset__diffuse_radiation_W_m2>,
-        <https://www.energyguard.eu/ontology/engreen#The_Weather_Dataset__direct_normal_irradiance_W_m2>,
-        <https://www.energyguard.eu/ontology/engreen#The_Weather_Dataset__shortwave_radiation_W_m2>,
-        <https://www.energyguard.eu/ontology/engreen#The_Weather_Dataset__temperature_2m_C>,
-        <https://www.energyguard.eu/ontology/engreen#The_Weather_Dataset__wind_speed_10m_km_h> ;
+    schema:variableMeasured engreen:The_Weather_Dataset__cloud_cover,
+        engreen:The_Weather_Dataset__diffuse_radiation_W_m2,
+        engreen:The_Weather_Dataset__direct_normal_irradiance_W_m2,
+        engreen:The_Weather_Dataset__shortwave_radiation_W_m2,
+        engreen:The_Weather_Dataset__temperature_2m_C,
+        engreen:The_Weather_Dataset__wind_speed_10m_km_h ;
     csvw:null "Empty cell = value not available" ;
     dcat:temporalResolution "PT1H"^^xsd:duration ;
     eg:storedInDatabaseTable "public.f_tsdata" ;
     eg:timeZone "Local time as returned by Open-Meteo; time zone and UTC offset are reported in the file header" .
 
-<https://www.energyguard.eu/ontology/engreen#GME_CSUD_Hourly_Electricity_Price_Dataset__Data> a eg:Variable ;
+engreen:GME_CSUD_Hourly_Electricity_Price_Dataset__Data a eg:Variable ;
     rdfs:label "Date"@en ;
     dcterms:description "Calendar date to which the zonal electricity price refers (dd/mm/yyyy)"@en ;
     csvw:name "Data" ;
     eg:dataType "text" ;
     eg:variableKind "timestamp" .
 
-<https://www.energyguard.eu/ontology/engreen#GME_CSUD_Hourly_Electricity_Price_Dataset__Ora> a eg:Variable ;
+engreen:GME_CSUD_Hourly_Electricity_Price_Dataset__Ora a eg:Variable ;
     rdfs:label "Hour"@en ;
     dcterms:description "Hourly market interval associated with the price (1 = 00:00–01:00)"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/HR> ;
-    schema1:maxValue 23.0 ;
-    schema1:minValue 0.0 ;
+    qudt:hasUnit unit:HR ;
+    schema:maxValue 23.0 ;
+    schema:minValue 0.0 ;
     csvw:name "Ora" ;
     eg:dataType "integer" ;
     eg:variableKind "timestamp" .
 
-<https://www.energyguard.eu/ontology/engreen#GME_CSUD_Hourly_Electricity_Price_Dataset__PZ_t> a eg:Variable ;
+engreen:GME_CSUD_Hourly_Electricity_Price_Dataset__PZ_t a eg:Variable ;
     rdfs:label "Zonal electricity price"@en ;
     dcterms:description "Hourly electricity price for the GME Centro-Sud (CSUD) bidding zone, used as the reference value for electricity sold to the grid"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/CCY_EUR-PER-MegaW-HR> ;
+    qudt:hasUnit unit:CCY_EUR-PER-MegaW-HR ;
     skos:note "Valid range: ≥ 0 (2025: 0 – 0.289)"@en ;
     csvw:name "PZ_t" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_CSUD_bidding_zone> ;
+    sosa:isHostedBy engreen:Platform_CSUD_bidding_zone ;
     eg:dataType "float" ;
     eg:variableKind "measured" .
 
-<https://www.energyguard.eu/ontology/engreen#Licence_GME_CSUD_Hourly_Electricity_Price_Dataset> a dcterms:LicenseDocument ;
+engreen:Licence_GME_CSUD_Hourly_Electricity_Price_Dataset a dcterms:LicenseDocument ;
     rdfs:label "Public market data published by GME; reuse with citation of the source (GME terms of use)"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Active_power_W> a sosa:Sensor,
+engreen:Operational_monitoring_dataset__Active_power_W a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Active Power"@en ;
     dcterms:description "Instantaneous active power measured by the power meter at the grid connection point"@en ;
     dcterms:identifier "Pseudonymised power sensor code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: limited by plant and contracted power"@en ;
     csvw:name "Active power(W)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Power_sensor> ;
+    sosa:isHostedBy engreen:Platform_Power_sensor ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorPattern "________________\\_active\\_power" ;
     eg:dataType "float" ;
     eg:signConvention "+ = export to the grid; - = import from the grid" .
 
-<https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Active_power_kW> a sosa:Sensor,
+engreen:Operational_monitoring_dataset__Active_power_kW a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Active Power"@en ;
     dcterms:description "Instantaneous active power measured by the inverter (AC output)"@en ;
     dcterms:identifier "Pseudonymised inverter code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    qudt:hasUnit unit:KiloW ;
     skos:note "Valid range: 0 – inverter nominal power"@en ;
     csvw:name "Active power(kW)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Inverter> ;
+    sosa:isHostedBy engreen:Platform_Inverter ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorPattern "________________\\_active\\_power" ;
     eg:dataType "float" .
 
-<https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Batteria_SOC> a sosa:Sensor,
+engreen:Operational_monitoring_dataset__Batteria_SOC a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Battery SOC"@en ;
     dcterms:description "Battery state of charge, representing the available stored energy relative to its capacity"@en ;
     dcterms:identifier "Pseudonymised battery code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
-    schema1:maxValue 100.0 ;
-    schema1:minValue 0.0 ;
+    qudt:hasUnit unit:PERCENT ;
+    schema:maxValue 100.0 ;
+    schema:minValue 0.0 ;
     csvw:name "Batteria SOC(%)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Battery> ;
+    sosa:isHostedBy engreen:Platform_Battery ;
     sosa:observes prop:StateOfCharge ;
     eg:dataLakeSensorPattern "%\\_battery\\_soc" ;
     eg:dataType "float" .
 
-<https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Battery_Power_W> a sosa:Sensor,
+engreen:Operational_monitoring_dataset__Battery_Power_W a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Charge/Discharge Power"@en ;
     dcterms:description "Instantaneous power exchanged with the battery during charging or discharging"@en ;
     dcterms:identifier "Plant code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: limited by battery power rating"@en ;
     csvw:name "Battery Power(W)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Battery> ;
+    sosa:isHostedBy engreen:Platform_Battery ;
     sosa:observes prop:Power ;
     eg:dataType "float" ;
     eg:signConvention "+ = discharging; - = charging" .
 
-<https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Daily_energy_kWh> a sosa:Sensor,
+engreen:Operational_monitoring_dataset__Daily_energy_kWh a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Daily Energy"@en ;
     dcterms:description "Electrical energy produced by the PV inverter during the current day (reset at midnight)"@en ;
     dcterms:identifier "Pseudonymised inverter code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW-HR> ;
+    qudt:hasUnit unit:KiloW-HR ;
     skos:note "cumulative (daily)",
         "Valid range: ≥ 0"@en ;
     csvw:name "Daily energy(kWh)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Inverter> ;
+    sosa:isHostedBy engreen:Platform_Inverter ;
     sosa:observes prop:Energy ;
     eg:aggregation "cumulative" ;
     eg:dataLakeSensorPattern "%\\_day\\_cap" ;
     eg:dataType "float" .
 
-<https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Grid_Power_W> a sosa:Sensor,
+engreen:Operational_monitoring_dataset__Grid_Power_W a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Active Power"@en ;
     dcterms:description "Power exchanged with the grid at the connection point"@en ;
     dcterms:identifier "Plant code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: limited by plant and contracted power"@en ;
     csvw:name "Grid Power(W)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Grid_connection> ;
+    sosa:isHostedBy engreen:Platform_Grid_connection ;
     sosa:observes prop:Power ;
     eg:dataType "float" ;
     eg:signConvention "+ = import from the grid; - = export to the grid" .
 
-<https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Negative_active_energy_kWh> a sosa:Sensor,
+engreen:Operational_monitoring_dataset__Negative_active_energy_kWh a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Negative Active Energy"@en ;
     dcterms:description "Cumulative active energy measured by the power sensor in the negative flow direction (import from the grid)"@en ;
     dcterms:identifier "Pseudonymised power sensor code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW-HR> ;
+    qudt:hasUnit unit:KiloW-HR ;
     skos:note "cumulative (lifetime)",
         "Valid range: ≥ 0, non-decreasing"@en ;
     csvw:name "Negative active energy(kWh)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Power_sensor> ;
+    sosa:isHostedBy engreen:Platform_Power_sensor ;
     sosa:observes prop:Energy ;
     eg:aggregation "cumulative" ;
     eg:dataLakeSensorPattern "%\\_reverse\\_active\\_cap" ;
     eg:dataType "float" ;
     eg:signConvention "negative direction = import from the grid" .
 
-<https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Positive_active_energy_kWh> a sosa:Sensor,
+engreen:Operational_monitoring_dataset__Positive_active_energy_kWh a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Positive Active Energy"@en ;
     dcterms:description "Cumulative active energy measured by the power sensor in the positive flow direction (export to the grid)"@en ;
     dcterms:identifier "Pseudonymised power sensor code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW-HR> ;
+    qudt:hasUnit unit:KiloW-HR ;
     skos:note "cumulative (lifetime)",
         "Valid range: ≥ 0, non-decreasing"@en ;
     csvw:name "Positive active energy(kWh)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Power_sensor> ;
+    sosa:isHostedBy engreen:Platform_Power_sensor ;
     sosa:observes prop:Energy ;
     eg:aggregation "cumulative" ;
     eg:dataLakeSensorPattern "________________\\_active\\_cap" ;
     eg:dataType "float" ;
     eg:signConvention "positive direction = export to the grid" .
 
-<https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Potenza_di_carica_e_scarica_kW> a sosa:Sensor,
+engreen:Operational_monitoring_dataset__Potenza_di_carica_e_scarica_kW a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Charge/Discharge Power"@en ;
     dcterms:description "Instantaneous power exchanged with the battery during charging or discharging"@en ;
     dcterms:identifier "Pseudonymised battery code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    qudt:hasUnit unit:KiloW ;
     skos:note "Valid range: limited by battery power rating"@en ;
     csvw:name "Potenza di carica e scarica(kW)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Battery> ;
+    sosa:isHostedBy engreen:Platform_Battery ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorPattern "%\\_ch\\_discharge\\_power" ;
     eg:dataType "float" ;
     eg:signConvention "+ = charging; - = discharging" .
 
-<https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Production_Power_W> a sosa:Sensor,
+engreen:Operational_monitoring_dataset__Production_Power_W a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Active Power"@en ;
     dcterms:description "PV production power of the plant"@en ;
     dcterms:identifier "Plant code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0 – plant nominal power"@en ;
     csvw:name "Production Power(W)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Inverter> ;
+    sosa:isHostedBy engreen:Platform_Inverter ;
     sosa:observes prop:Power ;
     eg:dataType "float" .
 
-<https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__SoC> a sosa:Sensor,
+engreen:Operational_monitoring_dataset__SoC a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Battery SOC"@en ;
     dcterms:description "Battery state of charge, representing the available stored energy relative to its capacity"@en ;
     dcterms:identifier "Plant code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
-    schema1:maxValue 100.0 ;
-    schema1:minValue 0.0 ;
+    qudt:hasUnit unit:PERCENT ;
+    schema:maxValue 100.0 ;
+    schema:minValue 0.0 ;
     csvw:name "SoC(%)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Battery> ;
+    sosa:isHostedBy engreen:Platform_Battery ;
     sosa:observes prop:StateOfCharge ;
     eg:dataType "float" .
 
-<https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__Total_yield_kWh> a sosa:Sensor,
+engreen:Operational_monitoring_dataset__Total_yield_kWh a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Total PV Yield"@en ;
     dcterms:description "Cumulative AC energy yield of the inverter"@en ;
     dcterms:identifier "Pseudonymised inverter code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW-HR> ;
+    qudt:hasUnit unit:KiloW-HR ;
     skos:note "cumulative (lifetime)",
         "Valid range: ≥ 0, non-decreasing"@en ;
     csvw:name "Total yield(kWh)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Inverter> ;
+    sosa:isHostedBy engreen:Platform_Inverter ;
     sosa:observes prop:Energy ;
     eg:aggregation "cumulative" ;
     eg:dataLakeSensorPattern "%\\_total\\_cap" ;
     eg:dataType "float" .
 
-<https://www.energyguard.eu/ontology/engreen#Operational_monitoring_dataset__collectTime> a eg:Variable ;
+engreen:Operational_monitoring_dataset__collectTime a eg:Variable ;
     rdfs:label "Timestamp"@en ;
     dcterms:description "Timestamp of the measurement in UTC (5-minute resolution)."@en ;
     skos:note "Valid range: 2026 - ongoing"@en ;
     csvw:name "collectTime" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Inverter_Power_sensor_Battery> ;
+    sosa:isHostedBy engreen:Platform_Inverter_Power_sensor_Battery ;
     eg:storedInDatabaseColumn "public.d_calendar.datetime" ;
     eg:variableKind "timestamp" .
 
-<https://www.energyguard.eu/ontology/engreen#Period_GME_CSUD_Hourly_Electricity_Price_Dataset> a dcterms:PeriodOfTime ;
+engreen:Period_GME_CSUD_Hourly_Electricity_Price_Dataset a dcterms:PeriodOfTime ;
     rdfs:label "2025-01-01 – 2026-01-01"@en ;
     dcat:endDate "2026-01-01"^^xsd:date ;
     dcat:startDate "2025-01-01"^^xsd:date .
 
-<https://www.energyguard.eu/ontology/engreen#Period_Operational_monitoring_dataset> a dcterms:PeriodOfTime ;
+engreen:Period_Operational_monitoring_dataset a dcterms:PeriodOfTime ;
     rdfs:label "2025 – ongoing (automated acquisition since March 2026)"@en ;
     dcat:startDate "2025"^^xsd:gYear .
 
-<https://www.energyguard.eu/ontology/engreen#Period_Shelly_consumer_monitoring_dataset> a dcterms:PeriodOfTime ;
+engreen:Period_Shelly_consumer_monitoring_dataset a dcterms:PeriodOfTime ;
     rdfs:label "From installation of the meters (2026) – ongoing"@en ;
     dcat:startDate "2026"^^xsd:gYear .
 
-<https://www.energyguard.eu/ontology/engreen#Period_The_Antrodoco_REC_Mapping_Dataset> a dcterms:PeriodOfTime ;
+engreen:Period_The_Antrodoco_REC_Mapping_Dataset a dcterms:PeriodOfTime ;
     rdfs:label "2025 – ongoing (snapshot of the current REC configuration, 44 metering points)"@en ;
     dcat:startDate "2025"^^xsd:gYear .
 
-<https://www.energyguard.eu/ontology/engreen#Period_The_GSE_Historical_Metering_Dataset> a dcterms:PeriodOfTime ;
+engreen:Period_The_GSE_Historical_Metering_Dataset a dcterms:PeriodOfTime ;
     rdfs:label "2025-01-01 – 2026-04-30, ongoing (data published by GSE with a delay of about 60 days)"@en ;
     dcat:startDate "2025-01-01"^^xsd:date .
 
-<https://www.energyguard.eu/ontology/engreen#Period_The_Weather_Dataset> a dcterms:PeriodOfTime ;
+engreen:Period_The_Weather_Dataset a dcterms:PeriodOfTime ;
     rdfs:label "2025-01-01 – 2025-12-31"@en ;
     dcat:endDate "2025-12-31"^^xsd:date ;
     dcat:startDate "2025-01-01"^^xsd:date .
 
-<https://www.energyguard.eu/ontology/engreen#Place_GME_CSUD_Hourly_Electricity_Price_Dataset> a dcterms:Location ;
+engreen:Place_GME_CSUD_Hourly_Electricity_Price_Dataset a dcterms:Location ;
     rdfs:label "Italy, Centro-Sud (CSUD) bidding zone, where the Antrodoco REC is located"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Place_Operational_monitoring_dataset> a dcterms:Location ;
+engreen:Place_Operational_monitoring_dataset a dcterms:Location ;
     rdfs:label "Antrodoco Renewable Energy Community, Antrodoco (RI), Lazio, Italy"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Place_Shelly_consumer_monitoring_dataset> a dcterms:Location ;
+engreen:Place_Shelly_consumer_monitoring_dataset a dcterms:Location ;
     rdfs:label "Antrodoco Renewable Energy Community, Antrodoco (RI), Lazio, Italy"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Place_The_Antrodoco_REC_Mapping_Dataset> a dcterms:Location ;
+engreen:Place_The_Antrodoco_REC_Mapping_Dataset a dcterms:Location ;
     rdfs:label "Antrodoco Renewable Energy Community, Antrodoco (RI), Lazio, Italy"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Place_The_GSE_Historical_Metering_Dataset> a dcterms:Location ;
+engreen:Place_The_GSE_Historical_Metering_Dataset a dcterms:Location ;
     rdfs:label "Antrodoco Renewable Energy Community, Antrodoco (RI), Lazio, Italy"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Place_The_Weather_Dataset> a dcterms:Location ;
+engreen:Place_The_Weather_Dataset a dcterms:Location ;
     rdfs:label "Antrodoco (RI), Italy, reference point 42.4253 N, 13.0837 E, 481 m a.s.l."@en ;
     ns1:lat 42.4253 ;
     ns1:long 13.0837 .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_CSUD_bidding_zone> a sosa:Platform ;
+engreen:Platform_CSUD_bidding_zone a sosa:Platform ;
     rdfs:label "CSUD bidding zone"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_Grid_connection> a sosa:Platform ;
+engreen:Platform_Grid_connection a sosa:Platform ;
     rdfs:label "Grid connection"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_Inverter_Power_sensor_Battery> a sosa:Platform ;
+engreen:Platform_Inverter_Power_sensor_Battery a sosa:Platform ;
     rdfs:label "Inverter / Power sensor / Battery"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Shelly_consumer_monitoring_dataset__Consumo> a sosa:Sensor,
+engreen:Shelly_consumer_monitoring_dataset__Consumo a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Consumption"@en ;
     dcterms:description "Energy consumed during the interval"@en ;
     dcterms:identifier "Pseudonymised meter code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W-HR> ;
+    qudt:hasUnit unit:W-HR ;
     skos:note "sum over the interval",
         "Valid range: ≥ 0"@en ;
     csvw:name "Consumo" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Household_connection_point> ;
+    sosa:isHostedBy engreen:Platform_Household_connection_point ;
     sosa:observes prop:Energy ;
     eg:aggregation "sum" ;
     eg:dataLakeSensorPattern "%\\_total\\_act\\_energy" ;
     eg:dataType "float" .
 
-<https://www.energyguard.eu/ontology/engreen#Shelly_consumer_monitoring_dataset__Voltaggio_minimo> a sosa:Sensor,
+engreen:Shelly_consumer_monitoring_dataset__Voltaggio_minimo a sosa:Sensor,
         eg:Variable ;
     rdfs:label "Voltage"@en ;
     dcterms:description "Instantaneous voltage measured by the meter (channel 0) at the timestamp of the record"@en ;
     dcterms:identifier "Pseudonymised meter code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/V> ;
+    qudt:hasUnit unit:V ;
     skos:note "Valid range: about 180 – 250"@en ;
     csvw:name "Voltaggio minimo" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Household_connection_point> ;
+    sosa:isHostedBy engreen:Platform_Household_connection_point ;
     sosa:observes prop:Voltage ;
     eg:dataLakeSensorPattern "%\\_voltage" ;
     eg:dataType "float" .
 
-<https://www.energyguard.eu/ontology/engreen#Shelly_consumer_monitoring_dataset__collectTime> a eg:Variable ;
+engreen:Shelly_consumer_monitoring_dataset__collectTime a eg:Variable ;
     rdfs:label "Date / Hour"@en ;
     dcterms:description "Timestamp of the hourly interval in UTC, referring to the end of the interval"@en ;
     csvw:name "collectTime" ;
     eg:storedInDatabaseColumn "public.d_calendar.datetime" ;
     eg:variableKind "timestamp" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__CENSIMP> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__CENSIMP a eg:Variable ;
     rdfs:label "CENSIMP"@en ;
     dcterms:description "Pseudonymised GSE identification code of the generation plant, where applicable"@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_PV_plant> ;
+    sosa:isHostedBy engreen:Platform_PV_plant ;
     eg:dataType "text" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Contributo_PNRR> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Contributo_PNRR a eg:Variable ;
     rdfs:label "PNRR contribution (D6.2 Tables 10, 12)"@en ;
     dcterms:description "Share of the eligible investment cost covered by the PNRR capital grant, used for the incentive tariff reduction"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
-    schema1:maxValue 100.0 ;
-    schema1:minValue 0.0 ;
+    qudt:hasUnit unit:PERCENT ;
+    schema:maxValue 100.0 ;
+    schema:minValue 0.0 ;
     csvw:name "Contributo PNRR" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_PV_plant> ;
+    sosa:isHostedBy engreen:Platform_PV_plant ;
     eg:dataType "float" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Esente> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Esente a eg:Variable ;
     rdfs:label "GSE exemption (D6.2 Tables 10, 12)"@en ;
     dcterms:description "Whether the consumption point is exempt from the PNRR tariff reduction when energy is shared with it"@en ;
     csvw:name "Esente" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Metering_point> ;
+    sosa:isHostedBy engreen:Platform_Metering_point ;
     eg:codeList "Si = yes; No = no" ;
     eg:dataType "text" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__GSE> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__GSE a eg:Variable ;
     rdfs:label "GSE status"@en ;
     dcterms:description "Status of the user or asset with respect to registration and data availability through the GSE platform"@en ;
     csvw:name "GSE" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_REC_member> ;
+    sosa:isHostedBy engreen:Platform_REC_member ;
     eg:codeList "Si = registered, data available; Domanda inviata = application sent; Domanda da mandare = application to be sent" ;
     eg:dataType "text" ;
     eg:variableKind "state" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Note> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Note a eg:Variable ;
     rdfs:label "Notes"@en ;
     dcterms:description "Additional information on monitoring configuration or data availability (no personal data)"@en ;
     csvw:name "Note" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_REC_member> ;
+    sosa:isHostedBy engreen:Platform_REC_member ;
     eg:dataType "text" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__POD> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__POD a eg:Variable ;
     rdfs:label "POD"@en ;
     dcterms:description "Pseudonymised code of the Point of Delivery uniquely identifying the electricity supply or generation connection point"@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Metering_point> ;
+    sosa:isHostedBy engreen:Platform_Metering_point ;
     eg:dataType "text" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__PV_azimuth> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__PV_azimuth a eg:Variable ;
     rdfs:label "PV azimuth"@en ;
     dcterms:description "Azimuth angle describing the orientation of the photovoltaic modules"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/DEG> ;
+    qudt:hasUnit unit:DEG ;
     skos:note "Valid range: -90 – +90"@en ;
     csvw:name "PV_azimuth" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_PV_plant> ;
+    sosa:isHostedBy engreen:Platform_PV_plant ;
     eg:dataType "integer" ;
     eg:signConvention "0 = south; -90 = east; +90 = west" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__PV_installation_year> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__PV_installation_year a eg:Variable ;
     rdfs:label "PV installation year"@en ;
     dcterms:description "Year in which the photovoltaic system was installed"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/YR> ;
+    qudt:hasUnit unit:YR ;
     skos:note "Valid range: ≥ 2000"@en ;
     csvw:name "PV_installation_year" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_PV_plant> ;
+    sosa:isHostedBy engreen:Platform_PV_plant ;
     eg:dataType "integer" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__PV_model> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__PV_model a eg:Variable ;
     rdfs:label "PV module model"@en ;
     dcterms:description "Manufacturer and model of the installed photovoltaic modules"@en ;
     csvw:name "PV__model" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_PV_module> ;
+    sosa:isHostedBy engreen:Platform_PV_module ;
     eg:dataType "text" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__PV_number> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__PV_number a eg:Variable ;
     rdfs:label "Number of PV modules"@en ;
     dcterms:description "Total number of photovoltaic modules installed"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/NUM> ;
+    qudt:hasUnit unit:NUM ;
     skos:note "Valid range: > 0"@en ;
     csvw:name "PV_number" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_PV_plant> ;
+    sosa:isHostedBy engreen:Platform_PV_plant ;
     eg:dataType "integer" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__PV_power> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__PV_power a eg:Variable ;
     rdfs:label "PV module nominal power"@en ;
     dcterms:description "Nominal power of each installed photovoltaic module"@en ;
-    schema1:unitText "Wp" ;
+    schema:unitText "Wp" ;
     skos:note "Valid range: > 0"@en ;
     csvw:name "PV_power" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_PV_module> ;
+    sosa:isHostedBy engreen:Platform_PV_module ;
     eg:dataType "integer" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__PV_tilt> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__PV_tilt a eg:Variable ;
     rdfs:label "PV tilt"@en ;
     dcterms:description "Tilt angle of the photovoltaic modules with respect to the horizontal plane"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/DEG> ;
-    schema1:maxValue 90.0 ;
-    schema1:minValue 0.0 ;
+    qudt:hasUnit unit:DEG ;
+    schema:maxValue 90.0 ;
+    schema:minValue 0.0 ;
     csvw:name "PV_tilt" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_PV_plant> ;
+    sosa:isHostedBy engreen:Platform_PV_plant ;
     eg:dataType "integer" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Piattaforma> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Piattaforma a eg:Variable ;
     rdfs:label "Monitoring platform"@en ;
     dcterms:description "Digital platform used to retrieve or monitor data"@en ;
     csvw:name "Piattaforma" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Monitoring> ;
+    sosa:isHostedBy engreen:Platform_Monitoring ;
     eg:codeList "na = none (GSE data only); Fusion Solar; Solarman; Shelly" ;
     eg:dataType "text" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Pinv> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Pinv a eg:Variable ;
     rdfs:label "Inverter nominal power"@en ;
     dcterms:description "Nominal power of the installed inverter"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    qudt:hasUnit unit:KiloW ;
     skos:note "Valid range: > 0"@en ;
     csvw:name "Pinv" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Inverter> ;
+    sosa:isHostedBy engreen:Platform_Inverter ;
     eg:dataType "float" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Potenza_di_contratto_impegnata_kW> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Potenza_di_contratto_impegnata_kW a eg:Variable ;
     rdfs:label "Contracted power"@en ;
     dcterms:description "Contractually committed electricity supply power associated with the user"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    qudt:hasUnit unit:KiloW ;
     skos:note "Valid range: > 0"@en ;
     csvw:name "Potenza di contratto/impegnata [kW]" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Metering_point> ;
+    sosa:isHostedBy engreen:Platform_Metering_point ;
     eg:dataType "float" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Pplant> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Pplant a eg:Variable ;
     rdfs:label "Plant nominal power"@en ;
     dcterms:description "Total nominal power of the photovoltaic installation"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW> ;
+    qudt:hasUnit unit:KiloW ;
     skos:note "Valid range: > 0"@en ;
     csvw:name "Pplant" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_PV_plant> ;
+    sosa:isHostedBy engreen:Platform_PV_plant ;
     eg:dataType "float" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Ruolo_utente> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Ruolo_utente a eg:Variable ;
     rdfs:label "User role"@en ;
     dcterms:description "Role of the user within the REC"@en ;
     csvw:name "Ruolo utente" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_REC_member> ;
+    sosa:isHostedBy engreen:Platform_REC_member ;
     eg:codeList "Consumer; Producer; Prosumer" ;
     eg:dataType "text" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Sistemi_rilevazioni_dati> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Sistemi_rilevazioni_dati a eg:Variable ;
     rdfs:label "Data monitoring system"@en ;
     dcterms:description "Metering system or device used to collect operational or asset-level data"@en ;
     csvw:name "Sistemi rilevazioni dati" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Monitoring> ;
+    sosa:isHostedBy engreen:Platform_Monitoring ;
     eg:codeList "GSE; Meter Huawei; Meter Deye; Meter Shelly" ;
     eg:dataType "text" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Storage> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Storage a eg:Variable ;
     rdfs:label "Storage availability"@en ;
     dcterms:description "Indicates whether a battery energy storage system is installed"@en ;
     csvw:name "Storage" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Battery> ;
+    sosa:isHostedBy engreen:Platform_Battery ;
     eg:codeList "Si = yes; No = no" ;
     eg:dataType "text" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Storage_cap> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Storage_cap a eg:Variable ;
     rdfs:label "Storage capacity"@en ;
     dcterms:description "Nominal energy capacity of the installed battery energy storage system"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW-HR> ;
+    qudt:hasUnit unit:KiloW-HR ;
     skos:note "Valid range: > 0"@en ;
     csvw:name "Storage_cap" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Battery> ;
+    sosa:isHostedBy engreen:Platform_Battery ;
     eg:dataType "float" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Storage_installation_year> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Storage_installation_year a eg:Variable ;
     rdfs:label "Storage installation year"@en ;
     dcterms:description "Year in which the battery energy storage system was installed"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/YR> ;
+    qudt:hasUnit unit:YR ;
     skos:note "Valid range: ≥ 2000"@en ;
     csvw:name "Storage_installation_year" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Battery> ;
+    sosa:isHostedBy engreen:Platform_Battery ;
     eg:dataType "integer" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Storage_model> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Storage_model a eg:Variable ;
     rdfs:label "Storage model"@en ;
     dcterms:description "Manufacturer and model of the installed battery system"@en ;
     csvw:name "Storage_model" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Battery> ;
+    sosa:isHostedBy engreen:Platform_Battery ;
     eg:dataType "text" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__Tipologia_utente> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__Tipologia_utente a eg:Variable ;
     rdfs:label "User type"@en ;
     dcterms:description "Classification of the user"@en ;
     csvw:name "Tipologia utente" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_REC_member> ;
+    sosa:isHostedBy engreen:Platform_REC_member ;
     eg:codeList "Residenziale = residential; Azienda = company; Pubblico = public entity" ;
     eg:dataType "text" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Antrodoco_REC_Mapping_Dataset__not_in_source_file> a eg:Variable ;
+engreen:The_Antrodoco_REC_Mapping_Dataset__not_in_source_file a eg:Variable ;
     rdfs:label "Annual electricity consumption"@en ;
     dcterms:description "Available annual electricity consumption associated with the user profile"@en ;
-    schema1:unitText "kWh/year" ;
+    schema:unitText "kWh/year" ;
     skos:note "Valid range: ≥ 0"@en ;
     csvw:name "— (not in source file)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Metering_point> ;
+    sosa:isHostedBy engreen:Platform_Metering_point ;
     eg:dataType "float" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_GSE_Historical_Metering_Dataset__Codice_Misura> a eg:Variable ;
+engreen:The_GSE_Historical_Metering_Dataset__Codice_Misura a eg:Variable ;
     rdfs:label "Measurement code"@en ;
     dcterms:description "Identifier of the metering stream (POD for grid withdrawal) or generation unit (GSE UPN code for injection and production), pseudonymised"@en ;
     dcterms:identifier "Pseudonymised measurement code" ;
     csvw:name "Codice Misura" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Metering_point_production_unit> ;
+    sosa:isHostedBy engreen:Platform_Metering_point_production_unit ;
     eg:dataType "text" ;
     eg:variableKind "static" .
 
-<https://www.energyguard.eu/ontology/engreen#The_GSE_Historical_Metering_Dataset__Data> a eg:Variable ;
+engreen:The_GSE_Historical_Metering_Dataset__Data a eg:Variable ;
     rdfs:label "Date"@en ;
     dcterms:description "Calendar date to which the measured value refers"@en ;
     csvw:name "Data" ;
     eg:variableKind "timestamp" .
 
-<https://www.energyguard.eu/ontology/engreen#The_GSE_Historical_Metering_Dataset__Ora> a eg:Variable ;
+engreen:The_GSE_Historical_Metering_Dataset__Ora a eg:Variable ;
     rdfs:label "Hour"@en ;
     dcterms:description "Hourly interval to which the measured value refers (start of the hour)"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/HR> ;
-    schema1:maxValue 23.0 ;
-    schema1:minValue 0.0 ;
+    qudt:hasUnit unit:HR ;
+    schema:maxValue 23.0 ;
+    schema:minValue 0.0 ;
     csvw:name "Ora" ;
     eg:dataType "integer" ;
     eg:variableKind "timestamp" .
 
-<https://www.energyguard.eu/ontology/engreen#The_GSE_Historical_Metering_Dataset__kWh> a eg:Variable ;
+engreen:The_GSE_Historical_Metering_Dataset__kWh a eg:Variable ;
     rdfs:label "Energy value"@en ;
     dcterms:description "Energy measured during the hourly interval: grid withdrawal, grid injection or energy production depending on the file"@en ;
     dcterms:identifier "Pseudonymised measurement code" ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/KiloW-HR> ;
+    qudt:hasUnit unit:KiloW-HR ;
     skos:note "hourly sum",
         "Valid range: ≥ 0"@en ;
     csvw:name "kWh" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Metering_point_production_unit> ;
+    sosa:isHostedBy engreen:Platform_Metering_point_production_unit ;
     sosa:observes prop:Energy ;
     eg:aggregation "sum" ;
     eg:dataType "float" ;
     eg:signConvention "always positive; the flow direction is given by the file" ;
     eg:variableKind "measured" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Weather_Dataset__cloud_cover> a eg:Variable ;
+engreen:The_Weather_Dataset__cloud_cover a eg:Variable ;
     rdfs:label "cloud_pct"@en ;
     dcterms:description "Total cloud cover, representing the percentage of sky covered by clouds"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/PERCENT> ;
-    schema1:maxValue 100.0 ;
-    schema1:minValue 0.0 ;
+    qudt:hasUnit unit:PERCENT ;
+    schema:maxValue 100.0 ;
+    schema:minValue 0.0 ;
     csvw:name "cloud_cover (%)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Weather> ;
+    sosa:isHostedBy engreen:Platform_Weather ;
     sosa:observes prop:CloudCover ;
     eg:dataLakeSensorId "cloud_pct_1" ;
     eg:dataType "float" ;
     eg:variableKind "modelled" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Weather_Dataset__diffuse_radiation_W_m2> a eg:Variable ;
+engreen:The_Weather_Dataset__diffuse_radiation_W_m2 a eg:Variable ;
     rdfs:label "dhi_wm2"@en ;
     dcterms:description "Diffuse horizontal irradiance, representing the diffuse component of solar radiation received from the sky on a horizontal surface"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W-PER-M2> ;
+    qudt:hasUnit unit:W-PER-M2 ;
     skos:note "mean of the preceding hour",
         "Valid range: 0 – 600"@en ;
     csvw:name "diffuse_radiation (W/m²)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Solar_radiation> ;
+    sosa:isHostedBy engreen:Platform_Solar_radiation ;
     sosa:observes prop:SolarRadiation ;
     eg:aggregation "mean" ;
     eg:dataType "float" ;
     eg:variableKind "modelled" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Weather_Dataset__direct_normal_irradiance_W_m2> a eg:Variable ;
+engreen:The_Weather_Dataset__direct_normal_irradiance_W_m2 a eg:Variable ;
     rdfs:label "dni_wm2"@en ;
     dcterms:description "Direct normal irradiance, representing the direct component of solar radiation perpendicular to the sun direction"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W-PER-M2> ;
+    qudt:hasUnit unit:W-PER-M2 ;
     skos:note "mean of the preceding hour",
         "Valid range: 0 – 1 100"@en ;
     csvw:name "direct_normal_irradiance (W/m²)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Solar_radiation> ;
+    sosa:isHostedBy engreen:Platform_Solar_radiation ;
     sosa:observes prop:SolarRadiation ;
     eg:aggregation "mean" ;
     eg:dataType "float" ;
     eg:variableKind "modelled" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Weather_Dataset__shortwave_radiation_W_m2> a eg:Variable ;
+engreen:The_Weather_Dataset__shortwave_radiation_W_m2 a eg:Variable ;
     rdfs:label "ghi_wm2"@en ;
     dcterms:description "Global horizontal irradiance, representing the solar radiation received on a horizontal surface"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W-PER-M2> ;
+    qudt:hasUnit unit:W-PER-M2 ;
     skos:note "mean of the preceding hour",
         "Valid range: 0 – 1 200"@en ;
     csvw:name "shortwave_radiation (W/m²)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Solar_radiation> ;
+    sosa:isHostedBy engreen:Platform_Solar_radiation ;
     sosa:observes prop:SolarRadiation ;
     eg:aggregation "mean" ;
     eg:dataLakeSensorId "ghi_wm2_1" ;
     eg:dataType "float" ;
     eg:variableKind "modelled" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Weather_Dataset__temperature_2m_C> a eg:Variable ;
+engreen:The_Weather_Dataset__temperature_2m_C a eg:Variable ;
     rdfs:label "temp_c"@en ;
     dcterms:description "Outdoor air temperature at 2 metres above ground level"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/DEG_C> ;
-    schema1:maxValue 45.0 ;
-    schema1:minValue -25.0 ;
+    qudt:hasUnit unit:DEG_C ;
+    schema:maxValue 45.0 ;
+    schema:minValue -25.0 ;
     csvw:name "temperature_2m (°C)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Weather> ;
+    sosa:isHostedBy engreen:Platform_Weather ;
     sosa:observes prop:Temperature ;
     eg:dataLakeSensorId "temp_c_1" ;
     eg:dataType "float" ;
     eg:variableKind "modelled" .
 
-<https://www.energyguard.eu/ontology/engreen#The_Weather_Dataset__wind_speed_10m_km_h> a eg:Variable ;
+engreen:The_Weather_Dataset__wind_speed_10m_km_h a eg:Variable ;
     rdfs:label "wind_kmh"@en ;
     dcterms:description "Wind speed at 10 metres above ground level"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/KiloM-PER-HR> ;
+    qudt:hasUnit unit:KiloM-PER-HR ;
     skos:note "Valid range: ≥ 0"@en ;
     csvw:name "wind_speed_10m (km/h)" ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/engreen#Platform_Weather> ;
+    sosa:isHostedBy engreen:Platform_Weather ;
     sosa:observes prop:Speed ;
     eg:dataType "float" ;
     eg:variableKind "modelled" .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_Household_connection_point> a sosa:Platform ;
+engreen:Platform_Household_connection_point a sosa:Platform ;
     rdfs:label "Household connection point"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_Metering_point_production_unit> a sosa:Platform ;
+engreen:Platform_Metering_point_production_unit a sosa:Platform ;
     rdfs:label "Metering point / production unit"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_Monitoring> a sosa:Platform ;
+engreen:Platform_Monitoring a sosa:Platform ;
     rdfs:label "Monitoring"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_PV_module> a sosa:Platform ;
+engreen:Platform_PV_module a sosa:Platform ;
     rdfs:label "PV module"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_Power_sensor> a sosa:Platform ;
+engreen:Platform_Power_sensor a sosa:Platform ;
     rdfs:label "Power sensor"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_Solar_radiation> a sosa:Platform ;
+engreen:Platform_Solar_radiation a sosa:Platform ;
     rdfs:label "Solar radiation"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_Weather> a sosa:Platform ;
+engreen:Platform_Weather a sosa:Platform ;
     rdfs:label "Weather"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_Metering_point> a sosa:Platform ;
+engreen:Platform_Metering_point a sosa:Platform ;
     rdfs:label "Metering point"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_REC_member> a sosa:Platform ;
+engreen:Platform_REC_member a sosa:Platform ;
     rdfs:label "REC member"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_Inverter> a sosa:Platform ;
+engreen:Platform_Inverter a sosa:Platform ;
     rdfs:label "Inverter"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_PV_plant> a sosa:Platform ;
+engreen:Platform_PV_plant a sosa:Platform ;
     rdfs:label "PV plant"@en .
 
-<https://www.energyguard.eu/ontology/engreen#Platform_Battery> a sosa:Platform ;
+engreen:Platform_Battery a sosa:Platform ;
     rdfs:label "Battery"@en .
 

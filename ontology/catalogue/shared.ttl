@@ -7,84 +7,85 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
 
-<http://qudt.org/vocab/unit/A> qudt:symbol "A" .
+unit:A qudt:symbol "A" .
 
-<http://qudt.org/vocab/unit/BAR> qudt:symbol "bar" .
+unit:BAR qudt:symbol "bar" .
 
-<http://qudt.org/vocab/unit/CCY_EUR> qudt:symbol "EUR" .
+unit:CCY_EUR qudt:symbol "EUR" .
 
-<http://qudt.org/vocab/unit/CCY_EUR-PER-M2> qudt:symbol "EUR/m²" .
+unit:CCY_EUR-PER-M2 qudt:symbol "EUR/m²" .
 
-<http://qudt.org/vocab/unit/CCY_EUR-PER-MegaW-HR> qudt:symbol "€/MWh" .
+unit:CCY_EUR-PER-MegaW-HR qudt:symbol "€/MWh" .
 
-<http://qudt.org/vocab/unit/DEG> qudt:symbol "°" .
+unit:DEG qudt:symbol "°" .
 
-<http://qudt.org/vocab/unit/DEG_C> qudt:symbol "°C" .
+unit:DEG_C qudt:symbol "°C" .
 
-<http://qudt.org/vocab/unit/GM-PER-HR> qudt:symbol "g/h" .
+unit:GM-PER-HR qudt:symbol "g/h" .
 
-<http://qudt.org/vocab/unit/HR> qudt:symbol "h" .
+unit:HR qudt:symbol "h" .
 
-<http://qudt.org/vocab/unit/KiloGM-PER-M2> qudt:symbol "kg CO₂/m²" .
+unit:KiloGM-PER-M2 qudt:symbol "kg CO₂/m²" .
 
-<http://qudt.org/vocab/unit/KiloM-PER-HR> qudt:symbol "km/h" .
+unit:KiloM-PER-HR qudt:symbol "km/h" .
 
-<http://qudt.org/vocab/unit/KiloW> qudt:symbol "kW" .
+unit:KiloW qudt:symbol "kW" .
 
-<http://qudt.org/vocab/unit/KiloW-HR> qudt:symbol "kWh" .
+unit:KiloW-HR qudt:symbol "kWh" .
 
-<http://qudt.org/vocab/unit/KiloW-HR-PER-M2> qudt:symbol "kWh/m²" .
+unit:KiloW-HR-PER-M2 qudt:symbol "kWh/m²" .
 
-<http://qudt.org/vocab/unit/L> qudt:symbol "L" .
+unit:L qudt:symbol "L" .
 
-<http://qudt.org/vocab/unit/L-PER-MIN> qudt:symbol "L/min" .
+unit:L-PER-MIN qudt:symbol "L/min" .
 
-<http://qudt.org/vocab/unit/M> qudt:symbol "m" .
+unit:M qudt:symbol "m" .
 
-<http://qudt.org/vocab/unit/M-PER-SEC> qudt:symbol "m/s" .
+unit:M-PER-SEC qudt:symbol "m/s" .
 
-<http://qudt.org/vocab/unit/M2> qudt:symbol "m²" .
+unit:M2 qudt:symbol "m²" .
 
-<http://qudt.org/vocab/unit/M3> qudt:symbol "m³" .
+unit:M3 qudt:symbol "m³" .
 
-<http://qudt.org/vocab/unit/M3-PER-HR> qudt:symbol "m3/h" .
+unit:M3-PER-HR qudt:symbol "m3/h" .
 
-<http://qudt.org/vocab/unit/MegaW-HR> qudt:symbol "MWh" .
+unit:MegaW-HR qudt:symbol "MWh" .
 
-<http://qudt.org/vocab/unit/MicroGM-PER-M3> qudt:symbol "µg/m³" .
+unit:MicroGM-PER-M3 qudt:symbol "µg/m³" .
 
-<http://qudt.org/vocab/unit/MicroS-PER-CentiM> qudt:symbol "uS/cm" .
+unit:MicroS-PER-CentiM qudt:symbol "uS/cm" .
 
-<http://qudt.org/vocab/unit/MilliBAR> qudt:symbol "mbarg" .
+unit:MilliBAR qudt:symbol "mbarg" .
 
-<http://qudt.org/vocab/unit/MilliM> qudt:symbol "mm" .
+unit:MilliM qudt:symbol "mm" .
 
-<http://qudt.org/vocab/unit/NUM> qudt:symbol "count" .
+unit:NUM qudt:symbol "count" .
 
-<http://qudt.org/vocab/unit/PER-HR> qudt:symbol "1/h" .
+unit:PER-HR qudt:symbol "1/h" .
 
-<http://qudt.org/vocab/unit/PERCENT> qudt:symbol "%" .
+unit:PERCENT qudt:symbol "%" .
 
-<http://qudt.org/vocab/unit/PPM> qudt:symbol "PPM" .
+unit:PPM qudt:symbol "PPM" .
 
-<http://qudt.org/vocab/unit/REV-PER-MIN> qudt:symbol "rpm" .
+unit:REV-PER-MIN qudt:symbol "rpm" .
 
-<http://qudt.org/vocab/unit/SEC> qudt:symbol "s" .
+unit:SEC qudt:symbol "s" .
 
-<http://qudt.org/vocab/unit/TONNE-PER-YR> qudt:symbol "tCO₂/year" .
+unit:TONNE-PER-YR qudt:symbol "tCO₂/year" .
 
-<http://qudt.org/vocab/unit/V> qudt:symbol "V" .
+unit:V qudt:symbol "V" .
 
-<http://qudt.org/vocab/unit/W> qudt:symbol "W" .
+unit:W qudt:symbol "W" .
 
-<http://qudt.org/vocab/unit/W-HR> qudt:symbol "Wh" .
+unit:W-HR qudt:symbol "Wh" .
 
-<http://qudt.org/vocab/unit/W-PER-M2> qudt:symbol "W/m²" .
+unit:W-PER-M2 qudt:symbol "W/m²" .
 
-<http://qudt.org/vocab/unit/W-PER-M2-K> qudt:symbol "W/(m²K)" .
+unit:W-PER-M2-K qudt:symbol "W/(m²K)" .
 
-<http://qudt.org/vocab/unit/YR> qudt:symbol "year" .
+unit:YR qudt:symbol "year" .
 
 mp:BER a foaf:Organization ;
     rdfs:label "BER" ;

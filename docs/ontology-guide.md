@@ -419,6 +419,7 @@ Every item has a unique web-style address (an IRI). A short prefix stands for th
 | `eg:` | `https://www.energyguard.eu/ontology#` (the 13 core terms) |
 | `prop:` | `https://www.energyguard.eu/ontology/property#` (measurement types) |
 | `mp:` | `https://www.energyguard.eu/ontology/merged-pilots#` (the pilots and the catalogue) |
+| `unit:` | `http://qudt.org/vocab/unit/` (QUDT units, such as `unit:DEG_C`) |
 | `ber:`, `cea:`, `cartif:`, `ciemat:`, `rea:`, `engreen:`, `rdn:` | `https://www.energyguard.eu/ontology/<pilot>#` (that pilot's datasets, variables, equipment) |
 
 Items are named `<pilot namespace>#<name>`, for example `ber#TT-D101`. The ontology itself is

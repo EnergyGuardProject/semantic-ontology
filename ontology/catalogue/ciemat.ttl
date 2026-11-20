@@ -1,3 +1,4 @@
+@prefix ciemat: <https://www.energyguard.eu/ontology/ciemat#> .
 @prefix csvw: <http://www.w3.org/ns/csvw#> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
@@ -6,575 +7,576 @@
 @prefix prop: <https://www.energyguard.eu/ontology/property#> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema1: <http://schema.org/> .
+@prefix schema: <http://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://www.energyguard.eu/ontology/ciemat#Dataset_CEDER_CIEMAT_Microgrid_Daily_Operational_Data_1_s> a dcat:Dataset ;
+ciemat:Dataset_CEDER_CIEMAT_Microgrid_Daily_Operational_Data_1_s a dcat:Dataset ;
     dcterms:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/DAILY> ;
     dcterms:description "Operational data from the CEDER-CIEMAT microgrid in Soria, Spain. The dataset includes measurements from photovoltaic plants, wind turbines, electrical loads, battery storage systems and auxiliary equipment. It is collected for daily monitoring, operational analysis and the development and validation of intelligent energy management strategies. System covered: Microgrid operation, including photovoltaic plants, wind turbines, electrical consumption, energy storage systems and auxiliary equipment. Source: CEDER-CIEMAT microgrid monitoring and data acquisition system (SCADA / monitoring infrastructure)."@en ;
     dcterms:format "CSV, comma-separated, decimal point" ;
     dcterms:publisher mp:CIEMAT ;
-    dcterms:spatial <https://www.energyguard.eu/ontology/ciemat#Place_CEDER_CIEMAT_Microgrid_Daily_Operational_Data_1_s> ;
-    dcterms:temporal <https://www.energyguard.eu/ontology/ciemat#Period_CEDER_CIEMAT_Microgrid_Daily_Operational_Data_1_s> ;
+    dcterms:spatial ciemat:Place_CEDER_CIEMAT_Microgrid_Daily_Operational_Data_1_s ;
+    dcterms:temporal ciemat:Period_CEDER_CIEMAT_Microgrid_Daily_Operational_Data_1_s ;
     dcterms:title "CEDER-CIEMAT Microgrid – Daily Operational Data (1 s)"@en ;
-    schema1:variableMeasured <https://www.energyguard.eu/ontology/ciemat#ACTARIS>,
-        <https://www.energyguard.eu/ontology/ciemat#ARFRISOL>,
-        <https://www.energyguard.eu/ontology/ciemat#ARFRISOL_consumption>,
-        <https://www.energyguard.eu/ontology/ciemat#ATLANTIC>,
-        <https://www.energyguard.eu/ontology/ciemat#BATERIA_LFP>,
-        <https://www.energyguard.eu/ontology/ciemat#BATERIA_NMC>,
-        <https://www.energyguard.eu/ontology/ciemat#BATERIA_PB_ACIDO_PEPA_I>,
-        <https://www.energyguard.eu/ontology/ciemat#BATERIA_PB_ACIDO_PEPA_II>,
-        <https://www.energyguard.eu/ontology/ciemat#BOMBAS>,
-        <https://www.energyguard.eu/ontology/ciemat#CENTRAL_TERMICA>,
-        <https://www.energyguard.eu/ontology/ciemat#DEPOSITO_NIVEL>,
-        <https://www.energyguard.eu/ontology/ciemat#ED02_PV>,
-        <https://www.energyguard.eu/ontology/ciemat#ED02_consumption>,
-        <https://www.energyguard.eu/ontology/ciemat#ED03>,
-        <https://www.energyguard.eu/ontology/ciemat#ED03_consumption>,
-        <https://www.energyguard.eu/ontology/ciemat#ED09>,
-        <https://www.energyguard.eu/ontology/ciemat#ENNERA_3_5>,
-        <https://www.energyguard.eu/ontology/ciemat#GRUPO_DIESEL>,
-        <https://www.energyguard.eu/ontology/ciemat#LECA_1>,
-        <https://www.energyguard.eu/ontology/ciemat#LECA_2>,
-        <https://www.energyguard.eu/ontology/ciemat#LEVI>,
-        <https://www.energyguard.eu/ontology/ciemat#NED100>,
-        <https://www.energyguard.eu/ontology/ciemat#PEPA_I>,
-        <https://www.energyguard.eu/ontology/ciemat#PEPA_II>,
-        <https://www.energyguard.eu/ontology/ciemat#PEPA_III>,
-        <https://www.energyguard.eu/ontology/ciemat#PEPA_III_var>,
-        <https://www.energyguard.eu/ontology/ciemat#PEPA_II_var>,
-        <https://www.energyguard.eu/ontology/ciemat#RADIACION_SOLAR>,
-        <https://www.energyguard.eu/ontology/ciemat#RIOS>,
-        <https://www.energyguard.eu/ontology/ciemat#RYSE_E5>,
-        <https://www.energyguard.eu/ontology/ciemat#SOLENER>,
-        <https://www.energyguard.eu/ontology/ciemat#TURBINA_PV>,
-        <https://www.energyguard.eu/ontology/ciemat#TURBINA_consumption>,
-        <https://www.energyguard.eu/ontology/ciemat#TURBINA_hydro>,
-        <https://www.energyguard.eu/ontology/ciemat#VIENTO_ESTACION>,
-        <https://www.energyguard.eu/ontology/ciemat#VIENTO_PEPA_I>,
-        <https://www.energyguard.eu/ontology/ciemat#WINDERA_4_2> ;
+    schema:variableMeasured ciemat:ACTARIS,
+        ciemat:ARFRISOL,
+        ciemat:ARFRISOL_consumption,
+        ciemat:ATLANTIC,
+        ciemat:BATERIA_LFP,
+        ciemat:BATERIA_NMC,
+        ciemat:BATERIA_PB_ACIDO_PEPA_I,
+        ciemat:BATERIA_PB_ACIDO_PEPA_II,
+        ciemat:BOMBAS,
+        ciemat:CENTRAL_TERMICA,
+        ciemat:DEPOSITO_NIVEL,
+        ciemat:ED02_PV,
+        ciemat:ED02_consumption,
+        ciemat:ED03,
+        ciemat:ED03_consumption,
+        ciemat:ED09,
+        ciemat:ENNERA_3_5,
+        ciemat:GRUPO_DIESEL,
+        ciemat:LECA_1,
+        ciemat:LECA_2,
+        ciemat:LEVI,
+        ciemat:NED100,
+        ciemat:PEPA_I,
+        ciemat:PEPA_II,
+        ciemat:PEPA_III,
+        ciemat:PEPA_III_var,
+        ciemat:PEPA_II_var,
+        ciemat:RADIACION_SOLAR,
+        ciemat:RIOS,
+        ciemat:RYSE_E5,
+        ciemat:SOLENER,
+        ciemat:TURBINA_PV,
+        ciemat:TURBINA_consumption,
+        ciemat:TURBINA_hydro,
+        ciemat:VIENTO_ESTACION,
+        ciemat:VIENTO_PEPA_I,
+        ciemat:WINDERA_4_2 ;
     csvw:null "\\N – missing or unavailable measurement" ;
     dcat:temporalResolution "PT1S"^^xsd:duration ;
     eg:storedInDatabaseTable "public.f_tsdata" ;
     eg:timeZone "UTC" .
 
-<https://www.energyguard.eu/ontology/ciemat#ACTARIS> a sosa:Sensor,
+ciemat:ACTARIS a sosa:Sensor,
         eg:Variable ;
     rdfs:label "ACTARIS"@en ;
     dcterms:description "Total electrical power consumption of the CEDER site"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: -16,000 to +5,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_CEDER_CIEMAT_site_main_consumption_meter> ;
+    sosa:isHostedBy ciemat:Platform_CEDER_CIEMAT_site_main_consumption_meter ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "ACTARIS" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#ARFRISOL> a sosa:Sensor,
+ciemat:ARFRISOL a sosa:Sensor,
         eg:Variable ;
     rdfs:label "ARFRISOL"@en ;
     dcterms:description "Photovoltaic power generated by the ARFRISOL building installation"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–6,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_ARFRISOL_building_PV_system> ;
+    sosa:isHostedBy ciemat:Platform_ARFRISOL_building_PV_system ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "EDIFICIO_ARFRISOL" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#ARFRISOL_consumption> a sosa:Sensor,
+ciemat:ARFRISOL_consumption a sosa:Sensor,
         eg:Variable ;
     rdfs:label "ARFRISOL [consumption]"@en ;
     dcterms:description "Electrical power consumed by the ARFRISOL Transfomer Station"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–1,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_ARFRISOL_electrical_Transfomer_Station> ;
+    sosa:isHostedBy ciemat:Platform_ARFRISOL_electrical_Transfomer_Station ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "ARFRISOL" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#ATLANTIC> a sosa:Sensor,
+ciemat:ATLANTIC a sosa:Sensor,
         eg:Variable ;
     rdfs:label "ATLANTIC"@en ;
     dcterms:description "Electrical power generated by the ATLANTIC wind turbine"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–9,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_ATLANTIC_wind_turbine> ;
+    sosa:isHostedBy ciemat:Platform_ATLANTIC_wind_turbine ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "ATLANTIC" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#BATERIA_LFP> a sosa:Sensor,
+ciemat:BATERIA_LFP a sosa:Sensor,
         eg:Variable ;
     rdfs:label "BATERIA LFP"@en ;
     dcterms:description "Power associated with the LFP battery system"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: Not enough variation to establish a range"@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_LFP_battery_system> ;
+    sosa:isHostedBy ciemat:Platform_LFP_battery_system ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "BATERIA_LITIO" ;
     eg:dataType "integer" ;
     eg:signConvention "Positive values indicate charging; negative values indicate discharging" .
 
-<https://www.energyguard.eu/ontology/ciemat#BATERIA_NMC> a sosa:Sensor,
+ciemat:BATERIA_NMC a sosa:Sensor,
         eg:Variable ;
     rdfs:label "BATERIA NMC"@en ;
     dcterms:description "Power associated with the NMC battery system"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–3,500 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_NMC_battery_system> ;
+    sosa:isHostedBy ciemat:Platform_NMC_battery_system ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "BATERIA_NMC_PEPA_II" ;
     eg:dataType "integer" ;
     eg:signConvention "Positive values indicate charging; negative values indicate discharging" .
 
-<https://www.energyguard.eu/ontology/ciemat#BATERIA_PB_ACIDO_PEPA_I> a sosa:Sensor,
+ciemat:BATERIA_PB_ACIDO_PEPA_I a sosa:Sensor,
         eg:Variable ;
     rdfs:label "BATERIA PB-ACIDO PEPA I"@en ;
     dcterms:description "Power associated with the PEPA I lead-acid battery system"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_I_lead_acid_battery> ;
+    qudt:hasUnit unit:W ;
+    sosa:isHostedBy ciemat:Platform_PEPA_I_lead_acid_battery ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "BATERIA_PEPA_I" ;
     eg:dataType "integer" ;
     eg:signConvention "Positive values indicate charging; negative values indicate discharging" .
 
-<https://www.energyguard.eu/ontology/ciemat#BATERIA_PB_ACIDO_PEPA_II> a sosa:Sensor,
+ciemat:BATERIA_PB_ACIDO_PEPA_II a sosa:Sensor,
         eg:Variable ;
     rdfs:label "BATERIA PB-ACIDO PEPA II"@en ;
     dcterms:description "Power associated with the PEPA II lead-acid battery system"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_II_lead_acid_battery> ;
+    qudt:hasUnit unit:W ;
+    sosa:isHostedBy ciemat:Platform_PEPA_II_lead_acid_battery ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "BATERIA_PEPA_II" ;
     eg:dataType "integer" ;
     eg:signConvention "Positive values indicate charging; negative values indicate discharging" .
 
-<https://www.energyguard.eu/ontology/ciemat#BOMBAS> a sosa:Sensor,
+ciemat:BOMBAS a sosa:Sensor,
         eg:Variable ;
     rdfs:label "BOMBAS"@en ;
     dcterms:description "Electrical power consumed by the pumping system"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–29,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_Pumping_system> ;
+    sosa:isHostedBy ciemat:Platform_Pumping_system ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "BOMBAS" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#CENTRAL_TERMICA> a sosa:Sensor,
+ciemat:CENTRAL_TERMICA a sosa:Sensor,
         eg:Variable ;
     rdfs:label "CENTRAL TERMICA"@en ;
     dcterms:description "Photovoltaic power generated by the CENTRAL TERMICA installation"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–5,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_CENTRAL_TERMICA_PV_installation> ;
+    sosa:isHostedBy ciemat:Platform_CENTRAL_TERMICA_PV_installation ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "CENTRAL_TERMICA" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#DEPOSITO_NIVEL> a sosa:Sensor,
+ciemat:DEPOSITO_NIVEL a sosa:Sensor,
         eg:Variable ;
     rdfs:label "DEPOSITO NIVEL"@en ;
     dcterms:description "Reservoir level/volume measurement"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/M3> ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_Water_storage_reservoir> ;
+    qudt:hasUnit unit:M3 ;
+    sosa:isHostedBy ciemat:Platform_Water_storage_reservoir ;
     sosa:observes prop:Volume ;
     eg:dataLakeSensorId "DEPOSITO_NIVEL" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#ED02_PV> a sosa:Sensor,
+ciemat:ED02_PV a sosa:Sensor,
         eg:Variable ;
     rdfs:label "ED02 [PV]"@en ;
     dcterms:description "Photovoltaic power generated by the ED02 installation"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–10,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_ED02_PV_system> ;
+    sosa:isHostedBy ciemat:Platform_ED02_PV_system ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "ED02_PV" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#ED02_consumption> a sosa:Sensor,
+ciemat:ED02_consumption a sosa:Sensor,
         eg:Variable ;
     rdfs:label "ED02 [consumption]"@en ;
     dcterms:description "Electrical power consumed by the ED02 Transfomer Station"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–700 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_ED02_electrical_Transfomer_Station> ;
+    sosa:isHostedBy ciemat:Platform_ED02_electrical_Transfomer_Station ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "ED02" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#ED03> a sosa:Sensor,
+ciemat:ED03 a sosa:Sensor,
         eg:Variable ;
     rdfs:label "ED03"@en ;
     dcterms:description "Photovoltaic power generated by the ED03 installation"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–9,500 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_ED03_PV_system> ;
+    sosa:isHostedBy ciemat:Platform_ED03_PV_system ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "ED03_PV" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#ED03_consumption> a sosa:Sensor,
+ciemat:ED03_consumption a sosa:Sensor,
         eg:Variable ;
     rdfs:label "ED03 [consumption]"@en ;
     dcterms:description "Electrical power consumed by the ED03 Transfomer Station"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_ED03_electrical_Transfomer_Station> ;
+    qudt:hasUnit unit:W ;
+    sosa:isHostedBy ciemat:Platform_ED03_electrical_Transfomer_Station ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "ED03" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#ED09> a sosa:Sensor,
+ciemat:ED09 a sosa:Sensor,
         eg:Variable ;
     rdfs:label "ED09"@en ;
     dcterms:description "Photovoltaic power generated by the ED09 installation"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–6,500 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_ED09_PV_system> ;
+    sosa:isHostedBy ciemat:Platform_ED09_PV_system ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "ED09" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#ENNERA_3_5> a sosa:Sensor,
+ciemat:ENNERA_3_5 a sosa:Sensor,
         eg:Variable ;
     rdfs:label "ENNERA 3.5"@en ;
     dcterms:description "Electrical power generated by the ENNERA 3.5 wind turbine"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–4,500 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_ENNERA_3_5_wind_turbine> ;
+    sosa:isHostedBy ciemat:Platform_ENNERA_3_5_wind_turbine ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "ENNERA_3.5" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#GRUPO_DIESEL> a sosa:Sensor,
+ciemat:GRUPO_DIESEL a sosa:Sensor,
         eg:Variable ;
     rdfs:label "GRUPO DIESEL"@en ;
     dcterms:description "Electrical power generated by the diesel generator"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: Not enough variation to establish a range"@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_Diesel_generator> ;
+    sosa:isHostedBy ciemat:Platform_Diesel_generator ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "GRUPO_DIESEL" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#LECA_1> a sosa:Sensor,
+ciemat:LECA_1 a sosa:Sensor,
         eg:Variable ;
     rdfs:label "LECA 1"@en ;
     dcterms:description "Photovoltaic power generated by the LECA 1 installation"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–11,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_LECA_1_PV_system> ;
+    sosa:isHostedBy ciemat:Platform_LECA_1_PV_system ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "LECA_1" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#LECA_2> a sosa:Sensor,
+ciemat:LECA_2 a sosa:Sensor,
         eg:Variable ;
     rdfs:label "LECA 2"@en ;
     dcterms:description "Photovoltaic power generated by the LECA 2 installation"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–11,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_LECA_2_PV_system> ;
+    sosa:isHostedBy ciemat:Platform_LECA_2_PV_system ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "LECA_2" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#LEVI> a sosa:Sensor,
+ciemat:LEVI a sosa:Sensor,
         eg:Variable ;
     rdfs:label "LEVI"@en ;
     dcterms:description "Electrical power consumed at LEVI Transfomer Station"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–105,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_LEVI_Transfomer_Station> ;
+    sosa:isHostedBy ciemat:Platform_LEVI_Transfomer_Station ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "LEVI" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#NED100> a sosa:Sensor,
+ciemat:NED100 a sosa:Sensor,
         eg:Variable ;
     rdfs:label "NED100"@en ;
     dcterms:description "Electrical power generated by the NORVENTO NED100 wind turbine"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–17,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_NORVENTO_NED100_wind_turbine> ;
+    sosa:isHostedBy ciemat:Platform_NORVENTO_NED100_wind_turbine ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "NED100" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#PEPA_I> a sosa:Sensor,
+ciemat:PEPA_I a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PEPA_I"@en ;
     dcterms:description "Electrical power consumed by PEPA I Transfomer Station"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_I_electrical_Transfomer_Station> ;
+    qudt:hasUnit unit:W ;
+    sosa:isHostedBy ciemat:Platform_PEPA_I_electrical_Transfomer_Station ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "PEPA_I" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#PEPA_II> a sosa:Sensor,
+ciemat:PEPA_II a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PEPA_II"@en ;
     dcterms:description "Electrical power consumed by PEPA II Transfomer Station"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_II_electrical_Transfomer_Station> ;
+    qudt:hasUnit unit:W ;
+    sosa:isHostedBy ciemat:Platform_PEPA_II_electrical_Transfomer_Station ;
     sosa:observes prop:Power ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#PEPA_III> a sosa:Sensor,
+ciemat:PEPA_III a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PEPA_III"@en ;
     dcterms:description "Electrical power consumed by PEPA III Transfomer Station"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_III_electrical_Transfomer_Station> ;
+    qudt:hasUnit unit:W ;
+    sosa:isHostedBy ciemat:Platform_PEPA_III_electrical_Transfomer_Station ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "VATIMETRO_PEPA_III" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#PEPA_III_var> a sosa:Sensor,
+ciemat:PEPA_III_var a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PEPA III"@en ;
     dcterms:description "Aggregated photovoltaic power generated at PEPA III, including the individual inverters/trackers and microinverters"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–11,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_III_PV_system> ;
+    sosa:isHostedBy ciemat:Platform_PEPA_III_PV_system ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "PEPA_III" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#PEPA_II_var> a sosa:Sensor,
+ciemat:PEPA_II_var a sosa:Sensor,
         eg:Variable ;
     rdfs:label "PEPA II"@en ;
     dcterms:description "Photovoltaic power generated at PEPA II"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–11,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_II_PV_system> ;
+    sosa:isHostedBy ciemat:Platform_PEPA_II_PV_system ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "PEPA_II" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#Period_CEDER_CIEMAT_Microgrid_Daily_Operational_Data_1_s> a dcterms:PeriodOfTime ;
+ciemat:Period_CEDER_CIEMAT_Microgrid_Daily_Operational_Data_1_s a dcterms:PeriodOfTime ;
     rdfs:label "2024-01-25 - ongoing"@en ;
     dcat:startDate "2024-01-25"^^xsd:date .
 
-<https://www.energyguard.eu/ontology/ciemat#Place_CEDER_CIEMAT_Microgrid_Daily_Operational_Data_1_s> a dcterms:Location ;
+ciemat:Place_CEDER_CIEMAT_Microgrid_Daily_Operational_Data_1_s a dcterms:Location ;
     rdfs:label "CEDER, Soria, Spain"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_ARFRISOL_building_PV_system> a sosa:Platform ;
+ciemat:Platform_ARFRISOL_building_PV_system a sosa:Platform ;
     rdfs:label "ARFRISOL building PV system"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_ARFRISOL_electrical_Transfomer_Station> a sosa:Platform ;
+ciemat:Platform_ARFRISOL_electrical_Transfomer_Station a sosa:Platform ;
     rdfs:label "ARFRISOL electrical Transfomer Station"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_ATLANTIC_wind_turbine> a sosa:Platform ;
+ciemat:Platform_ATLANTIC_wind_turbine a sosa:Platform ;
     rdfs:label "ATLANTIC wind turbine"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_CEDER_CIEMAT_site_main_consumption_meter> a sosa:Platform ;
+ciemat:Platform_CEDER_CIEMAT_site_main_consumption_meter a sosa:Platform ;
     rdfs:label "CEDER-CIEMAT site – main consumption meter"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_CENTRAL_TERMICA_PV_installation> a sosa:Platform ;
+ciemat:Platform_CENTRAL_TERMICA_PV_installation a sosa:Platform ;
     rdfs:label "CENTRAL TERMICA PV installation"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_Diesel_generator> a sosa:Platform ;
+ciemat:Platform_Diesel_generator a sosa:Platform ;
     rdfs:label "Diesel generator"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_ED02_PV_system> a sosa:Platform ;
+ciemat:Platform_ED02_PV_system a sosa:Platform ;
     rdfs:label "ED02 PV system"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_ED02_electrical_Transfomer_Station> a sosa:Platform ;
+ciemat:Platform_ED02_electrical_Transfomer_Station a sosa:Platform ;
     rdfs:label "ED02 electrical Transfomer Station"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_ED03_PV_system> a sosa:Platform ;
+ciemat:Platform_ED03_PV_system a sosa:Platform ;
     rdfs:label "ED03 PV system"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_ED03_electrical_Transfomer_Station> a sosa:Platform ;
+ciemat:Platform_ED03_electrical_Transfomer_Station a sosa:Platform ;
     rdfs:label "ED03 electrical Transfomer Station"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_ED09_PV_system> a sosa:Platform ;
+ciemat:Platform_ED09_PV_system a sosa:Platform ;
     rdfs:label "ED09 PV system"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_ENNERA_3_5_wind_turbine> a sosa:Platform ;
+ciemat:Platform_ENNERA_3_5_wind_turbine a sosa:Platform ;
     rdfs:label "ENNERA 3.5 wind turbine"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_Hydraulic_power_plant_Pelton_turbine> a sosa:Platform ;
+ciemat:Platform_Hydraulic_power_plant_Pelton_turbine a sosa:Platform ;
     rdfs:label "Hydraulic power plant / Pelton turbine"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_LECA_1_PV_system> a sosa:Platform ;
+ciemat:Platform_LECA_1_PV_system a sosa:Platform ;
     rdfs:label "LECA 1 PV system"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_LECA_2_PV_system> a sosa:Platform ;
+ciemat:Platform_LECA_2_PV_system a sosa:Platform ;
     rdfs:label "LECA 2 PV system"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_LEVI_Transfomer_Station> a sosa:Platform ;
+ciemat:Platform_LEVI_Transfomer_Station a sosa:Platform ;
     rdfs:label "LEVI Transfomer Station"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_LFP_battery_system> a sosa:Platform ;
+ciemat:Platform_LFP_battery_system a sosa:Platform ;
     rdfs:label "LFP battery system"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_Meteorological_station> a sosa:Platform ;
+ciemat:Platform_Meteorological_station a sosa:Platform ;
     rdfs:label "Meteorological station"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_NMC_battery_system> a sosa:Platform ;
+ciemat:Platform_NMC_battery_system a sosa:Platform ;
     rdfs:label "NMC battery system"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_NORVENTO_NED100_wind_turbine> a sosa:Platform ;
+ciemat:Platform_NORVENTO_NED100_wind_turbine a sosa:Platform ;
     rdfs:label "NORVENTO NED100 wind turbine"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_III_PV_system> a sosa:Platform ;
+ciemat:Platform_PEPA_III_PV_system a sosa:Platform ;
     rdfs:label "PEPA III PV system"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_III_electrical_Transfomer_Station> a sosa:Platform ;
+ciemat:Platform_PEPA_III_electrical_Transfomer_Station a sosa:Platform ;
     rdfs:label "PEPA III electrical Transfomer Station"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_II_PV_system> a sosa:Platform ;
+ciemat:Platform_PEPA_II_PV_system a sosa:Platform ;
     rdfs:label "PEPA II PV system"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_II_electrical_Transfomer_Station> a sosa:Platform ;
+ciemat:Platform_PEPA_II_electrical_Transfomer_Station a sosa:Platform ;
     rdfs:label "PEPA II electrical Transfomer Station"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_II_lead_acid_battery> a sosa:Platform ;
+ciemat:Platform_PEPA_II_lead_acid_battery a sosa:Platform ;
     rdfs:label "PEPA II lead-acid battery"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_I_electrical_Transfomer_Station> a sosa:Platform ;
+ciemat:Platform_PEPA_I_electrical_Transfomer_Station a sosa:Platform ;
     rdfs:label "PEPA I electrical Transfomer Station"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_I_lead_acid_battery> a sosa:Platform ;
+ciemat:Platform_PEPA_I_lead_acid_battery a sosa:Platform ;
     rdfs:label "PEPA I lead-acid battery"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_I_wind_measurement_point> a sosa:Platform ;
+ciemat:Platform_PEPA_I_wind_measurement_point a sosa:Platform ;
     rdfs:label "PEPA I wind measurement point"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_PV_installation_labelled_TURBINA> a sosa:Platform ;
+ciemat:Platform_PV_installation_labelled_TURBINA a sosa:Platform ;
     rdfs:label "PV installation labelled TURBINA"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_Pumping_system> a sosa:Platform ;
+ciemat:Platform_Pumping_system a sosa:Platform ;
     rdfs:label "Pumping system"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_Pyranometer_Solar_radiation_measurement_system> a sosa:Platform ;
+ciemat:Platform_Pyranometer_Solar_radiation_measurement_system a sosa:Platform ;
     rdfs:label "Pyranometer – Solar radiation measurement system"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_RIOS_PV_installation> a sosa:Platform ;
+ciemat:Platform_RIOS_PV_installation a sosa:Platform ;
     rdfs:label "RIOS PV installation"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_RYSE_E5_wind_turbine> a sosa:Platform ;
+ciemat:Platform_RYSE_E5_wind_turbine a sosa:Platform ;
     rdfs:label "RYSE E5 wind turbine"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_SOLENER_wind_turbine> a sosa:Platform ;
+ciemat:Platform_SOLENER_wind_turbine a sosa:Platform ;
     rdfs:label "SOLENER wind turbine"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_TURBINA_electrical_Transfomer_Station> a sosa:Platform ;
+ciemat:Platform_TURBINA_electrical_Transfomer_Station a sosa:Platform ;
     rdfs:label "TURBINA electrical Transfomer Station"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_WINDERA_4_2_wind_turbine> a sosa:Platform ;
+ciemat:Platform_WINDERA_4_2_wind_turbine a sosa:Platform ;
     rdfs:label "WINDERA 4.2 wind turbine"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#Platform_Water_storage_reservoir> a sosa:Platform ;
+ciemat:Platform_Water_storage_reservoir a sosa:Platform ;
     rdfs:label "Water storage reservoir"@en .
 
-<https://www.energyguard.eu/ontology/ciemat#RADIACION_SOLAR> a sosa:Sensor,
+ciemat:RADIACION_SOLAR a sosa:Sensor,
         eg:Variable ;
     rdfs:label "RADIACION SOLAR"@en ;
     dcterms:description "Solar irradiance measured at the CEDER-CIEMAT microgrid"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W-PER-M2> ;
+    qudt:hasUnit unit:W-PER-M2 ;
     skos:note "Valid range: 0–1,100 W/m² approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_Pyranometer_Solar_radiation_measurement_system> ;
+    sosa:isHostedBy ciemat:Platform_Pyranometer_Solar_radiation_measurement_system ;
     sosa:observes prop:SolarRadiation ;
     eg:dataLakeSensorId "RADIACION_SOLAR" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#RIOS> a sosa:Sensor,
+ciemat:RIOS a sosa:Sensor,
         eg:Variable ;
     rdfs:label "RIOS"@en ;
     dcterms:description "Photovoltaic power generated by the RIOS installation"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–5,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_RIOS_PV_installation> ;
+    sosa:isHostedBy ciemat:Platform_RIOS_PV_installation ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "RIOS" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#RYSE_E5> a sosa:Sensor,
+ciemat:RYSE_E5 a sosa:Sensor,
         eg:Variable ;
     rdfs:label "RYSE E5"@en ;
     dcterms:description "Electrical power generated by the RYSE E5 wind turbine"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–20,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_RYSE_E5_wind_turbine> ;
+    sosa:isHostedBy ciemat:Platform_RYSE_E5_wind_turbine ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "RYSE_E5" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#SOLENER> a sosa:Sensor,
+ciemat:SOLENER a sosa:Sensor,
         eg:Variable ;
     rdfs:label "SOLENER"@en ;
     dcterms:description "Electrical power generated by the SOLENER wind turbine"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–8,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_SOLENER_wind_turbine> ;
+    sosa:isHostedBy ciemat:Platform_SOLENER_wind_turbine ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "SOLENER" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#TURBINA_PV> a sosa:Sensor,
+ciemat:TURBINA_PV a sosa:Sensor,
         eg:Variable ;
     rdfs:label "TURBINA [PV]"@en ;
     dcterms:description "Photovoltaic power associated with the installation labelled TURBINA in the PV signal list"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–48,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_PV_installation_labelled_TURBINA> ;
+    sosa:isHostedBy ciemat:Platform_PV_installation_labelled_TURBINA ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "TURBINA_PV" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#TURBINA_consumption> a sosa:Sensor,
+ciemat:TURBINA_consumption a sosa:Sensor,
         eg:Variable ;
     rdfs:label "TURBINA [consumption]"@en ;
     dcterms:description "Electrical power consumed by the TURBINA Transfomer Station"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_TURBINA_electrical_Transfomer_Station> ;
+    qudt:hasUnit unit:W ;
+    sosa:isHostedBy ciemat:Platform_TURBINA_electrical_Transfomer_Station ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "TURBINA_C" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#TURBINA_hydro> a sosa:Sensor,
+ciemat:TURBINA_hydro a sosa:Sensor,
         eg:Variable ;
     rdfs:label "TURBINA [hydro]"@en ;
     dcterms:description "Electrical power generated by the hydraulic turbine"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–3,500 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_Hydraulic_power_plant_Pelton_turbine> ;
+    sosa:isHostedBy ciemat:Platform_Hydraulic_power_plant_Pelton_turbine ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "TURBINA" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#VIENTO_ESTACION> a sosa:Sensor,
+ciemat:VIENTO_ESTACION a sosa:Sensor,
         eg:Variable ;
     rdfs:label "VIENTO ESTACION"@en ;
     dcterms:description "Wind speed measured at the meteorological station"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/M-PER-SEC> ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_Meteorological_station> ;
+    qudt:hasUnit unit:M-PER-SEC ;
+    sosa:isHostedBy ciemat:Platform_Meteorological_station ;
     sosa:observes prop:Speed ;
     eg:dataLakeSensorId "VIENTO_ESTACION" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#VIENTO_PEPA_I> a sosa:Sensor,
+ciemat:VIENTO_PEPA_I a sosa:Sensor,
         eg:Variable ;
     rdfs:label "VIENTO PEPA I"@en ;
     dcterms:description "Wind speed measured at PEPA I"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/M-PER-SEC> ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_PEPA_I_wind_measurement_point> ;
+    qudt:hasUnit unit:M-PER-SEC ;
+    sosa:isHostedBy ciemat:Platform_PEPA_I_wind_measurement_point ;
     sosa:observes prop:Speed ;
     eg:dataLakeSensorId "VIENTO_PEPA_I" ;
     eg:dataType "integer" .
 
-<https://www.energyguard.eu/ontology/ciemat#WINDERA_4_2> a sosa:Sensor,
+ciemat:WINDERA_4_2 a sosa:Sensor,
         eg:Variable ;
     rdfs:label "WINDERA 4.2"@en ;
     dcterms:description "Electrical power generated by the WINDERA 4.2 wind turbine"@en ;
-    qudt:hasUnit <http://qudt.org/vocab/unit/W> ;
+    qudt:hasUnit unit:W ;
     skos:note "Valid range: 0–11,000 W approx."@en ;
-    sosa:isHostedBy <https://www.energyguard.eu/ontology/ciemat#Platform_WINDERA_4_2_wind_turbine> ;
+    sosa:isHostedBy ciemat:Platform_WINDERA_4_2_wind_turbine ;
     sosa:observes prop:Power ;
     eg:dataLakeSensorId "WINDERA_4.2" ;
     eg:dataType "integer" .
