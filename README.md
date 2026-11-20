@@ -2,7 +2,7 @@
 
 This repository contains the Neo4j-based semantic data layer for EnergyGuard. It is used to model, import, and explore ontology-driven energy data for the semantic enrichment and data harmonisation work.
 
-The ontology is a **catalogue** of the pilots' datasets and variables and where each is stored in the data lake. It reuses standards (DCAT, SOSA, QUDT, SKOS, PROV, DQV, SHACL) and adds about 19 terms of its own. Version 2.0.0, see [CHANGELOG.md](CHANGELOG.md).
+The ontology is a **catalogue** of the pilots' datasets and variables and where each is stored in the data lake. It reuses standards (DCAT, SOSA, QUDT, SKOS, SHACL) and adds about 13 terms of its own. Version 2.0.0, see [CHANGELOG.md](CHANGELOG.md).
 
 ## What is in this repository
 
@@ -14,7 +14,7 @@ The ontology is a **catalogue** of the pilots' datasets and variables and where 
 ├── utils/                         build the ontology file · load it into Neo4j (see utils/README.md)
 ├── scripts/                       examples: explore kit (Python), saved Cypher queries (see scripts/README.md)
 ├── runtime/                       what Neo4j uses and writes: plugins, data, logs  (data/logs git-ignored)
-├── output/                        what the scripts write: backups, logs (git-ignored)
+├── output/                        what the scripts write: logs (git-ignored)
 └── archive/                       no longer used: the old generator, pilots' vocabularies, Neo4j data, jars
 ```
 
@@ -38,7 +38,7 @@ The repository supports the EnergyGuard semantic model and ontology work by:
 
 ```bash
 docker compose up -d                      # container "neo4j-ontology", data in runtime/data
-utils/neo4j/reload_ontology.sh          # load the ontology (backup -> reset -> import -> mapping)
+utils/neo4j/reload_ontology.sh          # load the ontology (reset -> import -> mapping)
 ```
 
 - Browser: `http://localhost:7474` · Bolt: `bolt://localhost:7687` · user `neo4j`, password in `docker-compose.yaml`
@@ -52,42 +52,21 @@ utils/neo4j/reload_ontology.sh          # load the ontology (backup -> reset -> 
 
 > New to the ontology? Start with the plain-language walkthrough: [docs/ontology-guide.md](docs/ontology-guide.md).
 
-All pilots are imported into Neo4j from **one** assembled file: `ontology/all_pilots.owl` (the folder is mounted read-only into Neo4j as `/import`).
-
-```
-ontology/core.ttl              the 19 terms no standard covers
-ontology/catalogue/*.ttl       pilots, datasets, variables, equipment, the catalogue (curated by hand)
-        │
-        └─ python3 utils/ontology/assemble.py        (needs: pip install rdflib)
-        ▼
-ontology/all_pilots.owl        the single file loaded with n10s
-```
-
-- The model reuses standards: DCAT (catalogue, datasets), SOSA (sensors, equipment, measurement types), QUDT (units), PROV, DQV,
-  SKOS, GeoSPARQL, FOAF. `ontology/shapes.ttl` holds SHACL checks (`utils/ontology/validate_shapes.py`).
-- The partners' Excel workbooks are reference material, not an input: nothing reads them automatically. Changes
-  are made in the Turtle files.
-- Every dataset says where its data lives in the data lake and every variable names its lake `sensor_id`, pattern or
-  column. Saved query `02_find_a_variable` turns that into SQL; `01`/`03` show what is and is not found in the lake.
-- The assembly is deterministic: unchanged inputs give a byte-identical file.
-
-Workflow:
-
-1. Edit `ontology/core.ttl` and/or `ontology/catalogue/*.ttl`, then run `assemble.py` and `validate_shapes.py`.
-2. Start Neo4j.
-3. Run `utils/neo4j/reload_ontology.sh`: backup, reset, import (01), mapping (02).
-
-## Scripts
-
-See [utils/README.md](utils/README.md) for assemble, validate and reload, and [scripts/README.md](scripts/README.md) for the explore kit (Python, no Cypher needed) and the four saved Cypher queries for the Neo4j Browser.
+The ontology is written by hand in Turtle (`ontology/core.ttl`, `ontology/catalogue/*.ttl`, checks in
+`ontology/shapes.ttl`) and assembled into **one** file, `ontology/all_pilots.owl`, which Neo4j imports (the `ontology/`
+folder is mounted read-only into Neo4j as `/import`). The partners' Excel workbooks are reference material: nothing reads
+them automatically. See the guide, section 6, for the details.
 
 After editing the Turtle files:
 
 ```bash
-python3 utils/ontology/assemble.py
-python3 utils/ontology/validate_shapes.py
-utils/neo4j/reload_ontology.sh            # backup -> reset -> import -> mapping
+python3 utils/ontology/assemble.py            # build all_pilots.owl   (needs: pip install rdflib)
+python3 utils/ontology/validate_shapes.py     # SHACL checks            (needs: pip install pyshacl)
+utils/neo4j/reload_ontology.sh                # reset -> import -> mapping
 ```
+
+More: [utils/README.md](utils/README.md) (assemble, validate, reload) and [scripts/README.md](scripts/README.md) (the
+explore kit, which needs no Cypher, and the 13 saved queries for the Neo4j Browser).
 
 ## Notes
 
