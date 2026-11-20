@@ -11,8 +11,7 @@ scripts/
 The explore kit connects to the project's Neo4j (`docker-compose.yaml`: `bolt://localhost:7687`, user `neo4j`). Set `NEO4J_URI` / `NEO4J_PASSWORD` for another instance.
 
 **Credentials and private inputs are not in git:**
-- `.env` (copy `.env.example`) holds `NEO4J_PASSWORD`; Docker Compose and `utils/neo4j/reload_ontology.sh` read it. It also has
-  optional `DATALAKE_*` settings, used only by the archived `archive/lake_discovery/discover_data_lake.py`.
+- `.env` (copy `.env.example`) holds `NEO4J_PASSWORD`; Docker Compose and `utils/neo4j/reload_ontology.sh` read it.
 - Loading and querying use the committed `ontology/all_pilots.owl` (assembled from `ontology/core.ttl` and
   `ontology/catalogue/*.ttl`); partners' Excel files are not needed.
 
@@ -38,6 +37,15 @@ are meant to be edited.
 | `01_where_is_the_data.cypher` | Every dataset's data-lake database/table and coverage | table |
 | `02_find_a_variable.cypher` | Search a variable → description, unit, and a ready-to-run **SQL** query for its data | table |
 | `03_not_in_the_lake.cypher` | Metadata variables not found in the data lake | table |
+| `04_pilots_and_datasets.cypher` | The pilots and their datasets | graph |
+| `05_one_pilot.cypher` | One pilot → datasets → variables | graph |
+| `06_dataset_variables_and_types.cypher` | One dataset, its variables, what each measures and its unit | graph |
+| `07_measurement_types.cypher` | The shared measurement types and their QUDT quantity kinds | graph |
+| `08_same_measurement_type_across_pilots.cypher` | One measurement type (e.g. pressure) in every pilot | graph |
+| `09_equipment.cypher` | A pilot's equipment and the variables it hosts | graph |
+| `10_hierarchy_overview.cypher` | **The whole hierarchy at a glance**: pilots → datasets → 3 example variables → type and unit | graph |
+| `11_schema.cypher` | Labels and relationships of the whole graph | graph |
+| `12_catalogue.cypher` | The catalogue, its datasets and their pilots | graph |
 
 **Nicer colours and captions:** in the Browser type `:style`, then drag `scripts/cypher/browser_style.grass`
 onto the style panel (or paste its content). Pilots, datasets, variables, measurement types, equipment and units get their own colour and
