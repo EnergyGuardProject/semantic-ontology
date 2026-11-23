@@ -64,9 +64,9 @@ def load_env(path=ROOT / ".env"):
             if sep and key and not key.startswith("#"):
                 os.environ.setdefault(key.strip(), val.strip().strip("'\""))
 
-B = "https://www.energyguard.eu/ontology"
-EG = rdflib.Namespace(B + "#")
-MP = rdflib.Namespace(B + "/merged-pilots#")
+B = "https://ontology.energy-guard.eu"
+EG = rdflib.Namespace(B + "/core#")
+MP = rdflib.Namespace(B + "/pilots#")
 
 DATABASES = {"RDN": "TEF1_RDN", "CIEMAT": "TEF2_CEDER", "BER": "TEF3_BER", "CEA": "TEF4_CEA",
              "CARTIF": "TEF5_CARTIF", "REA": "TEF6_REA", "ENGREEN": "TEF7_ENGREEN"}

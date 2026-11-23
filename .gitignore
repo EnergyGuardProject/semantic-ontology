@@ -21,3 +21,7 @@ pilot_metadata/
 
 # repository backups (bundles hold the history from before the clean-up, including data that was removed): never commit
 repo_backups/
+
+# the public read-only instance: data, logs
+runtime/public-data/
+runtime/public-logs/

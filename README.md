@@ -4,6 +4,25 @@ This repository contains the Neo4j-based semantic data layer for EnergyGuard. It
 
 The ontology is a **catalogue** of the pilots' datasets and variables and where each is stored in the data lake. It reuses standards (DCAT, SOSA, QUDT, SKOS, SHACL) and adds about 13 terms of its own. Version 2.0.0, see [CHANGELOG.md](CHANGELOG.md).
 
+## Query the ontology (no server access needed)
+
+A read-only copy of the graph is public at **https://ontology.energy-guard.eu**. Use the user `neo4j` and the shared
+read-only password, which you get from the project team (it is not in this repository). Nobody can change the graph.
+
+- **Neo4j Browser (pictures):** open <https://ontology.energy-guard.eu/browser/>. If it asks for a connection address, use
+  `neo4j+s://ontology.energy-guard.eu:443`. Then paste a query from [`scripts/cypher/`](scripts/cypher/), starting with
+  `00_one_example_path.cypher`.
+- **Python, no Cypher needed:** [`scripts/explore/`](scripts/explore/) is a small kit that needs only Python and the password.
+- **Any language:** the query interface is plain HTTPS, for example
+
+  ```bash
+  curl -u neo4j:<password> -H 'Content-Type: application/json' \
+       -d '{"statement":"MATCH (p:Pilot) RETURN p.displayName"}' \
+       https://ontology.energy-guard.eu/db/neo4j/query/v2
+  ```
+
+New to the ontology? Start with the walkthrough in [docs/ontology-guide.md](docs/ontology-guide.md).
+
 ## What is in this repository
 
 ```
@@ -41,9 +60,11 @@ docker compose up -d                      # container "neo4j-ontology", data in 
 utils/neo4j/reload_ontology.sh          # load the ontology (reset -> import -> mapping)
 ```
 
-- Browser: `http://localhost:7474` · Bolt: `bolt://localhost:7687` · user `neo4j`, password in `docker-compose.yaml`
-- Public: `neo4j.energy-guard.eu` (nginx-proxy-manager forwards to the container through the `nginxproxy_energyguard_net`
-  network, where it is known as `neo4j`)
+- Browser: `http://localhost:7474` · Bolt: `bolt://localhost:7687` · user `neo4j`, password in `.env`
+- Two instances: `neo4j-ontology` is private (this machine only) and is where the ontology is loaded; `neo4j-public` is a
+  read-only copy for everyone at `https://ontology.energy-guard.eu` (Browser at `/browser/`, shared password in `.env` as
+  `NEO4J_PUBLIC_PASSWORD`). nginx-proxy-manager forwards the domain to `neo4j-public` through the
+  `nginxproxy_energyguard_net` network. Setup and refreshing: `utils/README.md`, "Public read-only copy".
 - Ports are bound to localhost only. From your own machine: `ssh -L 7474:localhost:7474 -L 7687:localhost:7687 <server>`
 - This replaces the former live instance (container `neo4j`, run from `/home/atzortzis/neo4j`, now stopped; its data
   is untouched there).
@@ -62,7 +83,8 @@ After editing the Turtle files:
 ```bash
 python3 utils/ontology/assemble.py            # build all_pilots.owl   (needs: pip install rdflib)
 python3 utils/ontology/validate_shapes.py     # SHACL checks            (needs: pip install pyshacl)
-utils/neo4j/reload_ontology.sh                # reset -> import -> mapping
+utils/neo4j/reload_ontology.sh                # reset -> import -> mapping (private instance)
+utils/neo4j/refresh_public.sh                 # copy the graph to the public read-only instance
 ```
 
 More: [utils/README.md](utils/README.md) (assemble, validate, reload) and [scripts/README.md](scripts/README.md) (the

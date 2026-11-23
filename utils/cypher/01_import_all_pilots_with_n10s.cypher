@@ -31,17 +31,15 @@ CALL n10s.graphconfig.init({
 
 // 3b) Register prefixes so labels/relationships read e.g. eg__TemperatureMeasurement, dcterms__isPartOf
 //     (without this n10s invents ns0__, ns1__, ...; queries in 02 rely on these names)
-CALL n10s.nsprefixes.add('eg', 'https://www.energyguard.eu/ontology#');
-CALL n10s.nsprefixes.add('mp', 'https://www.energyguard.eu/ontology/merged-pilots#');
-CALL n10s.nsprefixes.add('rdn', 'https://www.energyguard.eu/ontology/rdn#');
-CALL n10s.nsprefixes.add('rdnf', 'https://www.energyguard.eu/ontology/rdn/faults#');
-CALL n10s.nsprefixes.add('rdnts', 'https://www.energyguard.eu/ontology/rdn/timeseries#');
-CALL n10s.nsprefixes.add('ciemat', 'https://www.energyguard.eu/ontology/ciemat#');
-CALL n10s.nsprefixes.add('ber', 'https://www.energyguard.eu/ontology/ber#');
-CALL n10s.nsprefixes.add('cea', 'https://www.energyguard.eu/ontology/cea#');
-CALL n10s.nsprefixes.add('cartif', 'https://www.energyguard.eu/ontology/cartif#');
-CALL n10s.nsprefixes.add('rea', 'https://www.energyguard.eu/ontology/rea#');
-CALL n10s.nsprefixes.add('engreen', 'https://www.energyguard.eu/ontology/engreen#');
+CALL n10s.nsprefixes.add('eg', 'https://ontology.energy-guard.eu/core#');
+CALL n10s.nsprefixes.add('mp', 'https://ontology.energy-guard.eu/pilots#');
+CALL n10s.nsprefixes.add('rdn', 'https://ontology.energy-guard.eu/rdn#');
+CALL n10s.nsprefixes.add('ciemat', 'https://ontology.energy-guard.eu/ciemat#');
+CALL n10s.nsprefixes.add('ber', 'https://ontology.energy-guard.eu/ber#');
+CALL n10s.nsprefixes.add('cea', 'https://ontology.energy-guard.eu/cea#');
+CALL n10s.nsprefixes.add('cartif', 'https://ontology.energy-guard.eu/cartif#');
+CALL n10s.nsprefixes.add('rea', 'https://ontology.energy-guard.eu/rea#');
+CALL n10s.nsprefixes.add('engreen', 'https://ontology.energy-guard.eu/engreen#');
 // standard vocabularies used by the ontology
 CALL n10s.nsprefixes.add('dcterms', 'http://purl.org/dc/terms/');
 CALL n10s.nsprefixes.add('dcat', 'http://www.w3.org/ns/dcat#');
@@ -62,7 +60,7 @@ CALL n10s.nsprefixes.add('dqv', 'http://www.w3.org/ns/dqv#');
 CALL n10s.nsprefixes.add('vcard', 'http://www.w3.org/2006/vcard/ns#');
 CALL n10s.nsprefixes.add('geosparql', 'http://www.opengis.net/ont/geosparql#');
 CALL n10s.nsprefixes.add('quantitykind', 'http://qudt.org/vocab/quantitykind/');
-CALL n10s.nsprefixes.add('prop', 'https://www.energyguard.eu/ontology/property#');
+CALL n10s.nsprefixes.add('prop', 'https://ontology.energy-guard.eu/property#');
 CALL n10s.nsprefixes.add('csvw', 'http://www.w3.org/ns/csvw#');
 
 // 4) Import OWL from Neo4j import directory

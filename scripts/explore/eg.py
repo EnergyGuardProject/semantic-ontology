@@ -17,12 +17,15 @@ Connection: put NEO4J_URI / NEO4J_USER / NEO4J_PASSWORD in a file called .env ne
 or set them as environment variables, or call eg.connect(uri, user, password).
 Every function returns a list of dicts (wrap in pandas.DataFrame to see a table).
 """
+import base64
+import json
 import os
+import urllib.error
+import urllib.request
 from pathlib import Path
 
-from neo4j import GraphDatabase
-
-_driver = None
+_driver = None   # Bolt connection (bolt://... or neo4j://...), when used
+_http = None     # HTTPS connection (https://...), when used: {"url": ..., "headers": ...}
 
 
 def _load_dotenv():
@@ -38,8 +41,10 @@ def _load_dotenv():
 def connect(uri=None, user=None, password=None):
     """Connect to the ontology's Neo4j. Arguments default to the environment variables
     NEO4J_URI (default bolt://localhost:7687), NEO4J_USER (default neo4j) and NEO4J_PASSWORD.
+    The address can be https://ontology.energy-guard.eu (the public read-only copy, from anywhere: no extra software)
+    or a Bolt address such as bolt://localhost:7687 (needs `pip install neo4j` and a tunnel to the server).
     Called automatically on first use; call it yourself to point at a different server."""
-    global _driver
+    global _driver, _http
     _load_dotenv()
     uri = uri or os.environ.get("NEO4J_URI", "bolt://localhost:7687")
     user = user or os.environ.get("NEO4J_USER", "neo4j")
@@ -48,6 +53,15 @@ def connect(uri=None, user=None, password=None):
         raise RuntimeError("No Neo4j password: set NEO4J_PASSWORD or call eg.connect(uri, user, password).")
     if _driver is not None:
         _driver.close()
+    _driver = _http = None
+    if uri.startswith(("http://", "https://")):
+        token = base64.b64encode(f"{user}:{password}".encode()).decode()
+        _http = {"url": uri.rstrip("/") + "/db/neo4j/query/v2",
+                 "headers": {"Content-Type": "application/json", "Accept": "application/json",
+                             "Authorization": "Basic " + token}}
+        _q("RETURN 1")   # fails now, with a clear message, if the address or password is wrong
+        return _http
+    from neo4j import GraphDatabase   # only the Bolt way needs the neo4j package
     _driver = GraphDatabase.driver(uri, auth=(user, password))
     _driver.verify_connectivity()
     return _driver
@@ -55,8 +69,19 @@ def connect(uri=None, user=None, password=None):
 
 def _q(cypher, **params):
     # n10s stores most values as lists (hence the [0]) and prefixes names (eg__, dcterms__); only this file needs to know.
-    if _driver is None:
+    if _driver is None and _http is None:
         connect()
+    if _http is not None:
+        body = json.dumps({"statement": cypher, "parameters": params}).encode()
+        req = urllib.request.Request(_http["url"], data=body, headers=_http["headers"], method="POST")
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                data = json.load(r)
+        except urllib.error.HTTPError as e:
+            msg = "wrong user or password" if e.code == 401 else e.read().decode(errors="replace")[:300]
+            raise RuntimeError(f"Neo4j answered {e.code}: {msg}") from None
+        fields, values = data["data"]["fields"], data["data"]["values"]
+        return [dict(zip(fields, row)) for row in values]
     records, _, _ = _driver.execute_query(cypher, params, routing_="r")
     return [r.data() for r in records]
 

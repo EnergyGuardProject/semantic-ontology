@@ -16,8 +16,8 @@ import rdflib
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "ontology" / "all_pilots.owl"
-PREFIXES = {"eg": "https://www.energyguard.eu/ontology#", "mp": "https://www.energyguard.eu/ontology/merged-pilots#",
-            "prop": "https://www.energyguard.eu/ontology/property#"}
+PREFIXES = {"eg": "https://ontology.energy-guard.eu/core#", "mp": "https://ontology.energy-guard.eu/pilots#",
+            "prop": "https://ontology.energy-guard.eu/property#"}
 
 
 def main():

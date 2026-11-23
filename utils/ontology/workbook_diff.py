@@ -23,8 +23,8 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "archive" / "ontology_generator"))
 import build_all_pilots_owl as old  # noqa: E402  (readers and normalisers only)
 
-EG = Namespace("https://www.energyguard.eu/ontology#")
-MP = Namespace("https://www.energyguard.eu/ontology/merged-pilots#")
+EG = Namespace("https://ontology.energy-guard.eu/core#")
+MP = Namespace("https://ontology.energy-guard.eu/pilots#")
 QUDT = Namespace("http://qudt.org/vocab/unit/")
 SCHEMA = Namespace("http://schema.org/")
 QS = Namespace("http://qudt.org/schema/qudt/")

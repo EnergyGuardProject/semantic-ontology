@@ -311,10 +311,12 @@ ber:TT-D101 a sosa:Sensor, eg:Variable ;              # a sensor, and a variable
 ## 5. Using it
 
 The catalogue is stored as a file (`ontology/all_pilots.owl`) and loaded into a **Neo4j graph database**, where you can
-click through it or query it. There are three ways in, from easiest to most technical.
+click through it or query it. A read-only copy is public at `https://ontology.energy-guard.eu` for everyone (user `neo4j`
+and a shared password, from the project team): nobody can change it, and the Neo4j Browser is at
+`https://ontology.energy-guard.eu/browser/`. There are three ways in, from easiest to most technical.
 
 **1. From Python, no query language needed.** The folder `scripts/explore/` is a small standalone kit with a notebook.
-You only need the address and password of the Neo4j server.
+You only need the shared password; it works from anywhere, with no extra software.
 
 ```python
 import eg
@@ -416,14 +418,14 @@ Every item has a unique web-style address (an IRI). A short prefix stands for th
 
 | Prefix | Namespace |
 |---|---|
-| `eg:` | `https://www.energyguard.eu/ontology#` (the 13 core terms) |
-| `prop:` | `https://www.energyguard.eu/ontology/property#` (measurement types) |
-| `mp:` | `https://www.energyguard.eu/ontology/merged-pilots#` (the pilots and the catalogue) |
+| `eg:` | `https://ontology.energy-guard.eu/core#` (the 13 core terms) |
+| `prop:` | `https://ontology.energy-guard.eu/property#` (measurement types) |
+| `mp:` | `https://ontology.energy-guard.eu/pilots#` (the pilots and the catalogue) |
 | `unit:` | `http://qudt.org/vocab/unit/` (QUDT units, such as `unit:DEG_C`) |
-| `ber:`, `cea:`, `cartif:`, `ciemat:`, `rea:`, `engreen:`, `rdn:` | `https://www.energyguard.eu/ontology/<pilot>#` (that pilot's datasets, variables, equipment) |
+| `ber:`, `cea:`, `cartif:`, `ciemat:`, `rea:`, `engreen:`, `rdn:` | `https://ontology.energy-guard.eu/<pilot>#` (that pilot's datasets, variables, equipment) |
 
-Items are named `<pilot namespace>#<name>`, for example `ber#TT-D101`. The ontology itself is
-`https://www.energyguard.eu/ontology/merged-pilots`, version 2.0.0.
+Items are named `<pilot namespace>#<name>`, for example `ber#TT-D101`. The addresses are names, not web pages: the domain serves the Neo4j Browser, not the ontology files, which are in the repository (`ontology/`). The ontology itself is
+`https://ontology.energy-guard.eu/core`, version 2.1.0.
 
 ### Glossary
 

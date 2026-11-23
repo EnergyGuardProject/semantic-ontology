@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.0
+
+- **New home for the addresses:** every ontology address moved from `https://www.energyguard.eu/ontology…` to the hosted domain `https://ontology.energy-guard.eu/…`: core terms `/core#`, measurement types `/property#`, pilots and catalogue `/pilots#`, and one namespace per pilot (`/ber#`, `/cea#`, …). The ontology itself is `https://ontology.energy-guard.eu/core`.
+- The addresses are names that do not open a web page (the domain serves the Neo4j Browser); the ontology files are in the repository.
+- **Public read-only Neo4j:** a second instance, `neo4j-public`, serves the graph at `https://ontology.energy-guard.eu` with a shared password, no plugins and no writes; `refresh_public.sh` copies the graph from the private instance. The explore kit can now connect over `https://`.
+- Only the addresses changed: the 8,296 other triples are identical to 2.0.0. Anything that stored the old addresses (for example a Neo4j graph) must be reloaded.
+
 ## 2.0.0
 
 Rebuilt on standards; the ontology is now hand-curated Turtle instead of generated from the partners' workbooks.

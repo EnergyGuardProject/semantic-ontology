@@ -1,4 +1,4 @@
-@prefix eg:      <https://www.energyguard.eu/ontology#> .
+@prefix eg:      <https://ontology.energy-guard.eu/core#> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
@@ -14,9 +14,9 @@
 # GeoSPARQL (geometries), FOAF (organisations).
 # Written by hand. The catalogue (pilots, datasets, variables) lives in ontology/catalogue/*.ttl.
 
-<https://www.energyguard.eu/ontology/merged-pilots> a owl:Ontology ;
-    owl:versionInfo "2.0.0" ;
-    owl:versionIRI <https://www.energyguard.eu/ontology/merged-pilots/2.0.0> ;
+<https://ontology.energy-guard.eu/core> a owl:Ontology ;
+    owl:versionInfo "2.1.0" ;
+    owl:versionIRI <https://ontology.energy-guard.eu/core/2.1.0> ;
     dcterms:title "EnergyGuard Ontology (all pilots)"@en ;
     dcterms:description "Catalogue of the datasets and variables delivered by the seven EnergyGuard pilots and the location of each series in the EnergyGuard data lake. It describes the data; it does not contain measurements."@en ;
     dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> .

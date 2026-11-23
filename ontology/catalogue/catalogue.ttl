@@ -1,13 +1,13 @@
-@prefix ber: <https://www.energyguard.eu/ontology/ber#> .
-@prefix cartif: <https://www.energyguard.eu/ontology/cartif#> .
-@prefix cea: <https://www.energyguard.eu/ontology/cea#> .
-@prefix ciemat: <https://www.energyguard.eu/ontology/ciemat#> .
+@prefix ber: <https://ontology.energy-guard.eu/ber#> .
+@prefix cartif: <https://ontology.energy-guard.eu/cartif#> .
+@prefix cea: <https://ontology.energy-guard.eu/cea#> .
+@prefix ciemat: <https://ontology.energy-guard.eu/ciemat#> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix engreen: <https://www.energyguard.eu/ontology/engreen#> .
-@prefix mp: <https://www.energyguard.eu/ontology/merged-pilots#> .
-@prefix rdn: <https://www.energyguard.eu/ontology/rdn#> .
-@prefix rea: <https://www.energyguard.eu/ontology/rea#> .
+@prefix engreen: <https://ontology.energy-guard.eu/engreen#> .
+@prefix mp: <https://ontology.energy-guard.eu/pilots#> .
+@prefix rdn: <https://ontology.energy-guard.eu/rdn#> .
+@prefix rea: <https://ontology.energy-guard.eu/rea#> .
 
 mp:EnergyGuardCatalogue a dcat:Catalog ;
     dcterms:description "Catalogue of the datasets delivered by the EnergyGuard pilots. The numbers themselves are stored in the EnergyGuard data lake (PostgreSQL, operated by CARTIF, one database per pilot); each dataset names its database and table. The host address is not published."@en ;

@@ -29,13 +29,13 @@ MATCH (p:sosa__Platform) SET p:Platform;
 MATCH (u:Resource) WHERE u.uri STARTS WITH 'http://qudt.org/vocab/unit/' SET u:Unit;
 
 // Pilot nodes carry the pilot's name as a label too (BER, CEA, ...)
-MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/rdn' SET n:RDN;
-MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/ciemat#' SET n:CIEMAT;
-MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/ber#' SET n:BER;
-MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/cea#' SET n:CEA;
-MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/cartif#' SET n:CARTIF;
-MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/rea#' SET n:REA;
-MATCH (n:Resource) WHERE n.uri CONTAINS '/ontology/engreen#' SET n:ENGREEN;
+MATCH (n:Resource) WHERE n.uri STARTS WITH 'https://ontology.energy-guard.eu/rdn#' SET n:RDN;
+MATCH (n:Resource) WHERE n.uri STARTS WITH 'https://ontology.energy-guard.eu/ciemat#' SET n:CIEMAT;
+MATCH (n:Resource) WHERE n.uri STARTS WITH 'https://ontology.energy-guard.eu/ber#' SET n:BER;
+MATCH (n:Resource) WHERE n.uri STARTS WITH 'https://ontology.energy-guard.eu/cea#' SET n:CEA;
+MATCH (n:Resource) WHERE n.uri STARTS WITH 'https://ontology.energy-guard.eu/cartif#' SET n:CARTIF;
+MATCH (n:Resource) WHERE n.uri STARTS WITH 'https://ontology.energy-guard.eu/rea#' SET n:REA;
+MATCH (n:Resource) WHERE n.uri STARTS WITH 'https://ontology.energy-guard.eu/engreen#' SET n:ENGREEN;
 
 // D) A readable name for everything that has one (n10s stores values as lists: take the first)
 MATCH (n:Resource)

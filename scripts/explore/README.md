@@ -12,7 +12,11 @@ It only **reads** the graph. Nothing else from the repository is needed.
 
 ## You need
 - Python 3.10+
-- The **address** and **password** of the deployed Neo4j (e.g. `bolt://<host>:7687`, user `neo4j`). Port 7687 must be reachable from your machine.
+- The **password** of the public read-only Neo4j (user `neo4j`), from whoever gave you this folder. The address is
+  `https://ontology.energy-guard.eu`; it works from anywhere, with no tunnel and no extra software. The copy is
+  read-only: you can look at anything but cannot change it.
+- (Optional, on the server or through an SSH tunnel) the private Neo4j over Bolt: `NEO4J_URI=bolt://localhost:7687`
+  (needs `pip install neo4j`).
 
 ## Setup
 ```bash
@@ -31,7 +35,7 @@ VS Code also works: open the notebook and choose the `venv` kernel (`pip install
 ## Without the notebook
 ```python
 import eg
-eg.connect("bolt://<host>:7687", "neo4j", "<password>")   # or set the NEO4J_* variables
+eg.connect("https://ontology.energy-guard.eu", "neo4j", "<password>")   # or set the NEO4J_* variables
 eg.pilots()                         # which pilots exist and how big they are
 eg.datasets("hydrogen")             # datasets mentioning a word (no argument: all)
 eg.measurement_types()              # every measurement type (optionally for one pilot)

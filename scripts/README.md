@@ -8,10 +8,10 @@ scripts/
 └── cypher/        queries to paste into the Neo4j Browser (+ browser_style.grass)
 ```
 
-The explore kit connects to the project's Neo4j (`docker-compose.yaml`: `bolt://localhost:7687`, user `neo4j`). Set `NEO4J_URI` / `NEO4J_PASSWORD` for another instance.
+The explore kit connects to the public read-only Neo4j at `https://ontology.energy-guard.eu` (user `neo4j`, the shared password). Set `NEO4J_URI` / `NEO4J_PASSWORD` for another instance, for example `bolt://localhost:7687` on the server.
 
-**Credentials and private inputs are not in git:**
-- `.env` (copy `.env.example`) holds `NEO4J_PASSWORD`; Docker Compose and `utils/neo4j/reload_ontology.sh` read it.
+**Credentials are not in git:**
+- `.env` (copy `.env.example`) holds `NEO4J_PASSWORD` (the private instance) and `NEO4J_PUBLIC_PASSWORD` (the shared read-only one); Docker Compose and the scripts in `utils/neo4j/` read it.
 - Loading and querying use the committed `ontology/all_pilots.owl` (assembled from `ontology/core.ttl` and
   `ontology/catalogue/*.ttl`); partners' Excel files are not needed.
 
@@ -27,7 +27,7 @@ folder anywhere); the person only needs the Neo4j address and password.
 
 ## Saved queries for the Neo4j Browser (Cypher)
 
-Open the Browser (`http://localhost:7474`, or `neo4j.energy-guard.eu`), paste a query from
+Open the Browser (`http://localhost:7474`, or `https://ontology.energy-guard.eu/browser/`), paste a query from
 `scripts/cypher/` and run it. Queries with a value on the first line (`WITH 'CEA' AS pilot`)
 are meant to be edited.
 

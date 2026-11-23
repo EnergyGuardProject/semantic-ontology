@@ -1,8 +1,10 @@
-# Neo4j instance holding the EnergyGuard ontology (ontology built by utils/ontology/build_all_pilots_owl.py).
+# Two Neo4j instances holding the EnergyGuard ontology:
+#   neo4j-ontology  private, writable, with the plugins; the ontology is loaded here (reachable only from this machine)
+#   neo4j-public    a read-only copy for everyone, with a shared password and no plugins; refresh it with utils/neo4j/refresh_public.sh
 #
 #   docker compose up -d
 #   Browser: http://localhost:7474   Bolt: bolt://localhost:7687   (bound to localhost)
-#   public:  https://neo4j.energy-guard.eu  (nginx-proxy-manager -> host "neo4j", port 7474)
+#   public:  https://ontology.energy-guard.eu  (nginx-proxy-manager -> host "neo4j-public", port 7474; Browser at /browser/)
 #   from your own machine: ssh -L 7474:localhost:7474 -L 7687:localhost:7687 <server>
 #   load / reload the ontology: utils/neo4j/reload_ontology.sh
 name: neo4j-ontology
@@ -18,7 +20,7 @@ services:
       default:
       nginxproxy_energyguard_net:
         aliases:
-          - neo4j               # the name nginx-proxy-manager forwards neo4j.energy-guard.eu to
+          - neo4j               # the name nginx-proxy-manager forwards ontology.energy-guard.eu to
     volumes:
       - ./runtime/data:/data
       - ./runtime/logs:/logs
@@ -34,6 +36,35 @@ services:
       NEO4J_server_memory_heap_initial__size: "512m"
       NEO4J_server_memory_heap_max__size: "1g"
       NEO4J_server_memory_pagecache_size: "512m"
+
+
+  neo4j-public:
+    image: neo4j:2025.10.1-bullseye
+    container_name: neo4j-public
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:7475:7474"  # for testing from this machine only
+      - "127.0.0.1:7688:7687"
+    networks:
+      default:
+      nginxproxy_energyguard_net:
+        aliases:
+          - neo4j-public        # the name nginx-proxy-manager forwards ontology.energy-guard.eu to
+    volumes:
+      - ./runtime/public-data:/data
+      - ./runtime/public-logs:/logs
+    environment:
+      NEO4J_AUTH: "neo4j/${NEO4J_PUBLIC_PASSWORD:?set NEO4J_PUBLIC_PASSWORD in .env}"
+      NEO4J_server_databases_read__only: "neo4j"          # nobody can change the graph
+      # no plugins are mounted, and only the procedures the Browser needs are allowed
+      NEO4J_dbms_security_procedures_allowlist: "db.*,dbms.components,dbms.clientConfig,dbms.showCurrentUser,dbms.procedures,dbms.functions"
+      NEO4J_db_transaction_timeout: "20s"                  # a runaway query is stopped
+      NEO4J_dbms_memory_transaction_total_max: "512m"
+      NEO4J_server_bolt_advertised__address: "ontology.energy-guard.eu:443"
+      NEO4J_server_http_advertised__address: "ontology.energy-guard.eu:443"
+      NEO4J_server_memory_heap_initial__size: "256m"
+      NEO4J_server_memory_heap_max__size: "512m"
+      NEO4J_server_memory_pagecache_size: "128m"
 
 networks:
   nginxproxy_energyguard_net:
