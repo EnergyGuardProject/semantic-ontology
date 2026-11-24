@@ -29,24 +29,24 @@ _http = None     # HTTPS connection (https://...), when used: {"url": ..., "head
 
 
 def _load_dotenv():
-    """Read NEO4J_* settings from a file called .env next to this file, if there is one (real environment variables win)."""
+    """Read NEO4J_* settings from a file called .env next to this file, if there is one (they override variables inherited from elsewhere, such as the repo-root .env that VS Code loads)."""
     f = Path(__file__).resolve().parent / ".env"
     if f.exists():
         for line in f.read_text(encoding="utf-8").splitlines():
             key, sep, val = line.partition("=")
             if sep and key.strip().startswith("NEO4J_"):
-                os.environ.setdefault(key.strip(), val.strip().strip("'\""))
+                os.environ[key.strip()] = val.strip().strip("'\"")
 
 
 def connect(uri=None, user=None, password=None):
     """Connect to the ontology's Neo4j. Arguments default to the environment variables
-    NEO4J_URI (default bolt://localhost:7687), NEO4J_USER (default neo4j) and NEO4J_PASSWORD.
+    NEO4J_URI (default https://ontology.energy-guard.eu), NEO4J_USER (default neo4j) and NEO4J_PASSWORD.
     The address can be https://ontology.energy-guard.eu (the public read-only copy, from anywhere: no extra software)
     or a Bolt address such as bolt://localhost:7687 (needs `pip install neo4j` and a tunnel to the server).
     Called automatically on first use; call it yourself to point at a different server."""
     global _driver, _http
     _load_dotenv()
-    uri = uri or os.environ.get("NEO4J_URI", "bolt://localhost:7687")
+    uri = uri or os.environ.get("NEO4J_URI", "https://ontology.energy-guard.eu")
     user = user or os.environ.get("NEO4J_USER", "neo4j")
     password = password or os.environ.get("NEO4J_PASSWORD")
     if not password:
